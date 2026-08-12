@@ -87,6 +87,17 @@ button[aria-pressed="true"]{background:var(--surface-3); border-color:var(--blue
 html[data-theme="dark"] .row.top .fill{background:#7FBFEA}
 .tick{position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--ref);
   box-shadow:0 0 0 2px var(--surface); transition:left .22s ease}
+/* Linked highlight. The hovered row keeps full contrast and everything else recedes —
+   a ring on the hovered row merged with its neighbours across the 2px row gap. Nothing
+   changes weight or size, so the layout never reflows as the pointer moves. */
+.chart.dim .row:not(.hl) .fill{opacity:.22}
+.chart.dim .row:not(.hl) .tick{opacity:.25}
+.chart.dim .row:not(.hl) .lab,
+.chart.dim .row:not(.hl) .val,
+.chart.dim .row:not(.hl) .val em{color:var(--ink-3)}
+.chart .fill, .chart .tick{transition:width .22s ease, left .22s ease, opacity .12s ease}
+.row.hl .lab{color:var(--navy)}
+.row.hl .track{box-shadow:0 0 0 1px var(--blue)}
 .row .val{font-size:12.5px; color:var(--ink); font-variant-numeric:tabular-nums; text-align:right}
 .row .val em{font-style:normal; color:var(--ink-3); font-size:11.5px}
 .axis{margin-left:284px; margin-top:6px; font-size:11px; color:var(--ink-3); display:flex; justify-content:space-between; max-width:calc(100% - 372px)}
@@ -115,12 +126,22 @@ html[data-theme="dark"] .row.top .fill{background:#7FBFEA}
 /* ---------- purpose band ---------- */
 .intro{max-width:1220px; margin:0 auto; padding:0 20px}
 .intro .box{background:var(--surface); border:1px solid var(--rule); border-radius:10px;
-  padding:18px 22px; margin-top:16px; display:grid;
-  grid-template-columns:168px minmax(0,1fr); gap:8px 28px; align-items:start}
+  padding:16px 22px; margin-top:16px; display:grid;
+  grid-template-columns:196px minmax(0,1fr); gap:8px 28px; align-items:start}
+.intro .box.closed{grid-template-columns:1fr}
 @media(max-width:800px){.intro .box{grid-template-columns:1fr; gap:10px}}
 .intro h2{font-size:15px}
 .intro .k{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3);
-  margin-top:4px}
+  margin-top:3px; display:block}
+.introtog{display:flex; align-items:flex-start; gap:9px; background:none; border:none;
+  padding:2px 0; text-align:left; border-radius:6px; width:100%}
+.introtog:hover{background:none}
+.introtog:hover h2{color:var(--blue)}
+.introtog:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+.introtog .tw{color:var(--ink-3); font-size:11px; line-height:1.7; transition:transform .16s ease;
+  flex:none}
+.introtog[aria-expanded="false"] .tw{transform:rotate(-90deg)}
+.introtog[aria-expanded="false"] .k::after{content:" · click to expand"; color:var(--ink-3)}
 .intro p{font-size:13.5px; color:var(--ink-2); line-height:1.62; margin:0 0 11px; max-width:90ch}
 .intro p:last-child{margin-bottom:0}
 .intro p strong{color:var(--navy)}
@@ -196,6 +217,15 @@ ul.pm li strong{color:var(--navy)}
 .capr .t{flex:1; min-width:0}
 .capr .s{font-size:11px; color:var(--ink-3); flex:none}
 
+/* ---------- export bar ---------- */
+.export{margin-top:18px; padding-top:14px; border-top:1px solid var(--rule)}
+.export .top{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.export .lbl{font-size:12px; color:var(--ink-3)}
+.export button{font-size:12px; padding:5px 10px; color:var(--ink-3)}
+.export button:hover{color:var(--ink-2); background:var(--surface-2)}
+.export button:disabled{opacity:.5; cursor:default}
+.export .hint2{font-size:11.5px; color:var(--ink-3); margin:9px 0 0; max-width:96ch}
+
 /* ---------- tables ---------- */
 table.data{border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px}
 table.data th, table.data td{padding:6px 7px; border-bottom:1px solid var(--rule); text-align:center; vertical-align:middle}
@@ -204,9 +234,17 @@ table.data thead th{font-size:10.5px; text-transform:uppercase; letter-spacing:.
 table.data th.rh, table.data td.rh{text-align:left; color:var(--ink-2); white-space:normal; min-width:150px}
 table.data tbody th.rh{font-weight:400}
 table.data tbody tr.tot th.rh{font-weight:600}
-table.data tbody tr:hover td{background:var(--surface-2)}
+table.data tbody tr:hover td, table.data tbody tr:hover th{background:var(--surface-3)}
+table.data tr.sub td, table.data tr.sub th{border-top:1.5px solid var(--rule); color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
 table.data tr.tot td, table.data tr.tot th{border-top:1.5px solid var(--rule); border-bottom:none;
   font-weight:600; color:var(--navy); background:var(--surface-2)}
+#tbl-res tbody tr{cursor:default}
+#tbl-res tbody tr td, #tbl-res tbody tr th{transition:color .12s ease}
+#tbl-res.dim tbody tr:not(.hl) td, #tbl-res.dim tbody tr:not(.hl) th,
+#tbl-res.dim tbody tr:not(.hl) td em{color:var(--ink-3)}
+#tbl-res tbody tr.hl td, #tbl-res tbody tr.hl th{background:var(--surface-3); color:var(--ink)}
+#tbl-res tbody tr.hl th.rh{box-shadow:inset 3px 0 0 var(--blue); color:var(--navy); font-weight:600}
 .scroll{overflow-x:auto; margin:0 -20px; padding:0 20px}
 .derived{color:var(--ink-3); font-size:11px; font-style:italic}
 
@@ -246,10 +284,12 @@ td.locked{opacity:.72}
 .wt.chg .nm{color:var(--changed-ink); font-weight:600}
 .wsum{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-3);
   border-top:1.5px solid var(--rule); padding-top:8px; margin-top:8px}
-.toggles{display:flex; flex-direction:column; gap:7px; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule)}
+.toggles{display:flex; flex-direction:column; gap:7px; margin-top:14px; padding-top:12px; border-top:1.5px solid var(--rule)}
+.toggles label.chk{max-width:none}
 label.chk{display:flex; gap:8px; align-items:flex-start; font-size:12px; color:var(--ink-2); cursor:pointer}
 label.chk input{margin:2px 0 0; accent-color:var(--blue)}
 label.chk span i{font-style:normal; color:var(--ink-3); display:block; font-size:11.5px}
+.toggles label.chk span i{max-width:none}
 .hint{font-size:11.5px; color:var(--ink-3); margin-top:10px; line-height:1.45}
 .foot{font-size:11.5px; color:var(--ink-3); margin-top:20px; line-height:1.55; max-width:88ch}
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
@@ -281,9 +321,12 @@ html[data-theme="dark"] #toast{color:#12161F}
 </header>
 
 <div class="intro">
-  <div class="box">
-    <div><h2>What is being decided</h2><div class="k">and why it cannot wait</div></div>
-    <div>
+  <div class="box closed">
+    <button class="introtog" id="intro-tog" aria-expanded="false" aria-controls="intro-body">
+      <span class="tw" aria-hidden="true">▾</span>
+      <span><h2>What is being decided</h2><span class="k">and why it cannot wait</span></span>
+    </button>
+    <div id="intro-body" hidden>
       <p>MCA is building one platform under every option here: a CHD knowledge graph, AI
         extraction over clinical notes, assembly of datasets against definitions a user supplies,
         and governance carried on each record. <strong>That stack does not change with the choice
@@ -347,6 +390,18 @@ html[data-theme="dark"] #toast{color:#12161F}
         <tbody></tbody>
       </table>
     </div>
+
+    <div class="export">
+      <div class="top">
+        <span class="lbl">Export this configuration and its results:</span>
+        <button id="btn-json">Export</button>
+        <button id="btn-import">Load a JSON export…</button>
+        <input type="file" id="file-json" accept=".json,application/json" hidden>
+      </div>
+      <p class="hint2">Downloads one zip holding a static visual report of the current state, for
+        reading, printing or sending on, and a JSON record of every input, which loads back into
+        this page.</p>
+    </div>
   </section>
 
   <!-- ============ WEIGHTS ============ -->
@@ -361,29 +416,25 @@ html[data-theme="dark"] #toast{color:#12161F}
     </div>
     <div id="wts" class="wgrid"></div>
     <div class="wsum"><span>Sum of weights</span><span><b id="wsum">24</b> · maximum possible score <b id="wmax">120</b></span></div>
-    <div class="grid2" style="gap:8px 34px">
-      <div>
-        <div class="toggles">
-          <label class="chk"><input type="checkbox" id="lk-reach">
-            <span>Unlock <b>Use-case reach</b><i>Derived from capability coverage by banding: ≥85%→5, ≥60%→4, ≥46%→3, ≥20%→2, else 1. That banding is a reconstruction, not a published rule.</i></span></label>
-          <label class="chk"><input type="checkbox" id="lk-cost">
-            <span>Unlock <b>Relative cost</b><i>Mirrors the points row of the cost table, which is a direct input — the published points are not a function of the eight cost components.</i></span></label>
-        </div>
-      </div>
-      <div class="hint" id="setup-note" style="margin-top:16px"></div>
-    </div>
+    <div class="hint" id="setup-note"></div>
   </section>
 
   <!-- ============ COMPARISON SCORES ============ -->
   <section class="card" aria-labelledby="h-cmp">
     <div class="hd"><h2 id="h-cmp">Comparison scores</h2>
-      <div class="note">Click the nth dot to set a score, or focus a cell and press 1–5 or an arrow key. Two rows are derived by default — unlock them in the weights panel above.</div>
+      <div class="note">Click the nth dot to set a score, or focus a cell and press 1–5 or an arrow key. Two rows are derived by default — unlock either below the table to set it by hand.</div>
     </div>
     <div class="scroll">
       <table class="data" id="tbl-cmp">
         <thead><tr><th class="rh">Criterion</th></tr></thead>
         <tbody></tbody>
       </table>
+    </div>
+    <div class="toggles">
+      <label class="chk"><input type="checkbox" id="lk-reach">
+        <span>Unlock <b>Use-case reach</b><i>Derived from capability coverage by banding: ≥85%→5, ≥60%→4, ≥46%→3, ≥20%→2, else 1. That banding is a reconstruction, not a published rule.</i></span></label>
+      <label class="chk"><input type="checkbox" id="lk-cost">
+        <span>Unlock <b>Relative cost</b><i>Mirrors the points row of the cost table, which is driven by the eight cost components unless those points are set by hand.</i></span></label>
     </div>
   </section>
 
@@ -400,10 +451,14 @@ html[data-theme="dark"] #toast{color:#12161F}
   <!-- ============ COST ============ -->
   <section class="card" aria-labelledby="h-cost">
     <div class="hd"><h2 id="h-cost">Cost profile</h2>
-      <div class="note">Click a word to cycle High → Mod → Low → None. The points row is a separate input, not a sum of the components; edit it directly to move the Relative cost criterion.</div>
+      <div class="note">Click a word to cycle High → Mod → Low → None. Each step moves that option's cost points, which in turn move the Relative cost criterion.</div>
     </div>
     <div class="scroll">
       <table class="data" id="tbl-cost"><thead><tr><th class="rh">Cost component</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="toggles">
+      <label class="chk"><input type="checkbox" id="lk-points">
+        <span>Set the points row by hand<i>Otherwise each component step moves that option's points one place from its published value, clamped to 1–5. The published points are not a function of these eight components — Options 6 and 7 have near-identical profiles yet are printed as 2 and 5 — so the points are anchored on what was published rather than recomputed from scratch. The cost load row shows the raw movement even where the clamp holds the points still.</i></span></label>
     </div>
   </section>
 
@@ -493,7 +548,7 @@ const PUB_SCORES = [
 ];
 const W_LONG  = [3,1,2,3,3,3,3,2,1,1,2];
 const W_FLAT  = [1,1,1,1,1,1,1,1,1,1,1];
-const W_SETUP = [0.4,2.7,2.8,1.1,0.6,0.7,0.5,2.3,2.6,1.8,1.9];
+const W_SETUP = [1,3,3,0,0,2,1,1,2,2,3];
 const PUB_WEIGHTED  = [99,105,80,78,51,56,78];   // long-horizon, of 120
 const PUB_UNWEIGHTED= [41,47,38,34,27,30,39];    // of 55
 const PUB_SETUP     = [54,72,63,48,48,59,72];    // setup weighting, as printed
@@ -528,6 +583,8 @@ const PUB_COST = [
   ["High","Mod","Mod","High","Mod","Mod","Low"]
 ];
 const PUB_POINTS = [2,3,4,1,2,2,5];
+const COST_VAL = {None:0, Low:1, Mod:2, High:3};
+const PUB_LOAD = [19,15,10,22,17,11,11];   // the published components summed, per option
 
 const REACH_ROW = 0, COST_ROW = 10;
 const CAP_V = ["F","P","N"], CAP_G = {F:"●",P:"◐",N:"○"};
@@ -545,10 +602,19 @@ const clone = x => JSON.parse(JSON.stringify(x));
 let S = {
   scores: clone(PUB_SCORES), weights: clone(W_LONG), caps: clone(PUB_CAP),
   cost: clone(PUB_COST), points: clone(PUB_POINTS),
-  unlockReach:false, unlockCost:false, preset:"long", sel:1
+  unlockReach:false, unlockCost:false, manualPoints:false, preset:"long", sel:1
 };
 
 /* ================= derivations ================= */
+/* Cost load: the eight components summed, None 0 → High 3. The published points are NOT a
+   function of these components — options 6 and 7 have near-identical profiles yet are printed
+   as 2 and 5 — so no formula can recompute them from scratch. Instead the points are anchored
+   on the published value and moved one point per component step, which keeps the published
+   state exact while making every edit register. */
+const costLoad = o => COSTC.reduce((a,_,r)=>a+COST_VAL[S.cost[r][o]], 0);
+const derivedPoints = o =>
+  Math.max(1, Math.min(5, PUB_POINTS[o] - (costLoad(o) - PUB_LOAD[o])));
+
 const coverage = o => {
   let v = 0;
   for (let r=0;r<CAPS.length;r++){ const m=S.caps[r][o]; v += m==="F"?1:m==="P"?0.5:0; }
@@ -556,6 +622,7 @@ const coverage = o => {
 };
 const band = c => c>=85?5:c>=60?4:c>=46?3:c>=20?2:1;
 function applyDerived(){
+  if(!S.manualPoints) for (let o=0;o<7;o++) S.points[o] = derivedPoints(o);
   for (let o=0;o<7;o++){
     if(!S.unlockReach) S.scores[REACH_ROW][o] = band(coverage(o));
     if(!S.unlockCost)  S.scores[COST_ROW][o]  = S.points[o];
@@ -596,8 +663,8 @@ function buildCmp(){
   tb.addEventListener("click", e=>{
     const dot=e.target.closest(".dots"); if(!dot) return;
     const td=dot.parentElement, r=+td.dataset.r, o=+td.dataset.o;
-    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived — unlock it in the weights panel."
-                                     :"Relative cost mirrors the cost points — unlock it, or edit the points row."); return; }
+    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived from capability coverage — unlock it below the table."
+                                     :"Relative cost mirrors the cost points — unlock it below the table, or edit the points row."); return; }
     const dots=[...dot.querySelectorAll(".d")], i=dots.indexOf(e.target);
     S.scores[r][o] = i>=0 ? i+1 : S.scores[r][o];
     render();
@@ -611,7 +678,7 @@ function buildCmp(){
     else if(/^[1-5]$/.test(e.key)) nv=+e.key;
     else return;
     e.preventDefault();
-    if(locked(r)){ toast("That row is derived — unlock it in the weights panel."); return; }
+    if(locked(r)){ toast("That row is derived — unlock it below the comparison scores table."); return; }
     S.scores[r][o]=nv; render(); dot.focus();
   });
 }
@@ -657,9 +724,12 @@ function buildCost(){
     }
     tb.appendChild(tr);
   });
+  const lr=document.createElement("tr"); lr.className="sub";
+  lr.innerHTML="<th class='rh' scope='row'>Cost load, of 24</th>"+OPTS.map(()=>"<td></td>").join("");
+  tb.appendChild(lr);
   const tr=document.createElement("tr"); tr.className="tot";
-  tr.innerHTML="<th class='rh' scope='row'>Points, 5 = cheapest</th>"+
-    OPTS.map((o,i)=>`<td><input type="number" min="1" max="5" step="1" data-pt="${i}" style="width:46px;font:inherit;font-size:12.5px;text-align:center;padding:3px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink)"></td>`).join("");
+  tr.innerHTML="<th class='rh' scope='row'>Points, 5 = cheapest <span class='derived' id='pt-tag'></span></th>"+
+    OPTS.map((o,i)=>`<td><span class="ptv"></span><input type="number" min="1" max="5" step="1" data-pt="${i}" style="width:46px;font:inherit;font-size:12.5px;text-align:center;padding:3px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink)"></td>`).join("");
   tb.appendChild(tr);
   tb.addEventListener("click", e=>{
     const b=e.target.closest(".cw"); if(!b) return;
@@ -679,13 +749,13 @@ function buildWts(){
   CRIT.forEach((c,i)=>{
     const row=document.createElement("div"); row.className="wt"; row.dataset.i=i;
     row.innerHTML=`<div class="nm">${c[0]}<i>${c[1]}</i></div>
-      <input type="range" min="0" max="5" step="0.1" data-w="${i}" aria-label="Weight for ${c[0]}">
-      <input type="number" min="0" max="5" step="0.1" data-w="${i}" aria-label="Weight value for ${c[0]}">`;
+      <input type="range" min="0" max="5" step="1" data-w="${i}" aria-label="Weight for ${c[0]}">
+      <input type="number" min="0" max="5" step="1" data-w="${i}" aria-label="Weight value for ${c[0]}">`;
     box.appendChild(row);
   });
   box.addEventListener("input", e=>{
     const i=e.target.dataset.w; if(i===undefined) return;
-    let v=Math.round(Math.max(0,Math.min(5,+e.target.value||0))*10)/10;
+    let v=Math.round(Math.max(0,Math.min(5,+e.target.value||0)));
     S.weights[+i]=v; S.preset="free"; render();
   });
 }
@@ -738,11 +808,20 @@ function render(){
       td.classList.toggle("chg", v!==PUB_COST[r][o]);
     }
   });
-  const ptRow=cob.lastElementChild;
+  const loadRow=cob.children[COSTC.length];
   for(let o=0;o<7;o++){
-    const inp=ptRow.children[o+1].firstChild;
+    const L=costLoad(o), d=L-PUB_LOAD[o];
+    loadRow.children[o+1].innerHTML = d===0 ? String(L)
+      : `${L} <em style="font-style:normal;color:var(--changed-ink);font-size:11px">${d>0?"+":""}${d}</em>`;
+  }
+  const ptRow=cob.lastElementChild;
+  document.getElementById("pt-tag").textContent = S.manualPoints ? "by hand" : "from the components";
+  for(let o=0;o<7;o++){
+    const cell=ptRow.children[o+1], span=cell.querySelector(".ptv"), inp=cell.querySelector("input");
+    span.hidden = S.manualPoints; inp.hidden = !S.manualPoints;
+    span.textContent = S.points[o];
     if(document.activeElement!==inp) inp.value=S.points[o];
-    ptRow.children[o+1].classList.toggle("chg", S.points[o]!==PUB_POINTS[o]);
+    cell.classList.toggle("chg", S.points[o]!==PUB_POINTS[o]);
   }
 
   /* weights */
@@ -756,14 +835,12 @@ function render(){
   document.getElementById("wmax").textContent=fmt(wmax());
   document.querySelectorAll(".preset").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.p===S.preset)));
   document.getElementById("setup-note").textContent = S.preset==="setup"
-    ? "The setup weighting's own weights were never published. These are reconstructed from the six values in the brief's final column, rounded to tenths, and they reproduce every printed value to the nearest point. Across all weightings consistent with that column Option 2 lands between 70 and 77, so treat its exact figure as indicative."
+    ? "The setup weighting's own weights were never published; these are a whole-number reconstruction fitted to the brief's final column. They reproduce its headline exactly — Options 2 and 7 level at 72 — plus 54, 63 and 48 for Options 1, 3 and 5, and land one point low on Options 4 and 6. No whole-number weighting reproduces the column outright. Note what the fit implies: institutional feasibility, time to first value and relative cost carry the top weight while re-extraction and observability carry none, which is what makes this column favour the quick options."
     : "";
 
   /* results */
   const pr = pubRef();
-  const rows = OPTS.map((o,i)=>({i, name:o.n, w:weighted(i), u:unweighted(i), c:coverage(i),
-                                 pub: pr ? pr[i] : null}))
-                   .sort((a,b)=>b.w-a.w || b.u-a.u);
+  const rows = resultRows();
   const max = Math.max(wmax(), ...rows.map(r=>r.w), ...(pr||[0])) || 1;
   const scale = v => (v/max*100);
 
@@ -771,6 +848,7 @@ function render(){
   rows.forEach((r,rank)=>{
     const el=document.createElement("div");
     el.className="row"+(rank===0?" top":"");
+    el.dataset.o=r.i;
     el.innerHTML=`<div class="lab" title="${r.name}">${r.name}</div>
       <div class="track"><div class="fill" style="width:${scale(r.w).toFixed(2)}%"></div>${
         r.pub===null ? "" : `<div class="tick" style="left:${scale(r.pub).toFixed(2)}%" title="published ${r.pub}"></div>`}</div>
@@ -800,9 +878,10 @@ function render(){
 
   const rb=document.querySelector("#tbl-res tbody"); rb.innerHTML="";
   rows.forEach((r,rank)=>{
-    const d=r.pub===null?null:(S.preset==="setup"?Math.round(r.w)-r.pub:r.w-r.pub);
+    const d=r.pub===null?null:r.w-r.pub;
     const tr=document.createElement("tr");
     if(rank===0) tr.className="tot";
+    tr.dataset.o=r.i;
     tr.innerHTML=`<th class="rh" scope="row">${r.name}</th>
       <td>${fmt(r.w)} <em style="color:var(--ink-3);font-style:normal;font-size:11px">of ${fmt(wmax())}</em></td>
       <td>${Math.round(r.w/wmax()*100)}%</td><td>${r.u}</td><td>${r.c}%</td>
@@ -813,7 +892,7 @@ function render(){
   });
 
   document.getElementById("foot").textContent =
-    "Published values are those in the brief dated 7 August 2026. Use-case reach and Relative cost are derived unless unlocked: reach is banded from capability coverage, and Relative cost mirrors the cost points row. The eight cost components are descriptive — the published points are not their sum, so changing a component moves nothing until you edit the points. Nothing here is saved; reload to return to the published baseline.";
+    "Published values are those in the brief dated 7 August 2026. Use-case reach and Relative cost are derived unless unlocked: reach is banded from capability coverage, and Relative cost mirrors the cost points row. Each cost component step moves that option's points one place from the published value, so the cost profile feeds the Relative cost criterion; the points can also be set by hand. Nothing here is saved; reload to return to the published baseline, or export the current state — a visual report and a JSON record, zipped — from the Result panel.";
 
   renderOptions(rows);
 }
@@ -822,6 +901,23 @@ function dirty(){
   return JSON.stringify([S.scores,S.caps,S.cost,S.points]) !== JSON.stringify([PUB_SCORES,PUB_CAP,PUB_COST,PUB_POINTS])
       || JSON.stringify(S.weights)!==JSON.stringify(W_LONG);
 }
+
+/* ================= linked highlight =================
+   Driven from the results table only. Hovering a bar shows its tooltip and nothing else. */
+function linkHover(o){
+  const on = o >= 0;
+  document.getElementById("chart").classList.toggle("dim", on);
+  document.getElementById("tbl-res").classList.toggle("dim", on);
+  document.querySelectorAll("#chart .row").forEach(el=>
+    el.classList.toggle("hl", +el.dataset.o===o));
+  document.querySelectorAll("#tbl-res tbody tr").forEach(el=>
+    el.classList.toggle("hl", +el.dataset.o===o));
+}
+/* delegated, so it survives the table being rebuilt on every render */
+document.querySelector("#tbl-res tbody").addEventListener("mouseover", e=>{
+  const tr=e.target.closest("tr"); if(tr && tr.dataset.o!==undefined) linkHover(+tr.dataset.o);
+});
+document.querySelector("#tbl-res tbody").addEventListener("mouseleave", ()=>linkHover(-1));
 
 /* ================= tooltip ================= */
 const tip=document.getElementById("tip");
@@ -850,6 +946,308 @@ function toast(msg){
   clearTimeout(tmr); tmr=setTimeout(()=>t.classList.remove("on"), 2600);
 }
 
+/* ================= export and import ================= */
+const PRESET_LABEL = {long:"Long-horizon", flat:"Unweighted",
+                      setup:"Setup-weighted (whole-number reconstruction)", free:"Custom"};
+const MARK_WORD = {F:"supported", P:"partial", N:"not supported"};
+
+function resultRows(){
+  const pr=pubRef();
+  return OPTS.map((o,i)=>({i, name:o.n, w:weighted(i), u:unweighted(i), c:coverage(i),
+                           pub: pr?pr[i]:null}))
+             .sort((a,b)=>b.w-a.w || b.u-a.u);
+}
+function stamp(){
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+}
+const CRC_TABLE = (()=>{ const t=new Uint32Array(256);
+  for(let n=0;n<256;n++){ let c=n;
+    for(let k=0;k<8;k++) c = (c & 1) ? (0xEDB88320 ^ (c>>>1)) : (c>>>1);
+    t[n]=c>>>0; }
+  return t; })();
+function crc32(b){ let c=0xFFFFFFFF;
+  for(let i=0;i<b.length;i++) c=CRC_TABLE[(c ^ b[i]) & 0xFF] ^ (c>>>8);
+  return (c ^ 0xFFFFFFFF)>>>0; }
+
+async function deflateRaw(bytes){
+  if(typeof CompressionStream!=="function") return null;
+  try{
+    const st=new Blob([bytes]).stream().pipeThrough(new CompressionStream("deflate-raw"));
+    return new Uint8Array(await new Response(st).arrayBuffer());
+  }catch(e){ return null; }
+}
+
+/* Store or deflate, one archive, no library. Fixed 1980-01-01 timestamps so the same
+   configuration always produces the same bytes. */
+async function makeZip(files){
+  const enc=new TextEncoder(), body=[], central=[];
+  let offset=0, n=0;
+  for(const f of files){
+    const raw=enc.encode(f.text), crc=crc32(raw), name=enc.encode(f.name);
+    let data=await deflateRaw(raw), method=8;
+    if(!data || data.length>=raw.length){ data=raw; method=0; }
+    const lh=new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true); lh.setUint16(4,20,true); lh.setUint16(6,0,true);
+    lh.setUint16(8,method,true);     lh.setUint16(10,0,true); lh.setUint16(12,0x0021,true);
+    lh.setUint32(14,crc,true);       lh.setUint32(18,data.length,true);
+    lh.setUint32(22,raw.length,true);lh.setUint16(26,name.length,true); lh.setUint16(28,0,true);
+    body.push(new Uint8Array(lh.buffer), name, data);
+
+    const cd=new DataView(new ArrayBuffer(46));
+    cd.setUint32(0,0x02014b50,true); cd.setUint16(4,20,true);  cd.setUint16(6,20,true);
+    cd.setUint16(8,0,true);          cd.setUint16(10,method,true);
+    cd.setUint16(12,0,true);         cd.setUint16(14,0x0021,true);
+    cd.setUint32(16,crc,true);       cd.setUint32(20,data.length,true);
+    cd.setUint32(24,raw.length,true);cd.setUint16(28,name.length,true);
+    cd.setUint16(30,0,true); cd.setUint16(32,0,true); cd.setUint16(34,0,true);
+    cd.setUint16(36,0,true); cd.setUint32(38,0,true); cd.setUint32(42,offset,true);
+    central.push(new Uint8Array(cd.buffer), name);
+
+    offset += 30 + name.length + data.length; n++;
+  }
+  const cdSize=central.reduce((a,p)=>a+p.length,0);
+  const eo=new DataView(new ArrayBuffer(22));
+  eo.setUint32(0,0x06054b50,true); eo.setUint16(4,0,true); eo.setUint16(6,0,true);
+  eo.setUint16(8,n,true); eo.setUint16(10,n,true);
+  eo.setUint32(12,cdSize,true); eo.setUint32(16,offset,true); eo.setUint16(20,0,true);
+  return new Blob([...body, ...central, new Uint8Array(eo.buffer)], {type:"application/zip"});
+}
+
+function downloadBlob(name, blob){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download=name; document.body.appendChild(a); a.click();
+  a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+function download(name, mime, text){
+  downloadBlob(name, new Blob([text], {type:mime}));
+}
+
+function buildJSON(){
+  const rows=resultRows();
+  return JSON.stringify({
+    app:"where-the-data-lives-scoring-explorer", version:1,
+    exportedAt:new Date().toISOString(),
+    baseline:"PDI_WhereTheDataLives_2026-08-07 (brief dated 7 August 2026)",
+    weighting:PRESET_LABEL[S.preset], preset:S.preset,
+    criteria:CRIT.map(c=>c[0]), options:OPTS.map(o=>o.n),
+    capabilityNames:CAPS, costComponents:COSTC,
+    weights:S.weights.slice(), scores:clone(S.scores), capabilities:clone(S.caps),
+    cost:clone(S.cost), points:S.points.slice(),
+    flags:{unlockReach:S.unlockReach, unlockCost:S.unlockCost, manualPoints:S.manualPoints},
+    derived:{weightSum:wsum(), maxScore:wmax(),
+             coverage:OPTS.map((_,o)=>coverage(o)), costLoad:OPTS.map((_,o)=>costLoad(o))},
+    results:rows.map((r,rank)=>({rank:rank+1, option:r.name, weighted:r.w, maxScore:wmax(),
+      shareOfMax:Math.round(r.w/wmax()*100)/100, unweighted:r.u, capabilityCoverage:r.c,
+      published:r.pub, change:r.pub===null?null:r.w-r.pub})),
+    changedFromPublished:dirty()
+  }, null, 2);
+}
+
+const esc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const DOT = ["#DCE0E9","#C24444","#C97B36","#D9982B","#7A9E4C","#3E8E5A"];
+const MARK_COL = {F:"#3E8E5A", P:"#D9982B", N:"#C98F8F"};
+
+function reportDots(v){
+  let h="";
+  for(let i=1;i<=5;i++)
+    h+=`<span style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;`
+      +`background:${i<=v?DOT[v]:DOT[0]}"></span>`;
+  return h+`<span style="color:#8C8C8C;font-size:10.5px">${v}</span>`;
+}
+
+function reportChart(rows){
+  const max=wmax(), W=880, LAB=286, TRK=470, H=26, G=5;
+  const x=v=>v/max*TRK;
+  let g="";
+  rows.forEach((r,i)=>{
+    const y=i*(H+G), top=i===0;
+    g+=`<text x="${LAB-12}" y="${y+17}" text-anchor="end" font-size="12" `
+      +`fill="${top?"#1A2566":"#595959"}"${top?' font-weight="600"':''}>${esc(r.name)}</text>`
+      +`<rect x="${LAB}" y="${y}" width="${TRK}" height="${H-6}" rx="3" fill="#EDF1F8"/>`
+      +`<rect x="${LAB}" y="${y}" width="${x(r.w).toFixed(1)}" height="${H-6}" rx="3" `
+      +`fill="${top?"#1A2566":"#2E5FA3"}"/>`;
+    if(r.pub!==null)
+      g+=`<line x1="${(LAB+x(r.pub)).toFixed(1)}" y1="${y-2}" x2="${(LAB+x(r.pub)).toFixed(1)}" `
+        +`y2="${y+H-4}" stroke="#4A4A4A" stroke-width="2"/>`;
+    g+=`<text x="${LAB+TRK+10}" y="${y+16}" font-size="12" fill="#1A2566">${fmt(r.w)}</text>`
+      +`<text x="${LAB+TRK+52}" y="${y+16}" font-size="11" fill="#8C8C8C">`
+      +`${Math.round(r.w/max*100)}%</text>`;
+  });
+  const h=rows.length*(H+G)+22;
+  g+=`<text x="${LAB}" y="${h-2}" font-size="10.5" fill="#8C8C8C">0</text>`
+    +`<text x="${LAB+TRK}" y="${h-2}" font-size="10.5" fill="#8C8C8C" text-anchor="end">${fmt(max)}</text>`;
+  return `<svg viewBox="0 0 ${W} ${h}" width="100%" style="max-width:${W}px;height:auto" `
+    +`font-family="Aptos, Carlito, 'Segoe UI', Helvetica, Arial, sans-serif">${g}</svg>`;
+}
+
+function buildReport(){
+  const rows=resultRows(), top=rows[0], second=rows[1], marg=top.w-second.w;
+  const heads=OPTS.map(o=>`<th>${esc(o.s)}</th>`).join("");
+  const th=(t)=>`<th class="rh">${esc(t)}</th>`;
+
+  const cmp=CRIT.map((c,r)=>`<tr>${th(c[0])}${OPTS.map((_,o)=>
+      `<td>${reportDots(S.scores[r][o])}</td>`).join("")}</tr>`).join("")
+    + `<tr class="tot">${th("Total of 55")}${OPTS.map((_,o)=>
+      `<td>${unweighted(o)}</td>`).join("")}</tr>`;
+
+  const cap=CAPS.map((c,r)=>`<tr>${th(c)}${OPTS.map((_,o)=>{
+      const v=S.caps[r][o];
+      return `<td style="color:${MARK_COL[v]};font-size:15px">${CAP_G[v]}</td>`;}).join("")}</tr>`).join("")
+    + `<tr class="tot">${th("Coverage")}${OPTS.map((_,o)=>`<td>${coverage(o)}%</td>`).join("")}</tr>`;
+
+  const COSTCOL={High:"#1A2566",Mod:"#595959",Low:"#9AA6BF",None:"#B9C4E0"};
+  const cost=COSTC.map((c,r)=>`<tr>${th(c)}${OPTS.map((_,o)=>{
+      const v=S.cost[r][o];
+      return `<td style="color:${COSTCOL[v]}${v==="High"?";font-weight:700":""}">${v}</td>`;}).join("")}</tr>`).join("")
+    + `<tr class="sub">${th("Cost load, of 24")}${OPTS.map((_,o)=>`<td>${costLoad(o)}</td>`).join("")}</tr>`
+    + `<tr class="tot">${th("Points, 5 = cheapest")}${S.points.map(p=>`<td>${p}</td>`).join("")}</tr>`;
+
+  const wts=CRIT.map((c,i)=>`<tr>${th(c[0])}<td style="text-align:left;color:#8C8C8C">${esc(c[1])}</td>`
+      +`<td>${fmt(S.weights[i])}</td></tr>`).join("")
+    + `<tr class="tot">${th("Sum")}<td></td><td>${fmt(wsum())}</td></tr>`;
+
+  const res=rows.map((r,i)=>`<tr${i===0?' class="tot"':''}><td style="text-align:left">${i+1}</td>`
+      +`${th(r.name)}<td>${fmt(r.w)} <span style="color:#8C8C8C">of ${fmt(wmax())}</span></td>`
+      +`<td>${Math.round(r.w/wmax()*100)}%</td><td>${r.u}</td><td>${r.c}%</td>`
+      +`<td>${r.pub===null?"—":r.pub}</td>`
+      +`<td>${r.pub===null||r.w===r.pub?"—":(r.w>r.pub?"+":"")+fmt(r.w-r.pub)}</td></tr>`).join("");
+
+  return `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Where the Data Lives — scoring report</title>
+<style>
+@page{margin:16mm}
+body{font-family:Aptos,Carlito,"Segoe UI",-apple-system,Helvetica,Arial,sans-serif;
+  color:#595959;font-size:13px;line-height:1.55;max-width:960px;margin:32px auto;padding:0 24px}
+h1{font-size:21px;color:#1A2566;margin:0}
+h2{font-size:14px;color:#1A2566;margin:30px 0 10px;padding-bottom:5px;border-bottom:1px solid #DCE0E9}
+.meta{font-size:12px;color:#8C8C8C;margin-top:4px}
+.flag{display:inline-block;margin-top:10px;font-size:12px;padding:4px 9px;border-radius:5px;
+  background:#FDF4E0;color:#8A6316;border:1px solid #E6D9B4}
+.flag.ok{background:#F5F7FB;color:#3E8E5A;border-color:#DCE0E9}
+.lead{margin:18px 0 8px;font-size:12px;color:#8C8C8C;text-transform:uppercase;letter-spacing:.07em}
+.big{font-size:23px;color:#1A2566;font-weight:600;line-height:1.2}
+.sub2{font-size:12.5px;margin-top:4px}
+.legend{font-size:11.5px;color:#8C8C8C;margin:10px 0 12px}
+table{border-collapse:collapse;width:100%;font-size:12px;page-break-inside:avoid}
+th,td{padding:5px 6px;border-bottom:1px solid #DCE0E9;text-align:center;vertical-align:middle}
+thead th{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#8C8C8C;
+  border-bottom:1.5px solid #DCE0E9}
+th.rh{text-align:left;font-weight:400;color:#595959}
+tr.tot td,tr.tot th{border-top:1.5px solid #DCE0E9;border-bottom:none;font-weight:600;color:#1A2566;
+  background:#F5F7FB}
+tr.sub td,tr.sub th{border-top:1.5px solid #DCE0E9;color:#8C8C8C}
+figure{margin:0 0 6px}
+figcaption{font-size:11.5px;color:#8C8C8C;margin-top:6px}
+.note{font-size:11.5px;color:#8C8C8C;margin-top:26px;padding-top:12px;border-top:1px solid #DCE0E9}
+</style></head><body>
+<h1>Where the Data Lives — scoring report</h1>
+<div class="meta">Patient Data Initiative · seven data-custody options · generated
+  ${esc(new Date().toLocaleString())}<br>Baseline: the brief dated 7 August 2026 ·
+  Weighting: ${esc(PRESET_LABEL[S.preset])}</div>
+${dirty() ? '<div class="flag">One or more inputs differ from the published brief. The Published and Change columns show by how much.</div>' : '<div class="flag ok">Every input matches the published brief.</div>'}
+
+<div class="lead">Highest-scoring option</div>
+<div class="big">${esc(top.name)}</div>
+<div class="sub2">${fmt(top.w)} of ${fmt(wmax())} weighted · ${Math.round(top.w/wmax()*100)}% of the
+  maximum · ${top.u} of 55 unweighted · ${top.c}% capability coverage.
+  Ahead of ${esc(second.name)} by ${fmt(marg)} point${Math.abs(marg)===1?"":"s"}.</div>
+
+<h2>Result</h2>
+<figure>${reportChart(rows)}
+<figcaption>Weighted total under the weights below, ranked. The vertical rule marks the score
+  published in the brief under the same weighting where one exists.</figcaption></figure>
+<table><thead><tr><th style="text-align:left">Rank</th><th class="rh">Option</th><th>Weighted</th>
+<th>Share of max</th><th>Unweighted<br>of 55</th><th>Capability<br>coverage</th><th>Published</th>
+<th>Change</th></tr></thead><tbody>${res}</tbody></table>
+
+<h2>Weights</h2>
+<table><thead><tr><th class="rh">Criterion</th><th style="text-align:left">Class</th>
+<th>Weight</th></tr></thead><tbody>${wts}</tbody></table>
+
+<h2>Comparison scores</h2>
+<table><thead><tr><th class="rh">Criterion</th>${heads}</tr></thead><tbody>${cmp}</tbody></table>
+
+<h2>Capability coverage</h2>
+<div class="legend">● supported · ◐ partial · ○ not supported. Coverage counts full marks as 1 and
+  partial as 0.5 across the fourteen uses.</div>
+<table><thead><tr><th class="rh">Use case or capability</th>${heads}</tr></thead><tbody>${cap}</tbody></table>
+
+<h2>Cost profile</h2>
+<table><thead><tr><th class="rh">Cost component</th>${heads}</tr></thead><tbody>${cost}</tbody></table>
+
+<h2>Architecture — ${esc(top.name)}</h2>
+<figure style="max-width:420px">${PANELS[String(top.i+1)]}
+<figcaption>The highest-scoring option as drawn in Figure 1 of the brief. PHI custody:
+  ${esc(OFACTS[String(top.i+1)].custody)} · Control: ${esc(OFACTS[String(top.i+1)].control)} ·
+  Instrument: ${esc(OFACTS[String(top.i+1)].instrument)}.</figcaption></figure>
+
+<p class="note">Use-case reach is ${S.unlockReach?"set by hand":"banded from capability coverage (≥85%→5, ≥60%→4, ≥46%→3, ≥20%→2, else 1), a reconstruction rather than a published rule"}.
+Relative cost ${S.unlockCost?"is set by hand":"mirrors the cost points row"}, and the points are
+${S.manualPoints?"set by hand":"anchored on the published values and moved one place per component step; the published points are not a function of the eight components"}.
+This report is a snapshot — regenerate it from the interactive page after any further change.</p>
+</body></html>`;
+}
+
+function applyImport(d){
+  const dim=(a,r,c)=>Array.isArray(a) && a.length===r &&
+    a.every(x=>Array.isArray(x) && x.length===c);
+  const num=(a,n)=>Array.isArray(a) && a.length===n && a.every(v=>typeof v==="number" && isFinite(v));
+  if(!d || d.app!=="where-the-data-lives-scoring-explorer")
+    throw new Error("not an export from this page");
+  if(!dim(d.scores,11,7))       throw new Error("scores must be 11 criteria × 7 options");
+  if(!dim(d.capabilities,14,7)) throw new Error("capabilities must be 14 uses × 7 options");
+  if(!dim(d.cost,8,7))          throw new Error("cost must be 8 components × 7 options");
+  if(!num(d.weights,11))        throw new Error("weights must be 11 numbers");
+  if(!num(d.points,7))          throw new Error("points must be 7 numbers");
+  const bad = d.scores.flat().some(v=>!(v>=1&&v<=5)) || d.points.some(v=>!(v>=1&&v<=5)) ||
+              d.capabilities.flat().some(v=>!CAP_V.includes(v)) ||
+              d.cost.flat().some(v=>!COST_V.includes(v));
+  if(bad) throw new Error("a value is out of range");
+  // everything validated — only now mutate
+  S.scores=clone(d.scores); S.caps=clone(d.capabilities); S.cost=clone(d.cost);
+  S.points=d.points.map(v=>Math.round(v));
+  S.weights=d.weights.map(v=>Math.max(0,Math.min(5,Math.round(v))));
+  const f=d.flags||{};
+  S.unlockReach=!!f.unlockReach; S.unlockCost=!!f.unlockCost; S.manualPoints=!!f.manualPoints;
+  S.preset=["long","flat","setup","free"].includes(d.preset)?d.preset:"free";
+  document.getElementById("lk-reach").checked=S.unlockReach;
+  document.getElementById("lk-cost").checked=S.unlockCost;
+  document.getElementById("lk-points").checked=S.manualPoints;
+  render();
+}
+
+document.getElementById("btn-json").addEventListener("click", async e=>{
+  const btn=e.currentTarget, base=`where-the-data-lives-${stamp()}`;
+  const files=[{name:`${base}-report.html`, text:buildReport()},
+               {name:`${base}-scoring.json`, text:buildJSON()}];
+  btn.disabled=true;
+  try{
+    downloadBlob(`${base}.zip`, await makeZip(files));
+    toast("Downloaded a zip with the visual report and the JSON record.");
+  }catch(err){
+    // never leave someone with nothing: fall back to the two files on their own
+    files.forEach((f,i)=>setTimeout(()=>download(f.name,
+      f.name.endsWith(".json")?"application/json":"text/html;charset=utf-8", f.text), i*300));
+    toast("Could not build the zip — downloading the two files separately.");
+  }finally{ btn.disabled=false; }
+});
+document.getElementById("btn-import").addEventListener("click",()=>
+  document.getElementById("file-json").click());
+document.getElementById("file-json").addEventListener("change",e=>{
+  const f=e.target.files && e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try { applyImport(JSON.parse(rd.result)); toast(`Loaded ${f.name}.`); }
+    catch(err){ toast("Could not load that file — "+err.message); }
+    e.target.value="";
+  };
+  rd.onerror=()=>{ toast("Could not read that file."); e.target.value=""; };
+  rd.readAsText(f);
+});
+
 /* ================= controls ================= */
 document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
   S.preset=b.dataset.p;
@@ -858,11 +1256,14 @@ document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
 }));
 document.getElementById("lk-reach").addEventListener("change",e=>{S.unlockReach=e.target.checked; render();});
 document.getElementById("lk-cost").addEventListener("change",e=>{S.unlockCost=e.target.checked; render();});
+document.getElementById("lk-points").addEventListener("change",e=>{S.manualPoints=e.target.checked; render();});
 document.getElementById("btn-reset").addEventListener("click",()=>{
   S={scores:clone(PUB_SCORES),weights:clone(W_LONG),caps:clone(PUB_CAP),cost:clone(PUB_COST),
-     points:clone(PUB_POINTS),unlockReach:false,unlockCost:false,preset:"long",sel:S.sel};
+     points:clone(PUB_POINTS),unlockReach:false,unlockCost:false,manualPoints:false,
+     preset:"long",sel:S.sel};
   document.getElementById("lk-reach").checked=false;
   document.getElementById("lk-cost").checked=false;
+  document.getElementById("lk-points").checked=false;
   render(); toast("Reset to the published scores and long-horizon weights.");
 });
 document.getElementById("btn-theme").addEventListener("click",e=>{
@@ -928,8 +1329,8 @@ function buildOptions(){
   cw.addEventListener("click", e=>{
     const dot=e.target.closest(".dots"); if(!dot) return;
     const r=+dot.dataset.r, o=S.sel;
-    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived — unlock it in the weights panel."
-                                     :"Relative cost mirrors the cost points — unlock it, or edit the points row."); return; }
+    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived from capability coverage — unlock it below the table."
+                                     :"Relative cost mirrors the cost points — unlock it below the table, or edit the points row."); return; }
     const dots=[...dot.querySelectorAll(".d")], i=dots.indexOf(e.target);
     if(i>=0){ S.scores[r][o]=i+1; render(); }
   });
@@ -941,7 +1342,7 @@ function buildOptions(){
     else if(/^[1-5]$/.test(e.key)) nv=+e.key;
     else return;
     e.preventDefault();
-    if(locked(r)){ toast("That row is derived — unlock it in the weights panel."); return; }
+    if(locked(r)){ toast("That row is derived — unlock it below the comparison scores table."); return; }
     S.scores[r][o]=nv; render(); dot.focus();
   });
 }
@@ -1012,10 +1413,23 @@ function renderOptions(rows){
        <span class="t" style="color:var(--navy);font-weight:600">Points, 5 = cheapest</span>
        <span style="color:var(--navy);font-weight:600">${S.points[o]}</span></div>`;
   document.getElementById("ocost-note").textContent =
-    "Descriptive only — the points are a direct input, not a sum of the components.";
+    `Cost load ${costLoad(o)} of 24. Each component step moves the points one place from the published value.`;
 
   document.getElementById("foot2").textContent=document.getElementById("foot").textContent;
 }
+
+/* ================= the purpose band collapses ================= */
+(function(){
+  const tog=document.getElementById("intro-tog");
+  const body=document.getElementById("intro-body");
+  const box=tog.closest(".box");
+  tog.addEventListener("click",()=>{
+    const open = tog.getAttribute("aria-expanded")==="true";
+    tog.setAttribute("aria-expanded", String(!open));
+    body.hidden = open;
+    box.classList.toggle("closed", open);
+  });
+})();
 
 /* ================= tab switching ================= */
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
