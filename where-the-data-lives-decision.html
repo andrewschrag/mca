@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where the Data Lives — Scoring Explorer</title>
+<style>
+:root{
+  --navy:#1A2566; --blue:#2E5FA3; --blue-lt:#5B9BD5;
+  --surface:#FFFFFF; --surface-2:#F5F7FB; --surface-3:#EDF1F8;
+  --ink:#1A2566; --ink-2:#595959; --ink-3:#8C8C8C; --rule:#DCE0E9;
+  --bar:#2E5FA3; --bar-track:#EDF1F8; --ref:#4A4A4A;
+  --s1:#C24444; --s2:#C97B36; --s3:#D9982B; --s4:#7A9E4C; --s5:#3E8E5A; --s0:#DCE0E9;
+  --full:#3E8E5A; --part:#D9982B; --none:#C98F8F;
+  --changed-bg:#FDF4E0; --changed-ink:#8A6316;
+  --focus:#2E5FA3;
+}
+html[data-theme="dark"]{
+  --navy:#C8D4F0; --blue:#5B9BD5; --blue-lt:#8FBCE4;
+  --surface:#12161F; --surface-2:#1A1F2B; --surface-3:#232A38;
+  --ink:#E6EAF2; --ink-2:#B4BCCC; --ink-3:#8A93A5; --rule:#2E3646;
+  --bar:#3E6690; --bar-track:#232A38; --ref:#D5DBE6;
+  --s1:#D96A6A; --s2:#D89A5E; --s3:#E3B058; --s4:#97BC6A; --s5:#5CB07C; --s0:#2E3646;
+  --full:#5CB07C; --part:#E3B058; --none:#D08E8E;
+  --changed-bg:#2C2718; --changed-ink:#E0C77A;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--surface-2); color:var(--ink-2);
+  font-family:"Aptos","Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Aptos Display","Aptos","Segoe UI Variable Display","Segoe UI",-apple-system,sans-serif;
+  color:var(--navy); margin:0; font-weight:600; letter-spacing:-0.01em}
+h1{font-size:21px}
+h2{font-size:16px; margin-bottom:4px}
+h3{font-size:13px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); font-weight:600}
+p{margin:0 0 10px}
+.wrap{max-width:1220px; margin:0 auto; padding:0 20px 64px}
+
+/* ---------- header ---------- */
+header{background:var(--surface); border-bottom:1px solid var(--rule); position:sticky; top:0; z-index:40}
+.hdr{max-width:1220px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+.hdr .t{flex:1 1 320px; min-width:260px}
+.hdr .sub{font-size:12.5px; color:var(--ink-3); margin-top:2px}
+.btns{display:flex; gap:8px; flex-wrap:wrap}
+button{font:inherit; cursor:pointer; border-radius:6px; border:1px solid var(--rule);
+  background:var(--surface); color:var(--ink-2); padding:6px 11px; font-size:12.5px; transition:background .12s,border-color .12s}
+button:hover{background:var(--surface-3); border-color:var(--blue)}
+button:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+button.primary{background:var(--navy); border-color:var(--navy); color:#fff}
+html[data-theme="dark"] button.primary{color:#12161F}
+button.primary:hover{background:var(--blue); border-color:var(--blue)}
+button[aria-pressed="true"]{background:var(--surface-3); border-color:var(--blue); color:var(--navy); font-weight:600}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:18px 20px; margin-top:16px}
+.card > .hd{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.card > .hd .note{font-size:12.5px; color:var(--ink-3); flex:1 1 260px}
+.grid2{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:16px}
+@media(max-width:940px){.grid2{grid-template-columns:1fr}}
+
+/* ---------- hero ---------- */
+.hero{display:flex; gap:26px; flex-wrap:wrap; align-items:flex-end; padding-bottom:14px; border-bottom:1px solid var(--rule); margin-bottom:16px}
+.hero .lead{flex:1 1 280px}
+.hero .k{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3)}
+.hero .v{font-family:"Aptos Display","Aptos",sans-serif; font-size:26px; color:var(--navy); font-weight:600; line-height:1.15; margin-top:3px}
+.hero .v small{font-size:14px; font-weight:400; color:var(--ink-2)}
+.hero .m{font-size:12.5px; color:var(--ink-2); margin-top:5px; max-width:44ch}
+.flag{display:inline-block; margin-top:7px; font-size:12px; padding:3px 8px; border-radius:5px;
+  background:var(--changed-bg); color:var(--changed-ink); border:1px solid var(--rule)}
+
+/* ---------- bar chart ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--ink-2); margin-bottom:12px}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.sw{width:22px; height:9px; border-radius:0 4px 4px 0; background:var(--bar); display:inline-block}
+.sw.ref{width:2px; height:14px; border-radius:0; background:var(--ref)}
+.chart{display:flex; flex-direction:column; gap:2px}
+.row{display:grid; grid-template-columns:274px minmax(0,1fr) 78px; align-items:center; gap:10px}
+@media(max-width:640px){.row{grid-template-columns:132px minmax(0,1fr) 66px}}
+.row .lab{font-size:12.5px; color:var(--ink-2); text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.row.top .lab{color:var(--navy); font-weight:600}
+.track{position:relative; height:22px; background:var(--bar-track); border-radius:0 4px 4px 0}
+.fill{position:absolute; left:0; top:0; bottom:0; background:var(--bar); border-radius:0 4px 4px 0; transition:width .22s ease}
+.row.top .fill{background:var(--navy)}
+html[data-theme="dark"] .row.top .fill{background:#7FBFEA}
+.tick{position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--ref);
+  box-shadow:0 0 0 2px var(--surface); transition:left .22s ease}
+.row .val{font-size:12.5px; color:var(--ink); font-variant-numeric:tabular-nums; text-align:right}
+.row .val em{font-style:normal; color:var(--ink-3); font-size:11.5px}
+.axis{margin-left:284px; margin-top:6px; font-size:11px; color:var(--ink-3); display:flex; justify-content:space-between; max-width:calc(100% - 372px)}
+@media(max-width:640px){.axis{margin-left:142px; max-width:calc(100% - 208px)}}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:90; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--rule); border-radius:7px;
+  padding:9px 11px; font-size:12px; box-shadow:0 6px 20px rgba(20,30,60,.16); max-width:270px}
+#tip b{color:var(--navy); display:block; margin-bottom:3px; font-size:12.5px}
+#tip table{border-collapse:collapse; margin-top:5px; font-size:11.5px}
+#tip td{padding:1px 0}
+#tip td:last-child{text-align:right; padding-left:12px; font-variant-numeric:tabular-nums; color:var(--ink)}
+
+
+/* ---------- tabs ---------- */
+.tabs{display:flex; gap:4px; margin:0 auto; max-width:1220px; padding:0 20px}
+.tab{border:1px solid var(--rule); border-bottom:none; background:var(--surface-2);
+  color:var(--ink-2); border-radius:8px 8px 0 0; padding:8px 18px; font-size:13px;
+  position:relative; top:1px}
+.tab[aria-selected="true"]{background:var(--surface); color:var(--navy); font-weight:600;
+  border-color:var(--rule)}
+.tab:focus-visible{outline:2px solid var(--focus); outline-offset:-3px}
+[role="tabpanel"][hidden]{display:none}
+
+/* ---------- purpose band ---------- */
+.intro{max-width:1220px; margin:0 auto; padding:0 20px}
+.intro .box{background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+  padding:18px 22px; margin-top:16px; display:grid;
+  grid-template-columns:168px minmax(0,1fr); gap:8px 28px; align-items:start}
+@media(max-width:800px){.intro .box{grid-template-columns:1fr; gap:10px}}
+.intro h2{font-size:15px}
+.intro .k{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3);
+  margin-top:4px}
+.intro p{font-size:13.5px; color:var(--ink-2); line-height:1.62; margin:0 0 11px; max-width:90ch}
+.intro p:last-child{margin-bottom:0}
+.intro p strong{color:var(--navy)}
+
+/* ---------- option picker ---------- */
+.opick{display:flex; gap:6px; flex-wrap:wrap}
+.ochip{border:1px solid var(--rule); background:var(--surface); border-radius:7px;
+  padding:7px 11px; text-align:left; line-height:1.3; min-width:104px}
+.ochip b{display:block; font-size:12.5px; color:var(--ink-2); font-weight:600}
+.ochip i{font-style:normal; font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+.ochip[aria-selected="true"]{background:var(--navy); border-color:var(--navy)}
+.ochip[aria-selected="true"] b, .ochip[aria-selected="true"] i{color:#fff}
+html[data-theme="dark"] .ochip[aria-selected="true"] b,
+html[data-theme="dark"] .ochip[aria-selected="true"] i{color:#12161F}
+.ochip:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+
+/* ---------- option detail ---------- */
+.ogrid{display:grid; grid-template-columns:396px minmax(0,1fr); gap:26px; align-items:start}
+@media(max-width:900px){.ogrid{grid-template-columns:1fr}}
+.ofig{position:sticky; top:78px}
+@media(max-width:900px){.ofig{position:static}}
+.odiag{background:#FFFFFF; border:1px solid var(--rule); border-radius:9px; padding:4px 8px}
+.odiag svg{display:block; width:100%; height:auto}
+.oleg{margin-top:10px; background:#FFFFFF; border:1px solid var(--rule); border-radius:9px;
+  padding:10px 12px}
+.oleg svg{display:block; width:100%; height:auto}
+.facts{margin-top:12px; border-top:1px solid var(--rule); padding-top:10px; font-size:12px}
+.facts div{display:flex; gap:10px; padding:3px 0}
+.facts span:first-child{color:var(--ink-3); min-width:82px; flex:none}
+.facts span:last-child{color:var(--ink-2)}
+.odesc h3{margin:20px 0 8px}
+.odesc h3:first-child{margin-top:0}
+.odesc p{font-size:13.5px; color:var(--ink-2); line-height:1.62; margin:0 0 11px; max-width:74ch}
+.odesc p strong{color:var(--navy)}
+.verdict{border-left:3px solid var(--blue); background:var(--surface-2); border-radius:0 7px 7px 0;
+  padding:11px 15px; margin:0 0 18px}
+.verdict .k{font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3);
+  margin-bottom:3px}
+.verdict p{margin:0; font-size:13px}
+ul.pm{list-style:none; margin:0 0 4px; padding:0}
+ul.pm li{position:relative; padding:0 0 9px 22px; font-size:13px; line-height:1.58;
+  color:var(--ink-2); max-width:74ch}
+ul.pm li::before{position:absolute; left:0; top:0; font-weight:700}
+ul.pm.plus li::before{content:"+"; color:var(--s5)}
+ul.pm.minus li::before{content:"\2013"; color:var(--s1)}
+ul.pm li strong{color:var(--navy)}
+
+/* ---------- option scoring block ---------- */
+.kpis{display:flex; gap:28px; flex-wrap:wrap; padding-bottom:14px; margin-bottom:16px;
+  border-bottom:1px solid var(--rule)}
+.kpi .k{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3)}
+.kpi .v{font-family:"Aptos Display","Aptos",sans-serif; font-size:22px; color:var(--navy);
+  font-weight:600; line-height:1.15; margin-top:2px}
+.kpi .v small{font-size:12.5px; font-weight:400; color:var(--ink-2)}
+.crow{display:grid; grid-template-columns:214px 96px minmax(0,1fr) 44px; gap:10px;
+  align-items:center; padding:3px 0; border-bottom:1px solid var(--rule)}
+.crow:last-child{border-bottom:none}
+@media(max-width:700px){.crow{grid-template-columns:132px 96px minmax(0,1fr) 44px}}
+.crow .cn{font-size:12.5px; color:var(--ink-2); min-width:0; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap}
+.crow .ct{position:relative; height:16px; background:var(--bar-track); border-radius:0 4px 4px 0}
+.crow .cf{position:absolute; left:0; top:0; bottom:0; background:var(--bar);
+  border-radius:0 4px 4px 0; transition:width .2s ease}
+.crow .chg{background:var(--changed-bg); border-radius:5px}
+.crow .chg .n{color:var(--changed-ink); font-weight:600}
+.crow .cv{font-size:12px; color:var(--ink); text-align:right; font-variant-numeric:tabular-nums}
+.capg{display:block}
+.capr{display:flex; align-items:center; gap:10px; padding:4px 0; border-bottom:1px solid var(--rule);
+  font-size:12.5px; color:var(--ink-2)}
+.capr .g{font-size:17px; line-height:1; flex:none; width:16px; text-align:center}
+.capr .g[data-v="F"]{color:var(--full)} .capr .g[data-v="P"]{color:var(--part)}
+.capr .g[data-v="N"]{color:var(--none)}
+.capr .t{flex:1; min-width:0}
+.capr .s{font-size:11px; color:var(--ink-3); flex:none}
+
+/* ---------- tables ---------- */
+table.data{border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px}
+table.data th, table.data td{padding:6px 7px; border-bottom:1px solid var(--rule); text-align:center; vertical-align:middle}
+table.data thead th{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3);
+  font-weight:600; border-bottom:1.5px solid var(--rule); background:var(--surface); line-height:1.25}
+table.data th.rh, table.data td.rh{text-align:left; color:var(--ink-2); white-space:normal; min-width:150px}
+table.data tbody th.rh{font-weight:400}
+table.data tbody tr.tot th.rh{font-weight:600}
+table.data tbody tr:hover td{background:var(--surface-2)}
+table.data tr.tot td, table.data tr.tot th{border-top:1.5px solid var(--rule); border-bottom:none;
+  font-weight:600; color:var(--navy); background:var(--surface-2)}
+.scroll{overflow-x:auto; margin:0 -20px; padding:0 20px}
+.derived{color:var(--ink-3); font-size:11px; font-style:italic}
+
+/* ---------- dot score cell ---------- */
+.dots{display:inline-flex; align-items:center; gap:3px; padding:2px 4px; border-radius:5px; cursor:pointer}
+.dots:focus-visible{outline:2px solid var(--focus); outline-offset:1px}
+.dots .d{width:9px; height:9px; border-radius:50%; background:var(--s0)}
+.dots .n{font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; margin-left:4px; min-width:7px}
+.dots[data-v="1"] .d.on{background:var(--s1)} .dots[data-v="2"] .d.on{background:var(--s2)}
+.dots[data-v="3"] .d.on{background:var(--s3)} .dots[data-v="4"] .d.on{background:var(--s4)}
+.dots[data-v="5"] .d.on{background:var(--s5)}
+td.chg{background:var(--changed-bg) !important}
+td.chg .n{color:var(--changed-ink); font-weight:600}
+td.locked{opacity:.72}
+
+/* ---------- capability + cost cells ---------- */
+.mk{font-size:20px; line-height:1; cursor:pointer; border:none; background:none; padding:3px 6px; border-radius:5px; display:inline-block}
+.mk:focus-visible{outline:2px solid var(--focus); outline-offset:1px}
+.mk[data-v="F"]{color:var(--full)} .mk[data-v="P"]{color:var(--part)} .mk[data-v="N"]{color:var(--none)}
+.cw{font-size:11.5px; cursor:pointer; border:none; background:none; padding:4px 7px; border-radius:5px; letter-spacing:.02em}
+.cw:focus-visible{outline:2px solid var(--focus); outline-offset:1px}
+.cw[data-v="High"]{color:var(--navy); font-weight:700} .cw[data-v="Mod"]{color:var(--ink-2)}
+.cw[data-v="Low"]{color:var(--ink-3)} .cw[data-v="None"]{color:var(--ink-3); opacity:.6}
+
+/* ---------- weights ---------- */
+.wgrid{display:grid; grid-template-columns:1fr 1fr; gap:0 40px}
+@media(max-width:820px){.wgrid{grid-template-columns:1fr}}
+.wt{display:grid; grid-template-columns:minmax(0,1fr) 96px 70px; align-items:center; gap:10px; padding:5px 0; border-bottom:1px solid var(--rule)}
+.wt:last-child{border-bottom:none}
+.wt .nm{font-size:12.5px; color:var(--ink-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.wt .nm i{font-style:normal; color:var(--ink-3); font-size:11px; display:block; margin-top:1px}
+.wt input[type=range]{width:96px; accent-color:var(--blue)}
+.wt input[type=number]{width:70px; font:inherit; font-size:12.5px; padding:3px 5px; text-align:right;
+  border:1px solid var(--rule); border-radius:5px; background:var(--surface); color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.wt input:focus-visible{outline:2px solid var(--focus); outline-offset:1px}
+.wt.chg .nm{color:var(--changed-ink); font-weight:600}
+.wsum{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-3);
+  border-top:1.5px solid var(--rule); padding-top:8px; margin-top:8px}
+.toggles{display:flex; flex-direction:column; gap:7px; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule)}
+label.chk{display:flex; gap:8px; align-items:flex-start; font-size:12px; color:var(--ink-2); cursor:pointer}
+label.chk input{margin:2px 0 0; accent-color:var(--blue)}
+label.chk span i{font-style:normal; color:var(--ink-3); display:block; font-size:11.5px}
+.hint{font-size:11.5px; color:var(--ink-3); margin-top:10px; line-height:1.45}
+.foot{font-size:11.5px; color:var(--ink-3); margin-top:20px; line-height:1.55; max-width:88ch}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+#toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(8px); z-index:99;
+  background:var(--navy); color:#fff; padding:8px 15px; border-radius:7px; font-size:12.5px; opacity:0;
+  transition:opacity .16s, transform .16s; pointer-events:none}
+html[data-theme="dark"] #toast{color:#12161F}
+#toast.on{opacity:1; transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body data-palette="#2E5FA3">
+
+<header>
+  <div class="hdr">
+    <div class="t">
+      <h1>Where the Data Lives — Scoring Explorer</h1>
+      <div class="sub">Patient Data Initiative · seven data-custody options · edit any score, mark or weight and the ranking recomputes</div>
+    </div>
+    <div class="btns">
+      <button id="btn-copy">Copy summary</button>
+      <button id="btn-reset">Reset to published</button>
+      <button id="btn-theme" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button class="tab" id="tb-score" role="tab" aria-selected="true" aria-controls="tp-score">Scoring</button>
+    <button class="tab" id="tb-opt" role="tab" aria-selected="false" aria-controls="tp-opt">Options</button>
+  </div>
+</header>
+
+<div class="intro">
+  <div class="box">
+    <div><h2>What is being decided</h2><div class="k">and why it cannot wait</div></div>
+    <div>
+      <p>MCA is building one platform under every option here: a CHD knowledge graph, AI
+        extraction over clinical notes, assembly of datasets against definitions a user supplies,
+        and governance carried on each record. <strong>That stack does not change with the choice
+        below.</strong> What changes is where the identifiable record comes to rest, and who holds
+        the identifiers that turn scattered encounters into one longitudinal history.</p>
+      <p>That boundary sets everything downstream — which agreements MCA signs, whether MCA
+        becomes a HIPAA business associate, which of the fourteen intended uses are reachable at
+        all, and what MCA can promise a hospital. The build does not wait on it. The legal
+        workstream cannot start without it, and paper signed under one custody assumption is
+        expensive to unwind under another.</p>
+      <p>So these are seven answers to one question, not seven architectures. Release policy,
+        where computation runs, and how much federation to absorb are settings inside whichever
+        answer is chosen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="tp-score" role="tabpanel" aria-labelledby="tb-score">
+
+  <!-- ============ RESULTS ============ -->
+  <section class="card" aria-labelledby="h-res">
+    <div class="hd"><h2 id="h-res">Result</h2>
+      <div class="note">Bars show each option's total under the weights currently set, ranked. The tick marks the score published in the brief under that same weighting, so any movement is visible.</div>
+    </div>
+
+    <div class="hero">
+      <div class="lead">
+        <div class="k">Highest-scoring option</div>
+        <div class="v" id="hero-name">—</div>
+        <div class="m" id="hero-margin"></div>
+        <div id="hero-flag"></div>
+      </div>
+      <div>
+        <div class="k">Weighted</div>
+        <div class="v" id="hero-score">—<small id="hero-max"></small></div>
+      </div>
+      <div>
+        <div class="k">Share of max</div>
+        <div class="v" id="hero-share">—</div>
+      </div>
+      <div>
+        <div class="k">Unweighted</div>
+        <div class="v" id="hero-unw">—</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i class="sw"></i> Weighted total, current weights</span>
+      <span id="lg-ref"><i class="sw ref"></i> Published score for this weighting</span>
+    </div>
+    <div class="chart" id="chart"></div>
+    <div class="axis"><span>0</span><span id="axmid"></span><span id="axmax"></span></div>
+
+    <div class="scroll" style="margin-top:20px">
+      <table class="data" id="tbl-res">
+        <caption class="sr">Totals per option under the current weights</caption>
+        <thead><tr>
+          <th class="rh">Option</th><th>Weighted</th><th>Share of max</th>
+          <th>Unweighted<br>of 55</th><th>Capability<br>coverage</th><th>Published</th><th>Change</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ WEIGHTS ============ -->
+  <section class="card" aria-labelledby="h-wt">
+    <div class="hd"><h2 id="h-wt">Weights</h2>
+      <div class="note">Start from one of the three weightings in the brief, then move any weight. A weight of zero drops the criterion from the total.</div>
+    </div>
+    <div class="btns" style="margin-bottom:14px">
+      <button class="preset" data-p="long" aria-pressed="true">Long-horizon</button>
+      <button class="preset" data-p="flat" aria-pressed="false">Unweighted</button>
+      <button class="preset" data-p="setup" aria-pressed="false">Setup-weighted</button>
+    </div>
+    <div id="wts" class="wgrid"></div>
+    <div class="wsum"><span>Sum of weights</span><span><b id="wsum">24</b> · maximum possible score <b id="wmax">120</b></span></div>
+    <div class="grid2" style="gap:8px 34px">
+      <div>
+        <div class="toggles">
+          <label class="chk"><input type="checkbox" id="lk-reach">
+            <span>Unlock <b>Use-case reach</b><i>Derived from capability coverage by banding: ≥85%→5, ≥60%→4, ≥46%→3, ≥20%→2, else 1. That banding is a reconstruction, not a published rule.</i></span></label>
+          <label class="chk"><input type="checkbox" id="lk-cost">
+            <span>Unlock <b>Relative cost</b><i>Mirrors the points row of the cost table, which is a direct input — the published points are not a function of the eight cost components.</i></span></label>
+        </div>
+      </div>
+      <div class="hint" id="setup-note" style="margin-top:16px"></div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON SCORES ============ -->
+  <section class="card" aria-labelledby="h-cmp">
+    <div class="hd"><h2 id="h-cmp">Comparison scores</h2>
+      <div class="note">Click the nth dot to set a score, or focus a cell and press 1–5 or an arrow key. Two rows are derived by default — unlock them in the weights panel above.</div>
+    </div>
+    <div class="scroll">
+      <table class="data" id="tbl-cmp">
+        <thead><tr><th class="rh">Criterion</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ CAPABILITY ============ -->
+  <section class="card" aria-labelledby="h-cap">
+    <div class="hd"><h2 id="h-cap">Capability coverage</h2>
+      <div class="note">Click a mark to cycle it: ● supported → ◐ partial → ○ not supported. Coverage counts full marks as 1 and partial as 0.5 across the fourteen uses, and drives Use-case reach unless that row is unlocked.</div>
+    </div>
+    <div class="scroll">
+      <table class="data" id="tbl-cap"><thead><tr><th class="rh">Use case or capability</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <!-- ============ COST ============ -->
+  <section class="card" aria-labelledby="h-cost">
+    <div class="hd"><h2 id="h-cost">Cost profile</h2>
+      <div class="note">Click a word to cycle High → Mod → Low → None. The points row is a separate input, not a sum of the components; edit it directly to move the Relative cost criterion.</div>
+    </div>
+    <div class="scroll">
+      <table class="data" id="tbl-cost"><thead><tr><th class="rh">Cost component</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<div class="wrap" id="tp-opt" role="tabpanel" aria-labelledby="tb-opt" hidden>
+
+  <section class="card" aria-labelledby="h-pick">
+    <div class="hd"><h2 id="h-pick">Choose an option</h2>
+      <div class="note">Ranked by the weights currently set on the Scoring tab. Everything below
+        reflects the live inputs, so edits made there show up here.</div>
+    </div>
+    <div class="opick" id="opick" role="tablist" aria-label="Options"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-odet">
+    <h2 id="h-odet" class="sr">Option detail</h2>
+    <div class="ogrid">
+      <div class="ofig">
+        <div class="odiag" id="odiag"></div>
+        <div class="oleg" id="oleg"></div>
+        <div class="facts" id="ofacts"></div>
+      </div>
+      <div class="odesc" id="odesc"></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-osc">
+    <div class="hd"><h2 id="h-osc">How it scores</h2>
+      <div class="note">Bars show each criterion's weighted contribution to this option's total.
+        The dots are editable here as well — click the nth dot or use the arrow keys.</div>
+    </div>
+    <div class="kpis" id="okpis"></div>
+    <div id="ocrit"></div>
+  </section>
+
+  <div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start">
+    <section class="card" aria-labelledby="h-ocap">
+      <div class="hd"><h2 id="h-ocap">Capability coverage</h2>
+        <div class="note" id="ocap-note"></div>
+      </div>
+      <div class="capg" id="ocap"></div>
+    </section>
+    <section class="card" aria-labelledby="h-ocost">
+      <div class="hd"><h2 id="h-ocost">Cost profile</h2>
+        <div class="note" id="ocost-note"></div>
+      </div>
+      <div id="ocost"></div>
+    </section>
+  </div>
+
+  <p class="foot" id="foot2"></p>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ================= published data ================= */
+const OPTS = [
+  {n:"1 Central custody of identifiable PHI at MCA", s:"1 CENTRAL PHI"},
+  {n:"2 Central custody at an institutional host",   s:"2 HOST"},
+  {n:"3 Central limited data set",                   s:"3 LDS"},
+  {n:"4 Federated PHI, central store",               s:"4 FED+CTR"},
+  {n:"5 Federated PHI, federated extraction",        s:"5 FED EXT"},
+  {n:"6 Distributed hub",                            s:"6 HUB"},
+  {n:"7 Processor to coordinating centers",           s:"7 DCC"}
+];
+const CRIT = [
+  ["Use-case reach","Enduring capability"],
+  ["Institutional feasibility","Transition cost"],
+  ["Time to first value","Transition cost"],
+  ["Novel-question re-extraction","Enduring capability"],
+  ["Analytic observability","Enduring capability"],
+  ["Extensibility","Enduring capability"],
+  ["Sustainability","Enduring viability"],
+  ["Governance legitimacy","Enduring viability"],
+  ["Recoverability","Transition cost"],
+  ["Risk concentration","Operational risk"],
+  ["Relative cost, build and run","Cost"]
+];
+const PUB_SCORES = [
+  [5,5,2,4,2,2,2],[2,4,4,3,5,5,4],[2,4,3,1,1,5,5],[5,5,3,4,1,1,3],
+  [5,4,5,3,1,2,2],[5,4,3,4,1,1,2],[5,5,3,4,3,1,3],[4,5,3,4,5,5,5],
+  [3,4,5,3,1,1,4],[3,4,3,3,5,5,4],[2,3,4,1,2,2,5]
+];
+const W_LONG  = [3,1,2,3,3,3,3,2,1,1,2];
+const W_FLAT  = [1,1,1,1,1,1,1,1,1,1,1];
+const W_SETUP = [0.4,2.7,2.8,1.1,0.6,0.7,0.5,2.3,2.6,1.8,1.9];
+const PUB_WEIGHTED  = [99,105,80,78,51,56,78];   // long-horizon, of 120
+const PUB_UNWEIGHTED= [41,47,38,34,27,30,39];    // of 55
+const PUB_SETUP     = [54,72,63,48,48,59,72];    // setup weighting, as printed
+const PUB_BY_PRESET = {long:PUB_WEIGHTED, flat:PUB_UNWEIGHTED, setup:PUB_SETUP};
+
+const CAPS = [
+  "Registry data feeds","Retrospective evidence, self-serve","Regulatory evidence, external controls",
+  "Trials: feasibility and matching","Trials: enrollment and consent","Bedside decision support",
+  "Patient and family tools","Patient-mediated record acquisition","Adult care transition",
+  "Cross-network patient identity","Third-party linkage: claims, mortality",
+  "Genomics and multi-modal integration","Novel-question re-extraction","Policy evidence"
+];
+const PUB_CAP = [
+  "PFPFPPF","FFFFPPP","FFPPNNP","FFNFPPN","FFNPNPN","FFNFPPN","FPNPNNN",
+  "FPNPNNN","FPNPNNN","FFFFPNN","FFPFNNN","FFPPNNN","FFNPNNP","FFFFFFF"
+].map(r=>r.split(""));
+
+const COSTC = [
+  "Site onboarding: legal, security, integration","Ingestion and connectors",
+  "Node deployment and operation","AI extraction compute over notes","Storage and replication",
+  "Access control and per-record policy enforcement","Egress: de-identification and feed maintenance",
+  "Standing team and custodial obligations"
+];
+const PUB_COST = [
+  ["High","Low","Mod","High","Mod","Low","Low"],
+  ["Mod","Mod","Low","High","High","Low","Mod"],
+  ["None","Low","None","High","High","Mod","Low"],
+  ["High","High","Low","High","High","Low","Mod"],
+  ["Mod","Mod","Low","High","Mod","Low","Low"],
+  ["High","Mod","Low","Mod","Low","Low","Low"],
+  ["High","Mod","Mod","Mod","Low","Mod","Mod"],
+  ["High","Mod","Mod","High","Mod","Mod","Low"]
+];
+const PUB_POINTS = [2,3,4,1,2,2,5];
+
+const REACH_ROW = 0, COST_ROW = 10;
+const CAP_V = ["F","P","N"], CAP_G = {F:"●",P:"◐",N:"○"};
+const CAP_LABEL = {F:"supported",P:"partial",N:"not supported"};
+const COST_V = ["High","Mod","Low","None"];
+
+const PANELS = {"1": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 1 — Central custody of PHI</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<rect x=\"306\" y=\"40\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"51.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"232\" stroke=\"#1A2566\" stroke-width=\"2\" marker-end=\"url(#s)\"/>\n<text x=\"88\" y=\"150\" font-size=\"10.0\" fill=\"#1A2566\" text-anchor=\"start\">identified PHI</text>\n<line x1=\"6\" y1=\"186\" x2=\"354\" y2=\"186\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"192\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"207\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">BAA + DUA per site</text>\n<text x=\"166\" y=\"221\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">MCA is a business associate</text>\n<rect x=\"14\" y=\"240\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"259\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA platform</text>\n<text x=\"26\" y=\"274\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">identified record, governed release</text>\n<rect x=\"306\" y=\"245\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"256.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text></svg>", "2": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 2 — Central custody at a host</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<rect x=\"306\" y=\"40\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"51.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"104\" stroke=\"#1A2566\" stroke-width=\"2\" marker-end=\"url(#s)\"/>\n<text x=\"88\" y=\"96\" font-size=\"9.5\" fill=\"#1A2566\" text-anchor=\"start\">identified PHI, on paper that already exists</text>\n<rect x=\"14\" y=\"110\" width=\"332\" height=\"44\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#7C8CA8\"/>\n<text x=\"26\" y=\"129\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">Host institution</text>\n<text x=\"26\" y=\"144\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">existing coordinating center holds the record</text>\n<rect x=\"306\" y=\"115\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"126.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<rect x=\"14\" y=\"164\" width=\"104\" height=\"22\" rx=\"4\" fill=\"#FAFAFA\" stroke=\"#C6C6C6\"/>\n<text x=\"66\" y=\"179\" font-size=\"9.5\" fill=\"#5B6577\" text-anchor=\"middle\">imaging core</text>\n<rect x=\"126\" y=\"164\" width=\"104\" height=\"22\" rx=\"4\" fill=\"#FAFAFA\" stroke=\"#C6C6C6\"/>\n<text x=\"178\" y=\"179\" font-size=\"9.5\" fill=\"#5B6577\" text-anchor=\"middle\">identity core</text>\n<rect x=\"238\" y=\"164\" width=\"104\" height=\"22\" rx=\"4\" fill=\"#FAFAFA\" stroke=\"#C6C6C6\"/>\n<text x=\"290\" y=\"179\" font-size=\"9.5\" fill=\"#5B6577\" text-anchor=\"middle\">genomics core</text>\n<text x=\"14\" y=\"200\" font-size=\"9.0\" fill=\"#7A7A7A\" text-anchor=\"start\">capability cores at partner institutions and vendors</text>\n<line x1=\"6\" y1=\"212\" x2=\"354\" y2=\"212\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"218\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"233\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">Network agreement + service BAA</text>\n<text x=\"166\" y=\"247\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">MCA sets the rules, host holds the data</text>\n<rect x=\"14\" y=\"266\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\" stroke-dasharray=\"5 3\"/>\n<text x=\"26\" y=\"285\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA</text>\n<text x=\"26\" y=\"300\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">governance, funding and the tool layer</text>\n<rect x=\"306\" y=\"271\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#C7503F\" stroke-dasharray=\"3 2\"/>\n<text x=\"323\" y=\"282.4\" font-size=\"9.5\" fill=\"#C7503F\" text-anchor=\"middle\">PHI</text></svg>", "3": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 3 — Central limited data set</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">removes direct identifiers</text>\n<rect x=\"306\" y=\"40\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"51.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"232\" stroke=\"#5B9BD5\" stroke-width=\"2\" marker-end=\"url(#b)\" stroke-dasharray=\"6 4\"/>\n<text x=\"88\" y=\"150\" font-size=\"10.0\" fill=\"#5B9BD5\" text-anchor=\"start\">limited data set + tokens</text>\n<line x1=\"6\" y1=\"186\" x2=\"354\" y2=\"186\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"192\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"207\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">DUA only, no BAA</text>\n<text x=\"166\" y=\"221\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">bars contacting individuals</text>\n<rect x=\"14\" y=\"240\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"259\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA platform</text>\n<text x=\"26\" y=\"274\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">limited data set, no PHI</text></svg>", "4": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 4 — Federated PHI, central store</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"96\" stroke=\"#9AA6BF\" stroke-width=\"1.4\"/>\n<rect x=\"14\" y=\"96\" width=\"332\" height=\"44\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"115\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA node inside the hospital</text>\n<text x=\"26\" y=\"130\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">local graph, de-identification</text>\n<rect x=\"306\" y=\"101\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"112.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"148\" x2=\"76\" y2=\"204\" stroke=\"#5B9BD5\" stroke-width=\"2\" marker-end=\"url(#b)\" stroke-dasharray=\"6 4\"/>\n<text x=\"88\" y=\"174\" font-size=\"9.5\" fill=\"#5B9BD5\" text-anchor=\"start\">de-identified notes, facts, tokens</text>\n<line x1=\"6\" y1=\"180\" x2=\"354\" y2=\"180\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"186\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"201\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">Hosting agreement + DUA</text>\n<text x=\"166\" y=\"215\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">BAA if MCA staff can see PHI</text>\n<rect x=\"14\" y=\"234\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"253\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA central store</text>\n<text x=\"26\" y=\"268\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">de-identified data + identity service</text></svg>", "5": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 5 — Federated extraction</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"96\" stroke=\"#9AA6BF\" stroke-width=\"1.4\"/>\n<rect x=\"14\" y=\"96\" width=\"332\" height=\"44\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"115\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA node inside the hospital</text>\n<text x=\"26\" y=\"130\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">notes never leave the site</text>\n<rect x=\"306\" y=\"101\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"112.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"148\" x2=\"76\" y2=\"204\" stroke=\"#5B9BD5\" stroke-width=\"2\" marker-end=\"url(#b)\" stroke-dasharray=\"2 3\"/>\n<text x=\"88\" y=\"174\" font-size=\"9.5\" fill=\"#5B9BD5\" text-anchor=\"start\">structured results only</text>\n<line x1=\"6\" y1=\"180\" x2=\"354\" y2=\"180\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"186\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"201\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">Hosting agreement</text>\n<text x=\"166\" y=\"215\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">light DUA</text>\n<rect x=\"14\" y=\"234\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\"/>\n<text x=\"26\" y=\"253\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA</text>\n<text x=\"26\" y=\"268\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">aggregates results, no corpus</text></svg>", "6": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 6 — Distributed hub</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"96\" stroke=\"#9AA6BF\" stroke-width=\"1.4\"/>\n<rect x=\"14\" y=\"96\" width=\"332\" height=\"44\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#7C8CA8\"/>\n<text x=\"26\" y=\"115\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">Node institution</text>\n<text x=\"26\" y=\"130\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">holds and curates on its terms</text>\n<rect x=\"306\" y=\"101\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"112.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"148\" x2=\"76\" y2=\"204\" stroke=\"#5B9BD5\" stroke-width=\"2\" marker-end=\"url(#b)\" stroke-dasharray=\"6 4\"/>\n<text x=\"88\" y=\"174\" font-size=\"9.5\" fill=\"#5B9BD5\" text-anchor=\"start\">de-identified extracts, per node</text>\n<line x1=\"6\" y1=\"180\" x2=\"354\" y2=\"180\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"186\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"201\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">Rides existing DUAs</text>\n<text x=\"166\" y=\"215\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">subawards per node</text>\n<rect x=\"14\" y=\"234\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\" stroke-dasharray=\"5 3\"/>\n<text x=\"26\" y=\"253\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA</text>\n<text x=\"26\" y=\"268\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">coordinates and funds; holds nothing</text></svg>", "7": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-8 -8 376 338\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#1A2566\"/></marker><marker id=\"b\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,1 L9,5 L0,9 z\" fill=\"#5B9BD5\"/></marker></defs><rect x=\"-8\" y=\"-8\" width=\"376\" height=\"338\" fill=\"#FFFFFF\"/><text x=\"14\" y=\"22\" font-size=\"13.5\" fill=\"#1A2566\" text-anchor=\"start\">Option 7 — Processor to existing centers</text>\n<rect x=\"14\" y=\"36\" width=\"332\" height=\"42\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#C6C6C6\"/>\n<text x=\"26\" y=\"55\" font-size=\"12.0\" fill=\"#333333\" text-anchor=\"start\">Hospital</text>\n<text x=\"26\" y=\"70\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">EHR feed + clinical notes</text>\n<line x1=\"76\" y1=\"78\" x2=\"76\" y2=\"96\" stroke=\"#9AA6BF\" stroke-width=\"1.4\"/>\n<rect x=\"14\" y=\"96\" width=\"332\" height=\"44\" rx=\"5\" fill=\"#F4F4F4\" stroke=\"#7C8CA8\"/>\n<text x=\"26\" y=\"115\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">Coordinating center</text>\n<text x=\"26\" y=\"130\" font-size=\"10.5\" fill=\"#7A7A7A\" text-anchor=\"start\">ACTION, PC4 and similar</text>\n<rect x=\"306\" y=\"101\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"323\" y=\"112.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<line x1=\"76\" y1=\"148\" x2=\"76\" y2=\"204\" stroke=\"#1A2566\" stroke-width=\"2\" marker-end=\"url(#s)\"/>\n<text x=\"88\" y=\"174\" font-size=\"9.5\" fill=\"#1A2566\" text-anchor=\"start\">processed on the center’s behalf</text>\n<line x1=\"6\" y1=\"180\" x2=\"354\" y2=\"180\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<rect x=\"156\" y=\"186\" width=\"190\" height=\"36\" rx=\"5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"166\" y=\"201\" font-size=\"10.0\" fill=\"#7A5E12\" text-anchor=\"start\">Subcontractor agreement</text>\n<text x=\"166\" y=\"215\" font-size=\"9.5\" fill=\"#9A7A22\" text-anchor=\"start\">flow-down BAA</text>\n<rect x=\"14\" y=\"234\" width=\"332\" height=\"46\" rx=\"5\" fill=\"#EAF0FA\" stroke=\"#5B9BD5\" stroke-dasharray=\"5 3\"/>\n<text x=\"26\" y=\"253\" font-size=\"12.0\" fill=\"#1A2566\" text-anchor=\"start\">MCA</text>\n<text x=\"26\" y=\"268\" font-size=\"10.5\" fill=\"#5B7290\" text-anchor=\"start\">processes it, no custody</text>\n<rect x=\"306\" y=\"239\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#C7503F\" stroke-dasharray=\"3 2\"/>\n<text x=\"323\" y=\"250.4\" font-size=\"9.5\" fill=\"#C7503F\" text-anchor=\"middle\">PHI</text></svg>"};
+const LEGEND = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 560 96\" preserveAspectRatio=\"xMidYMid meet\" font-family=\"Carlito, Aptos, 'Segoe UI', Helvetica, Arial, sans-serif\"><rect x=\"0\" y=\"0\" width=\"560\" height=\"96\" rx=\"0\" fill=\"#FFFFFF\"/>\n<text x=\"0\" y=\"12\" font-size=\"10.5\" fill=\"#8C8C8C\" text-anchor=\"start\">LEGEND</text>\n<rect x=\"0\" y=\"24\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#C7503F\"/>\n<text x=\"17\" y=\"35.4\" font-size=\"9.5\" fill=\"#FFFFFF\" text-anchor=\"middle\">PHI</text>\n<text x=\"42\" y=\"35\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">identifiable data held here</text>\n<rect x=\"250\" y=\"24\" width=\"34\" height=\"15\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#C7503F\" stroke-dasharray=\"3 2\"/>\n<text x=\"267\" y=\"35.4\" font-size=\"9.5\" fill=\"#C7503F\" text-anchor=\"middle\">PHI</text>\n<text x=\"292\" y=\"35\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">handled but not held</text>\n<line x1=\"0\" y1=\"56\" x2=\"34\" y2=\"56\" stroke=\"#1A2566\" stroke-width=\"2\"/>\n<text x=\"42\" y=\"60\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">identified data crosses</text>\n<line x1=\"250\" y1=\"56\" x2=\"284\" y2=\"56\" stroke=\"#5B9BD5\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<text x=\"292\" y=\"60\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">de-identified or reduced data crosses</text>\n<line x1=\"0\" y1=\"80\" x2=\"34\" y2=\"80\" stroke=\"#C3C3C3\" stroke-width=\"1.2\" stroke-dasharray=\"3 4\"/>\n<text x=\"42\" y=\"84\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">institutional boundary — above it the institution, below it MCA</text>\n<rect x=\"392\" y=\"73\" width=\"13\" height=\"13\" rx=\"2.5\" fill=\"#FDF8EC\" stroke=\"#B08A2E\"/>\n<text x=\"412\" y=\"84\" font-size=\"11.0\" fill=\"#333333\" text-anchor=\"start\">the governing legal instrument</text></svg>";
+const OFACTS = {"1": {"custody": "MCA", "control": "MCA", "instrument": "BAA + DUA per site", "instrument_sub": "MCA is a business associate", "title": "Central custody of PHI"}, "2": {"custody": "the host institution", "control": "MCA", "instrument": "Network agreement + service BAA", "instrument_sub": "MCA sets the rules, host holds the data", "title": "Central custody at a host"}, "3": {"custody": "stays at the site", "control": "MCA", "instrument": "DUA only, no BAA", "instrument_sub": "bars contacting individuals", "title": "Central limited data set"}, "4": {"custody": "the site", "control": "MCA", "instrument": "Hosting agreement + DUA", "instrument_sub": "BAA if MCA staff can see PHI", "title": "Federated PHI, central store"}, "5": {"custody": "the site", "control": "MCA", "instrument": "Hosting agreement", "instrument_sub": "light DUA", "title": "Federated extraction"}, "6": {"custody": "each node institution", "control": "shared with the node institutions", "instrument": "Rides existing DUAs", "instrument_sub": "subawards per node", "title": "Distributed hub"}, "7": {"custody": "the coordinating center", "control": "the coordinating center", "instrument": "Subcontractor agreement", "instrument_sub": "flow-down BAA", "title": "Processor to existing centers"}};
+const ODESC  = {"1": {"n": 1, "title": "central custody of identifiable PHI at MCA", "summary": ["Structured feeds and clinical notes flow to MCA’s environment in identified form. MCA is a business associate of each contributing covered entity."], "strengths": ["Every committed capability is reachable. The only constraint: a recipient needs a basis for the specific patients it receives — a governance question, not an architectural one.", "<strong>MCA administers access; it does not conduct the research.</strong> A BAA can’t authorize a business associate’s own research, but that’s not the model here. MCA grants governed access to outside investigators, and the recipient-basis constraint above satisfies that requirement, not MCA’s BA status.", "<strong>Pooling helps a small population twice over</strong> for aggregate use: it raises statistical power and lowers disclosure risk together, since population-level results come off a larger denominator without person-level data leaving for that purpose.", "Novel-question re-extraction is fast and centrally validated: one model, one corpus, one place to tune and audit.", "Third-party data, genomics, PROs and wearables have a home; the patient-mediated channel has somewhere to deliver to."], "costs": ["Highest institutional ask of any option, and the one the resistance documented in section 2 most directly contradicts.", "Among the most expensive options to build and run, second only to Option 4. Per-record permission enforcement outweighs either a closed environment or an open release. It has to do both and decide between them for every row.", "Breach magnitude is among the highest of any option because the pooled copy exists.", "A hospital’s counsel will ask what becomes of the data if MCA stops funding this. There is no answer today; see section 10."], "extra": [{"h": "Release policy is a setting, not a separate option", "p": ["A business associate may disclose what the covered entity itself could. A recipient with an independent basis for specific patients (an agreement with the source institution, its own board approval, patient authorization, or being the treating institution) can receive those patients without new exposure. Three settings are available, and they aren’t mutually exclusive.", "Table 2. Three release settings under Option 1.", "<strong>The scores below assume governed per record.</strong> Three mechanics are easy to conflate: an agreement governs how a recipient handles data, not whether it’s entitled to receive it; minimum necessary applies to every disclosure; and an assembled cross-institution record needs every contributing permission aligned — only patient authorization resolves that cleanly.", "Prefer the closed setting? Read one point off use-case reach and add one to governance and risk — 4/5 rather than 5/5 on reach, 5/5 rather than 4/5 on governance. Open release runs roughly the reverse. Neither adjustment moves Option 1’s position: the custody decision dominates the release decision."]}]}, "2": {"n": 2, "title": "central custody at an institutional host", "summary": ["The identified record is centralized exactly as in Option 1, but it comes to rest inside an institution that already holds data of this kind for these sites — an existing coordinating center, itself a covered entity, with executed agreements and years of accumulated trust. MCA holds no data. It holds the network agreement that governs the data, funds the host and the capability cores around it, and owns the tool layer that makes the record worth having. The capability is distributed; the custody is not.", "MCA builds the part no one else in this field will. That means the CHD knowledge graph that gives AI extraction its context, extraction and dataset assembly that run against definitions a user supplies instead of a schema fixed years earlier, the quality and governance layer that makes per-patient permissions enforceable at scale, and the analysis tools at the far end. What MCA does not build it funds or buys — imaging AI from a group that already does it, identity and tokenization at a coordinating center already running cross-registry merges, sequencing through an existing industry relationship. A team of five or six orchestrates standards, partners and use.", "The NIH-funded Rare Diseases Clinical Research Network (RDCRN) has run this shape for over twenty years, and it is worth reading closely. NIH holds the money and the governance. The data management and coordinating center at Cincinnati Children’s holds the data and operates the platform, organized into four cores: administrative, clinical research, data management, and engagement and dissemination. Around it sit roughly twenty disease consortia whose principal investigators are at CHOP, Baylor, Johns Hopkins, Columbia, Emory, Boston Children’s, Alabama and elsewhere, spanning 270-odd clinical sites and 280 diseases on about $31.6 million a year. Three details matter more than the scale. The network is not branded to its host — Cincinnati appears in the fine print, not on the door. Each consortium’s administrative core holds delegated authority from its clinical sites to distribute data to third parties, which is the mechanism that lets a coordinating body act for sites it does not employ. And once data reaches the network repository, governance of sharing belongs to the funder while the coordinating center does the operational management. The funder holds governance; the institution holds the data."], "strengths": ["<strong>It removes the hardest ask in this brief rather than arguing with it.</strong> A hospital is not asked to send identified data to a foundation. It is asked to keep sending it where it already sends it, under paper that already exists, to a counterparty its own counsel has already cleared. The resistance documented in section 2 is aimed at the crossing this option does not make.", "<strong>Custody is a perpetual obligation, and an institution can carry one.</strong> A hospital’s counsel will ask who holds this if MCA stops funding it. That question has an answer for the first time. An academic medical center has institutional backing, succession and a legal office behind it; a five-person foundation team does not. This is the strongest available answer to the precondition in section 10, and it does not wait on the standing-entity decision.", "<strong>MCA governs without holding, which is the RDCRN split.</strong> A seated steering committee of site investigators, patient advocacy representatives and MCA as neutral convener, with the host as operator, is a structure this field already recognizes and has positive experience of. It answers the governance objection without MCA needing to be trusted with the data to answer it.", "<strong>MCA keeps the asset that actually appreciates.</strong> Custody is the least defensible asset in this field and the derived layer is the most. Under Option 7 the coordinating center takes a perpetual license over derivative works; here the same institution operates inside a network MCA funds and governs, so the knowledge graph, the extraction models and the cross-network crosswalk stay MCA’s.", "<strong>The exposure sits where it is already priced in.</strong> Breach magnitude, the accounting burden and the reputational exposure of a foundation holding patient records all sit with a covered entity that already carries that risk as a matter of course. The Project Nightingale problem in section 8 is largely not available against this shape.", "Time to first value is close to Option 7’s and far ahead of Option 1’s, because the instruments are amendments and riders, not new paper with every site."], "costs": ["<strong>MCA does not hold the asset, and the comparison table cannot see it.</strong> Section 6 scores eleven criteria and none of them is control. MCA’s leverage over a record it does not hold is contractual and financial, nothing more. If the relationship sours or institutional priorities shift, MCA negotiates; it cannot simply act. Anyone who prefers Option 1 is pricing that difference higher than this brief scores it, and that is a legitimate position rather than a scoring error.", "<strong>Host capture is the real failure mode.</strong> Practical control accretes to whoever operates the thing daily. Five years in, the host knows the data, employs the people who understand it, and is the party sites call. Contractual rights that were never exercised are worth less than they read. The mitigations are cheap now and unobtainable later: a written right to migrate the assembled record, MCA ownership of the derived layer, and no exclusivity that forecloses a second host.", "Naming a host picks a winner in a field where, as one advisor put it, whoever holds the data is not always the most loved. The jealousy that already attaches to well-funded coordinating centers would attach to this one, and MCA would have chosen it. Funding capability cores at several institutions is the counterweight, and it is the reason the cores are not decoration.", "MCA’s pace becomes the host’s pace for anything touching the environment. One registry spent a year getting a single vendor through security clearance at its host institution; every model upgrade and new tool enters that queue.", "The three patient-facing rows in section 4 get an extra party. A patient exercising the individual right of access would be designating an institution that is not their treating hospital, inside a network branded to a foundation. The mechanism exists (RDCRN runs a central contact registry), but the consent and branding design is not worked out.", "A pediatric host makes adult-center recruitment harder, and adults leaving pediatric care are the population this initiative most needs and least has. Worth weighing against a host attached to an adult system, which brings its own constraints.", "The funding obligation is perpetual too. MCA owes the host and every core indefinitely, and if MCA stops, the host keeps the data. RDCRN requires each consortium to plan for data sharing beyond the end of its funding period, which is the contractual precedent for handling this rather than a reason to ignore it.", "Cross-network linkage still needs its own instrument. Delegated authority from sites to a coordinating body has precedent, but authority to resolve identity across networks does not, and this option shares that exposure with Option 7."], "extra": []}, "3": {"n": 3, "title": "central limited data set", "summary": ["Direct identifiers are removed at the site; full dates and other limited-data-set elements are retained, and tokens support cross-site linkage. MCA holds a limited data set under a DUA, not PHI under a BAA."], "strengths": ["Retains the dates longitudinal CHD research needs, unlike Safe Harbor de-identification.", "Substantially lower legal bar; no BAA required.", "A credible near-term bridge that can run under existing agreements.", "Second cheapest option, because it carries no notes at scale and therefore little extraction compute."], "costs": ["A limited data set bars identifying or contacting the individuals in it. That forecloses trial recruitment and every patient-facing endpoint, and with them the adult-transition thesis.", "No notes means no novel-question re-extraction, which is the platform’s differentiator.", "Re-identification risk in small CHD cohorts is unresolved, not solved."], "extra": []}, "4": {"n": 4, "title": "federated PHI with a central de-identified store", "summary": ["MCA software runs inside each partner’s cloud and builds the local patient graph, so PHI never leaves the institution. De-identified notes, extracted facts and tokens flow to MCA’s central de-identified store. When PHI must rejoin, the local graph links back to MCA’s central identifier and the record repatriates in place."], "strengths": ["Strongest privacy posture, and an easier institutional conversation than either central-custody option.", "Preserves central, monitorable extraction, because de-identified note text still reaches the center.", "Central identity, third-party data and governance still have a home."], "costs": ["Most expensive of any option: it pays for federation and a central store at the same time.", "Repatriation does not yet exist and must be engineered and legally described before a site will sign.", "Free-text de-identification is the hardest de-identification problem there is, and aggressive scrubbing degrades the substrate the extraction model depends on.", "<strong>Missingness becomes ambiguous.</strong> No test performed, no feed configured and no participating node can all return an empty result.", "<strong>The slowest node sets the pace and the denominator moves.</strong> If a node is unavailable, the cohort silently isn’t the cohort — a methodological defect, not an inconvenience.", "A subtle legal trap: if MCA staff can see PHI while operating a site node, MCA is still a business associate. Federation avoids the transfer, not the agreement.", "N site deployments means N security reviews."], "extra": []}, "5": {"n": 5, "title": "federated PHI with federated extraction", "summary": ["The same federation, but extraction runs entirely inside each site and only structured results leave; the notes never move."], "strengths": ["One of the lighter legal instruments, though Options 6 and 7 ask even less of sites, and no central note corpus to breach."], "costs": ["Guts the differentiator, though not the statistics or the regulatory standing. Extracting a concept never captured before becomes a distributed backfill across every site; every model upgrade triggers a federated re-run.", "The federated-learning literature is discouraging on the points that matter: non-identically distributed data, unequal site sizes, stragglers, leakage from model updates, and hard-to-inspect mislabelling. Aggregated gradients don’t produce a coherent multimodal patient representation.", "No central validation corpus, so quality consistency cannot be guaranteed."], "extra": []}, "6": {"n": 6, "title": "distributed hub, no single custodian", "summary": ["Custody and expertise distributed across a small number of institutional nodes, with MCA coordinating and funding rather than holding. Modeled on the hub approach used for the 3D modeling project."], "strengths": ["No new-custodian trust problem; it uses institutions that already hold this data under instruments that already exist.", "Fastest possible start, and politically the least threatening option by a wide margin.", "Hedges: least wrong if the central legal path proves unwinnable.", "A working precedent exists for distributing capability without distributing custody: the NIH-funded Rare Diseases Clinical Research Network runs one platform out of a single institutional host, with four shared functional cores and disease-specific principal investigators spread across a dozen institutions. It is described in full under Option 2, which is the shape it actually supports — expertise distributed, the record still in one place."], "costs": ["It is the multi-coordinating-center status quo the vision rejects, and it reproduces the fragmentation the initiative exists to fix. That risk describes uncoordinated registries stacked side by side, not distribution itself. The precedent above is worth testing against before assuming Option 6 defaults to the status quo.", "Sustainability is tied to institutional funding cycles, grant renewals and individual people.", "It stacks DUAs instead of simplifying them, the problem identified at CCRC.", "Third-party data, genomics and mortality linkage have no home, because they belong to no institution.", "Coordination cost lands on whoever runs the study. Counterargument: it hedges across risk and benefit, which is a fair answer to that cost."], "extra": []}, "7": {"n": 7, "title": "processor to existing coordinating centers", "summary": ["MCA never becomes a custodian. It acts as a business associate or subcontractor of each existing data coordinating center, supplying extraction, the CHD knowledge graph, tokenization and dataset assembly as a service. ACTION’s agreement already contemplates this shape: it names a subcontractor working under the coordinating center as a permitted recipient."], "strengths": ["Cheapest option by a clear margin, and the only one that avoids site onboarding, custody and per-record access control at once.", "Fastest start, and the only option requiring no new site-level agreement.", "One of the least politically threatening options, because a processor serves instead of competing.", "MCA can still own the concept and phenotype library, the extraction models and the cross-network crosswalk. Custody is the least defensible asset in this field; the derived layer is the most.", "Available to a foundation in a way vendors aren’t: MCA can fund the coordinating centers whose work it processes, which converts a vendor relationship into a patron one."], "costs": ["<strong>The posture gets MCA into each silo but does not authorize joining across them.</strong> ACTION’s subcontractor clause is scoped to that network’s projects. Cross-network linkage needs a separate instrument no existing agreement supplies, and it is the capability the whole initiative rests on.", "<strong>Value accrues to the counterparty by default.</strong> The coordinating center holds a perpetual license covering derivative works and, under the trials amendment, negotiates all sponsor agreements.", "MCA’s access becomes a set of one-year auto-renewing agreements to which MCA is not a party.", "A processor may not be able to license claims or mortality data in its own name — which would cut off the external data that finds out-of-care adults.", "No dataset MCA can point to and call the CHD longitudinal resource.", "<strong>The risk of becoming a broker above continuing fragmentation.</strong> A single front door does not make a resource unified."], "extra": []}};
+const OVERD  = {"1": "<strong>Option 1 is the runner-up and the fallback, not a rejected option.</strong> If no host will accept MCA-authored governance over data in its custody, this goes back to Option 1 and its feasibility problem has to be solved instead of routed around. On the ten-year view it is nineteen points clear of everything except Option 2, so nothing here is an argument against it on capability.", "7": "<strong>Option 7 is the first step under either destination.</strong> As a destination it fails for the reasons in section 3 — no authority to link across networks, and derivative value accruing to the counterparty. As the opening move toward Option 2 it is exactly right, which is why the two are no longer competing.", "5": "<strong>Options 5 and 6 fail on their own terms.</strong> Option 5 guts the differentiator and rests on discouraging federated-learning evidence. Option 6 is the multi-coordinating-center status quo the vision rejects, and it reproduces the fragmentation the initiative exists to fix.", "6": "<strong>Options 5 and 6 fail on their own terms.</strong> Option 5 guts the differentiator and rests on discouraging federated-learning evidence. Option 6 is the multi-coordinating-center status quo the vision rejects, and it reproduces the fragmentation the initiative exists to fix.", "4": "<strong>Option 4 is the worst trade on the board despite its score.</strong> It pays for federation and a central store at once, and its own cost list admits MCA remains a business associate if staff can see PHI on a site node. It avoids the transfer, not the agreement, and buys the hardest engineering problem in this brief to do it.", "3": "<strong>Option 3 is a rung on the negotiating ladder, not an architecture.</strong> Its second-place ten-year score overstates it: a limited data set bars identifying or contacting individuals, foreclosing trial recruitment, every patient-facing endpoint, and the adult-transition thesis. Default to it during negotiation, per section 8 — not as a place to stop.", "2": "<strong>I recommend Option 2.</strong> Central custody of the identified record at an institutional host, with MCA holding the network agreement, the funding and the tool layer. It leads the ten-year weighting at 105 of 120 and ties Option 7 at the top of the setup weighting."};
+
+/* ================= state ================= */
+const clone = x => JSON.parse(JSON.stringify(x));
+let S = {
+  scores: clone(PUB_SCORES), weights: clone(W_LONG), caps: clone(PUB_CAP),
+  cost: clone(PUB_COST), points: clone(PUB_POINTS),
+  unlockReach:false, unlockCost:false, preset:"long", sel:1
+};
+
+/* ================= derivations ================= */
+const coverage = o => {
+  let v = 0;
+  for (let r=0;r<CAPS.length;r++){ const m=S.caps[r][o]; v += m==="F"?1:m==="P"?0.5:0; }
+  return Math.round(v/CAPS.length*100);
+};
+const band = c => c>=85?5:c>=60?4:c>=46?3:c>=20?2:1;
+function applyDerived(){
+  for (let o=0;o<7;o++){
+    if(!S.unlockReach) S.scores[REACH_ROW][o] = band(coverage(o));
+    if(!S.unlockCost)  S.scores[COST_ROW][o]  = S.points[o];
+  }
+}
+const wsum = () => S.weights.reduce((a,b)=>a+b,0);
+const wmax = () => wsum()*5;
+const weighted = o => S.scores.reduce((a,row,i)=>a+row[o]*S.weights[i],0);
+const unweighted = o => S.scores.reduce((a,row)=>a+row[o],0);
+const pubRef = () => PUB_BY_PRESET[S.preset] || null;
+const fmt = n => Math.abs(n-Math.round(n))<0.05 ? String(Math.round(n)) : (Math.round(n*10)/10).toFixed(1);
+
+/* ================= build: comparison table ================= */
+const tCmp = document.getElementById("tbl-cmp");
+function buildCmp(){
+  const hr = tCmp.querySelector("thead tr");
+  OPTS.forEach(o=>{ const th=document.createElement("th"); th.textContent=o.s; hr.appendChild(th); });
+  const tb = tCmp.querySelector("tbody");
+  CRIT.forEach((c,r)=>{
+    const tr=document.createElement("tr");
+    const th=document.createElement("th"); th.className="rh"; th.scope="row";
+    th.innerHTML = c[0] + (r===REACH_ROW||r===COST_ROW ? ' <span class="derived" data-tag="'+r+'">derived</span>' : "");
+    tr.appendChild(th);
+    for(let o=0;o<7;o++){
+      const td=document.createElement("td"); td.dataset.r=r; td.dataset.o=o;
+      const d=document.createElement("span");
+      d.className="dots"; d.tabIndex=0; d.setAttribute("role","spinbutton");
+      d.setAttribute("aria-label", c[0]+", "+OPTS[o].n);
+      d.innerHTML = "<i class='d'></i><i class='d'></i><i class='d'></i><i class='d'></i><i class='d'></i><span class='n'></span>";
+      td.appendChild(d); tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  });
+  const tr=document.createElement("tr"); tr.className="tot";
+  tr.innerHTML="<th class='rh' scope='row'>Total of 55</th>"+OPTS.map(()=>"<td></td>").join("");
+  tb.appendChild(tr);
+
+  tb.addEventListener("click", e=>{
+    const dot=e.target.closest(".dots"); if(!dot) return;
+    const td=dot.parentElement, r=+td.dataset.r, o=+td.dataset.o;
+    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived — unlock it in the weights panel."
+                                     :"Relative cost mirrors the cost points — unlock it, or edit the points row."); return; }
+    const dots=[...dot.querySelectorAll(".d")], i=dots.indexOf(e.target);
+    S.scores[r][o] = i>=0 ? i+1 : S.scores[r][o];
+    render();
+  });
+  tb.addEventListener("keydown", e=>{
+    const dot=e.target.closest(".dots"); if(!dot) return;
+    const td=dot.parentElement, r=+td.dataset.r, o=+td.dataset.o;
+    let v=S.scores[r][o], nv=v;
+    if(e.key==="ArrowUp"||e.key==="ArrowRight") nv=Math.min(5,v+1);
+    else if(e.key==="ArrowDown"||e.key==="ArrowLeft") nv=Math.max(1,v-1);
+    else if(/^[1-5]$/.test(e.key)) nv=+e.key;
+    else return;
+    e.preventDefault();
+    if(locked(r)){ toast("That row is derived — unlock it in the weights panel."); return; }
+    S.scores[r][o]=nv; render(); dot.focus();
+  });
+}
+const locked = r => (r===REACH_ROW && !S.unlockReach) || (r===COST_ROW && !S.unlockCost);
+
+/* ================= build: capability table ================= */
+function buildCap(){
+  const t=document.getElementById("tbl-cap"), hr=t.querySelector("thead tr");
+  OPTS.forEach(o=>{const th=document.createElement("th");th.textContent=o.s;hr.appendChild(th);});
+  const tb=t.querySelector("tbody");
+  CAPS.forEach((c,r)=>{
+    const tr=document.createElement("tr");
+    const th=document.createElement("th");th.className="rh";th.scope="row";th.textContent=c;tr.appendChild(th);
+    for(let o=0;o<7;o++){
+      const td=document.createElement("td");
+      const b=document.createElement("button");
+      b.className="mk"; b.dataset.r=r; b.dataset.o=o; td.appendChild(b); tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  });
+  const tr=document.createElement("tr"); tr.className="tot";
+  tr.innerHTML="<th class='rh' scope='row'>Coverage</th>"+OPTS.map(()=>"<td></td>").join("");
+  tb.appendChild(tr);
+  tb.addEventListener("click", e=>{
+    const b=e.target.closest(".mk"); if(!b) return;
+    const r=+b.dataset.r,o=+b.dataset.o;
+    S.caps[r][o]=CAP_V[(CAP_V.indexOf(S.caps[r][o])+1)%3]; render(); b.focus();
+  });
+}
+
+/* ================= build: cost table ================= */
+function buildCost(){
+  const t=document.getElementById("tbl-cost"), hr=t.querySelector("thead tr");
+  OPTS.forEach(o=>{const th=document.createElement("th");th.textContent=o.s;hr.appendChild(th);});
+  const tb=t.querySelector("tbody");
+  COSTC.forEach((c,r)=>{
+    const tr=document.createElement("tr");
+    const th=document.createElement("th");th.className="rh";th.scope="row";th.textContent=c;tr.appendChild(th);
+    for(let o=0;o<7;o++){
+      const td=document.createElement("td");
+      const b=document.createElement("button");
+      b.className="cw"; b.dataset.r=r; b.dataset.o=o; td.appendChild(b); tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  });
+  const tr=document.createElement("tr"); tr.className="tot";
+  tr.innerHTML="<th class='rh' scope='row'>Points, 5 = cheapest</th>"+
+    OPTS.map((o,i)=>`<td><input type="number" min="1" max="5" step="1" data-pt="${i}" style="width:46px;font:inherit;font-size:12.5px;text-align:center;padding:3px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink)"></td>`).join("");
+  tb.appendChild(tr);
+  tb.addEventListener("click", e=>{
+    const b=e.target.closest(".cw"); if(!b) return;
+    const r=+b.dataset.r,o=+b.dataset.o;
+    S.cost[r][o]=COST_V[(COST_V.indexOf(S.cost[r][o])+1)%4]; render(); b.focus();
+  });
+  tb.addEventListener("input", e=>{
+    const i=e.target.dataset.pt; if(i===undefined) return;
+    let v=Math.max(1,Math.min(5,Math.round(+e.target.value||1)));
+    S.points[+i]=v; render();
+  });
+}
+
+/* ================= build: weights ================= */
+function buildWts(){
+  const box=document.getElementById("wts");
+  CRIT.forEach((c,i)=>{
+    const row=document.createElement("div"); row.className="wt"; row.dataset.i=i;
+    row.innerHTML=`<div class="nm">${c[0]}<i>${c[1]}</i></div>
+      <input type="range" min="0" max="5" step="0.1" data-w="${i}" aria-label="Weight for ${c[0]}">
+      <input type="number" min="0" max="5" step="0.1" data-w="${i}" aria-label="Weight value for ${c[0]}">`;
+    box.appendChild(row);
+  });
+  box.addEventListener("input", e=>{
+    const i=e.target.dataset.w; if(i===undefined) return;
+    let v=Math.round(Math.max(0,Math.min(5,+e.target.value||0))*10)/10;
+    S.weights[+i]=v; S.preset="free"; render();
+  });
+}
+
+/* ================= render ================= */
+function render(){
+  applyDerived();
+
+  /* comparison */
+  const cb=document.querySelector("#tbl-cmp tbody");
+  CRIT.forEach((c,r)=>{
+    const tr=cb.children[r];
+    tr.querySelectorAll('[data-tag]').forEach(t=>{
+      t.textContent = locked(r) ? "derived" : "manual";
+    });
+    for(let o=0;o<7;o++){
+      const td=tr.children[o+1], dot=td.firstChild, v=S.scores[r][o];
+      dot.dataset.v=v;
+      dot.setAttribute("aria-valuenow",v);
+      dot.querySelectorAll(".d").forEach((d,i)=>d.classList.toggle("on", i<v));
+      dot.querySelector(".n").textContent=v;
+      td.classList.toggle("chg", v!==PUB_SCORES[r][o]);
+      td.classList.toggle("locked", locked(r));
+    }
+  });
+  const totRow=cb.lastElementChild;
+  for(let o=0;o<7;o++) totRow.children[o+1].textContent=unweighted(o);
+
+  /* capability */
+  const capb=document.querySelector("#tbl-cap tbody");
+  CAPS.forEach((c,r)=>{
+    const tr=capb.children[r];
+    for(let o=0;o<7;o++){
+      const td=tr.children[o+1], b=td.firstChild, v=S.caps[r][o];
+      b.dataset.v=v; b.textContent=CAP_G[v];
+      b.setAttribute("aria-label", `${CAPS[r]}, ${OPTS[o].n}: ${CAP_LABEL[v]}`);
+      td.classList.toggle("chg", v!==PUB_CAP[r][o]);
+    }
+  });
+  const covRow=capb.lastElementChild;
+  for(let o=0;o<7;o++) covRow.children[o+1].textContent=coverage(o)+"%";
+
+  /* cost */
+  const cob=document.querySelector("#tbl-cost tbody");
+  COSTC.forEach((c,r)=>{
+    const tr=cob.children[r];
+    for(let o=0;o<7;o++){
+      const td=tr.children[o+1], b=td.firstChild, v=S.cost[r][o];
+      b.dataset.v=v; b.textContent=v;
+      td.classList.toggle("chg", v!==PUB_COST[r][o]);
+    }
+  });
+  const ptRow=cob.lastElementChild;
+  for(let o=0;o<7;o++){
+    const inp=ptRow.children[o+1].firstChild;
+    if(document.activeElement!==inp) inp.value=S.points[o];
+    ptRow.children[o+1].classList.toggle("chg", S.points[o]!==PUB_POINTS[o]);
+  }
+
+  /* weights */
+  const wb=document.getElementById("wts");
+  CRIT.forEach((c,i)=>{
+    const row=wb.children[i];
+    row.querySelectorAll("input").forEach(inp=>{ if(document.activeElement!==inp) inp.value=S.weights[i]; });
+    row.classList.toggle("chg", S.preset==="free" && Math.abs(S.weights[i]-W_LONG[i])>1e-9);
+  });
+  document.getElementById("wsum").textContent=fmt(wsum());
+  document.getElementById("wmax").textContent=fmt(wmax());
+  document.querySelectorAll(".preset").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.p===S.preset)));
+  document.getElementById("setup-note").textContent = S.preset==="setup"
+    ? "The setup weighting's own weights were never published. These are reconstructed from the six values in the brief's final column, rounded to tenths, and they reproduce every printed value to the nearest point. Across all weightings consistent with that column Option 2 lands between 70 and 77, so treat its exact figure as indicative."
+    : "";
+
+  /* results */
+  const pr = pubRef();
+  const rows = OPTS.map((o,i)=>({i, name:o.n, w:weighted(i), u:unweighted(i), c:coverage(i),
+                                 pub: pr ? pr[i] : null}))
+                   .sort((a,b)=>b.w-a.w || b.u-a.u);
+  const max = Math.max(wmax(), ...rows.map(r=>r.w), ...(pr||[0])) || 1;
+  const scale = v => (v/max*100);
+
+  const chart=document.getElementById("chart"); chart.innerHTML="";
+  rows.forEach((r,rank)=>{
+    const el=document.createElement("div");
+    el.className="row"+(rank===0?" top":"");
+    el.innerHTML=`<div class="lab" title="${r.name}">${r.name}</div>
+      <div class="track"><div class="fill" style="width:${scale(r.w).toFixed(2)}%"></div>${
+        r.pub===null ? "" : `<div class="tick" style="left:${scale(r.pub).toFixed(2)}%" title="published ${r.pub}"></div>`}</div>
+      <div class="val">${fmt(r.w)} <em>${Math.round(r.w/wmax()*100)}%</em></div>`;
+    el.addEventListener("mousemove", ev=>showTip(ev, r));
+    el.addEventListener("mouseleave", hideTip);
+    chart.appendChild(el);
+  });
+  document.getElementById("lg-ref").style.display = pr ? "inline-flex" : "none";
+  document.getElementById("axmid").textContent=fmt(max/2);
+  document.getElementById("axmax").textContent=fmt(max);
+
+  const top=rows[0], second=rows[1];
+  document.getElementById("hero-name").textContent=top.name;
+  document.getElementById("hero-score").innerHTML=fmt(top.w)+"<small> of "+fmt(wmax())+"</small>";
+  document.getElementById("hero-share").textContent=Math.round(top.w/wmax()*100)+"%";
+  document.getElementById("hero-unw").innerHTML=top.u+"<small> of 55</small>";
+  const marg=top.w-second.w;
+  document.getElementById("hero-margin").textContent =
+    `Ahead of ${second.name} by ${fmt(marg)} point${Math.abs(marg)===1?"":"s"}, ` +
+    (marg/wmax()<0.02 ? "which is inside the noise of this exercise — treat the two as tied."
+                      : `or ${(marg/wmax()*100).toFixed(1)}% of the maximum.`);
+  const flag=document.getElementById("hero-flag");
+  flag.innerHTML = top.i!==1
+    ? `<span class="flag">This differs from the brief, which ranks Option 2 first and recommends it.</span>`
+    : (dirty() ? `<span class="flag">Option 2 still leads under these inputs.</span>` : "");
+
+  const rb=document.querySelector("#tbl-res tbody"); rb.innerHTML="";
+  rows.forEach((r,rank)=>{
+    const d=r.pub===null?null:(S.preset==="setup"?Math.round(r.w)-r.pub:r.w-r.pub);
+    const tr=document.createElement("tr");
+    if(rank===0) tr.className="tot";
+    tr.innerHTML=`<th class="rh" scope="row">${r.name}</th>
+      <td>${fmt(r.w)} <em style="color:var(--ink-3);font-style:normal;font-size:11px">of ${fmt(wmax())}</em></td>
+      <td>${Math.round(r.w/wmax()*100)}%</td><td>${r.u}</td><td>${r.c}%</td>
+      <td>${r.pub===null?"—":r.pub}</td>
+      <td style="color:${d===null||Math.abs(d)<0.05?"var(--ink-3)":"var(--changed-ink)"}">${
+        d===null||Math.abs(d)<0.05?"—":(d>0?"+":"")+fmt(d)}</td>`;
+    rb.appendChild(tr);
+  });
+
+  document.getElementById("foot").textContent =
+    "Published values are those in the brief dated 7 August 2026. Use-case reach and Relative cost are derived unless unlocked: reach is banded from capability coverage, and Relative cost mirrors the cost points row. The eight cost components are descriptive — the published points are not their sum, so changing a component moves nothing until you edit the points. Nothing here is saved; reload to return to the published baseline.";
+
+  renderOptions(rows);
+}
+
+function dirty(){
+  return JSON.stringify([S.scores,S.caps,S.cost,S.points]) !== JSON.stringify([PUB_SCORES,PUB_CAP,PUB_COST,PUB_POINTS])
+      || JSON.stringify(S.weights)!==JSON.stringify(W_LONG);
+}
+
+/* ================= tooltip ================= */
+const tip=document.getElementById("tip");
+function showTip(ev, r){
+  const top3 = CRIT.map((c,i)=>({c:c[0], v:S.scores[i][r.i]*S.weights[i]}))
+                   .sort((a,b)=>b.v-a.v).slice(0,3)
+                   .map(x=>`<tr><td>${x.c}</td><td>${fmt(x.v)}</td></tr>`).join("");
+  tip.innerHTML=`<b>${r.name}</b>Weighted ${fmt(r.w)} of ${fmt(wmax())}${r.pub===null?"":" · published "+r.pub}
+    <table><tr><td>Unweighted</td><td>${r.u} of 55</td></tr>
+    <tr><td>Capability coverage</td><td>${r.c}%</td></tr></table>
+    <div style="margin-top:6px;color:var(--ink-3)">Largest contributions</div><table>${top3}</table>`;
+  tip.style.opacity=1;
+  const pad=14, w=tip.offsetWidth, h=tip.offsetHeight;
+  let x=ev.clientX+pad, y=ev.clientY+pad;
+  if(x+w>innerWidth-8) x=ev.clientX-w-pad;
+  if(y+h>innerHeight-8) y=ev.clientY-h-pad;
+  tip.style.left=x+"px"; tip.style.top=y+"px";
+}
+function hideTip(){ tip.style.opacity=0; }
+
+/* ================= toast ================= */
+let tmr;
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("on");
+  clearTimeout(tmr); tmr=setTimeout(()=>t.classList.remove("on"), 2600);
+}
+
+/* ================= controls ================= */
+document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
+  S.preset=b.dataset.p;
+  S.weights = clone(b.dataset.p==="long"?W_LONG : b.dataset.p==="flat"?W_FLAT : W_SETUP);
+  render();
+}));
+document.getElementById("lk-reach").addEventListener("change",e=>{S.unlockReach=e.target.checked; render();});
+document.getElementById("lk-cost").addEventListener("change",e=>{S.unlockCost=e.target.checked; render();});
+document.getElementById("btn-reset").addEventListener("click",()=>{
+  S={scores:clone(PUB_SCORES),weights:clone(W_LONG),caps:clone(PUB_CAP),cost:clone(PUB_COST),
+     points:clone(PUB_POINTS),unlockReach:false,unlockCost:false,preset:"long",sel:S.sel};
+  document.getElementById("lk-reach").checked=false;
+  document.getElementById("lk-cost").checked=false;
+  render(); toast("Reset to the published scores and long-horizon weights.");
+});
+document.getElementById("btn-theme").addEventListener("click",e=>{
+  const dark=document.documentElement.dataset.theme==="dark";
+  document.documentElement.dataset.theme=dark?"light":"dark";
+  e.target.textContent=dark?"Dark":"Light";
+  e.target.setAttribute("aria-pressed",String(!dark));
+});
+document.getElementById("btn-copy").addEventListener("click",()=>{
+  const pr=pubRef();
+  const rows=OPTS.map((o,i)=>({name:o.n,w:weighted(i),u:unweighted(i),c:coverage(i),pub:pr?pr[i]:null}))
+                 .sort((a,b)=>b.w-a.w);
+  const wl=CRIT.map((c,i)=>`${c[0]} ${fmt(S.weights[i])}`).join("; ");
+  let txt="Where the Data Lives - scoring, current settings\n\n"
+    +`Weights: ${wl}\nSum ${fmt(wsum())}, max ${fmt(wmax())}\n\n`
+    +"Rank  Option                       Weighted  Share  Unwtd  Coverage  Published\n";
+  rows.forEach((r,i)=>{
+    txt+=`${String(i+1).padEnd(6)}${r.name.padEnd(29)}${fmt(r.w).padStart(8)}`
+      +`${(Math.round(r.w/wmax()*100)+"%").padStart(7)}${String(r.u).padStart(7)}`
+      +`${(r.c+"%").padStart(10)}${String(r.pub===null?"-":r.pub).padStart(11)}\n`;
+  });
+  if(dirty()) txt+="\nNote: one or more inputs differ from the published brief.\n";
+  navigator.clipboard.writeText(txt).then(
+    ()=>toast("Summary copied to the clipboard."),
+    ()=>toast("Could not reach the clipboard — select the table instead."));
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") hideTip(); });
+
+
+/* ================= options tab ================= */
+const OCRIT_ROWS = [];
+function buildOptions(){
+  const pick=document.getElementById("opick");
+  OPTS.forEach((o,i)=>{
+    const b=document.createElement("button");
+    b.className="ochip"; b.dataset.o=i; b.setAttribute("role","tab");
+    b.innerHTML=`<b>Option ${i+1}</b><i></i>`;
+    pick.appendChild(b);
+  });
+  pick.addEventListener("click", e=>{
+    const b=e.target.closest(".ochip"); if(!b) return;
+    S.sel=+b.dataset.o; render();
+    document.getElementById("h-odet").scrollIntoView({block:"start",behavior:"smooth"});
+  });
+  pick.addEventListener("keydown", e=>{
+    if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
+    e.preventDefault();
+    S.sel=(S.sel + (e.key==="ArrowRight"?1:6)) % 7; render();
+    document.querySelector(`.ochip[data-o="${S.sel}"]`).focus();
+  });
+
+  document.getElementById("oleg").innerHTML = LEGEND;
+
+  const cw=document.getElementById("ocrit");
+  CRIT.forEach((c,r)=>{
+    const row=document.createElement("div"); row.className="crow";
+    row.innerHTML=`<div class="cn" title="${c[0]}">${c[0]}</div>
+      <div><span class="dots" tabindex="0" role="spinbutton" data-r="${r}"
+        aria-label="${c[0]}"><i class='d'></i><i class='d'></i><i class='d'></i><i class='d'></i><i class='d'></i><span class='n'></span></span></div>
+      <div class="ct"><div class="cf"></div></div><div class="cv"></div>`;
+    cw.appendChild(row); OCRIT_ROWS.push(row);
+  });
+  cw.addEventListener("click", e=>{
+    const dot=e.target.closest(".dots"); if(!dot) return;
+    const r=+dot.dataset.r, o=S.sel;
+    if(locked(r)){ toast(r===REACH_ROW?"Use-case reach is derived — unlock it in the weights panel."
+                                     :"Relative cost mirrors the cost points — unlock it, or edit the points row."); return; }
+    const dots=[...dot.querySelectorAll(".d")], i=dots.indexOf(e.target);
+    if(i>=0){ S.scores[r][o]=i+1; render(); }
+  });
+  cw.addEventListener("keydown", e=>{
+    const dot=e.target.closest(".dots"); if(!dot) return;
+    const r=+dot.dataset.r, o=S.sel; let v=S.scores[r][o], nv=v;
+    if(e.key==="ArrowUp"||e.key==="ArrowRight") nv=Math.min(5,v+1);
+    else if(e.key==="ArrowDown"||e.key==="ArrowLeft") nv=Math.max(1,v-1);
+    else if(/^[1-5]$/.test(e.key)) nv=+e.key;
+    else return;
+    e.preventDefault();
+    if(locked(r)){ toast("That row is derived — unlock it in the weights panel."); return; }
+    S.scores[r][o]=nv; render(); dot.focus();
+  });
+}
+
+function renderOptions(rows){
+  const o=S.sel, n=o+1, key=String(n);
+  const rank=rows.findIndex(r=>r.i===o)+1;
+  const me=rows[rank-1];
+
+  document.querySelectorAll(".ochip").forEach(b=>{
+    const i=+b.dataset.o, rk=rows.findIndex(r=>r.i===i)+1;
+    b.setAttribute("aria-selected", String(i===o));
+    b.querySelector("i").textContent=`#${rk} · ${fmt(rows[rk-1].w)}`;
+  });
+
+  document.getElementById("odiag").innerHTML = PANELS[key];
+
+  const f=OFACTS[key];
+  document.getElementById("ofacts").innerHTML =
+    `<div><span>PHI custody</span><span>${f.custody}</span></div>
+     <div><span>Control</span><span>${f.control}</span></div>
+     <div><span>Instrument</span><span>${f.instrument} — ${f.instrument_sub}</span></div>`;
+
+  const d=ODESC[key];
+  let h=`<h2 style="font-size:19px">Option ${n} — ${d.title.charAt(0).toUpperCase()+d.title.slice(1)}</h2>`;
+  h+=`<div class="verdict"><div class="k">${n===2?"The recommendation":"How section 7 treats it"}</div><p>${OVERD[key]||""}</p></div>`;
+  h+=d.summary.map(p=>`<p>${p}</p>`).join("");
+  if(d.strengths.length) h+=`<h3>Strengths</h3><ul class="pm plus">${d.strengths.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  if(d.costs.length) h+=`<h3>Costs and risks</h3><ul class="pm minus">${d.costs.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  d.extra.forEach(x=>{ h+=`<h3>${x.h}</h3>`+x.p.map(p=>`<p>${p}</p>`).join(""); });
+  document.getElementById("odesc").innerHTML=h;
+
+  document.getElementById("okpis").innerHTML =
+    `<div class="kpi"><div class="k">Rank</div><div class="v">${rank}<small> of 7</small></div></div>
+     <div class="kpi"><div class="k">Weighted</div><div class="v">${fmt(me.w)}<small> of ${fmt(wmax())}</small></div></div>
+     <div class="kpi"><div class="k">Share of max</div><div class="v">${Math.round(me.w/wmax()*100)}%</div></div>
+     <div class="kpi"><div class="k">Unweighted</div><div class="v">${me.u}<small> of 55</small></div></div>
+     <div class="kpi"><div class="k">Capability coverage</div><div class="v">${me.c}%</div></div>
+     <div class="kpi"><div class="k">Published</div><div class="v">${me.pub===null?"—":me.pub}${
+        me.pub===null?"":`<small> under this weighting</small>`}</div></div>`;
+
+  const contrib=CRIT.map((c,r)=>S.scores[r][o]*S.weights[r]);
+  const cmax=Math.max(...contrib, 0.0001);
+  CRIT.forEach((c,r)=>{
+    const row=OCRIT_ROWS[r], v=S.scores[r][o], dot=row.querySelector(".dots");
+    dot.dataset.v=v; dot.setAttribute("aria-valuenow",v);
+    dot.querySelectorAll(".d").forEach((el,i)=>el.classList.toggle("on", i<v));
+    dot.querySelector(".n").textContent=v;
+    dot.parentElement.classList.toggle("chg", v!==PUB_SCORES[r][o]);
+    row.querySelector(".cf").style.width=(contrib[r]/cmax*100).toFixed(1)+"%";
+    row.querySelector(".cv").textContent=fmt(contrib[r]);
+    row.querySelector(".cn").innerHTML=c[0]+(locked(r)?' <span class="derived">derived</span>':"");
+  });
+
+  const cg=document.getElementById("ocap");
+  cg.innerHTML=CAPS.map((c,r)=>{
+    const v=S.caps[r][o];
+    return `<div class="capr"><span class="g" data-v="${v}">${CAP_G[v]}</span>
+      <span class="t" title="${c}">${c}</span><span class="s">${CAP_LABEL[v]}</span></div>`;
+  }).join("");
+  document.getElementById("ocap-note").textContent =
+    `${coverage(o)}% of the fourteen intended uses. Edit the marks on the Scoring tab.`;
+
+  document.getElementById("ocost").innerHTML=COSTC.map((c,r)=>
+    `<div class="capr"><span class="t" title="${c}">${c}</span>
+     <span class="cw" data-v="${S.cost[r][o]}" style="cursor:default">${S.cost[r][o]}</span></div>`).join("")
+    + `<div class="capr" style="border-bottom:none;margin-top:4px;padding-top:8px;border-top:1.5px solid var(--rule)">
+       <span class="t" style="color:var(--navy);font-weight:600">Points, 5 = cheapest</span>
+       <span style="color:var(--navy);font-weight:600">${S.points[o]}</span></div>`;
+  document.getElementById("ocost-note").textContent =
+    "Descriptive only — the points are a direct input, not a sum of the components.";
+
+  document.getElementById("foot2").textContent=document.getElementById("foot").textContent;
+}
+
+/* ================= tab switching ================= */
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>{
+    const on = x===t;
+    x.setAttribute("aria-selected", String(on));
+    document.getElementById(x.getAttribute("aria-controls")).hidden = !on;
+  });
+  hideTip(); window.scrollTo(0,0);
+}));
+
+buildCmp(); buildCap(); buildCost(); buildWts(); buildOptions(); render();
+</script>
+</body>
+</html>
