@@ -14,23 +14,24 @@
  *  6. Re-deploy (Manage deployments → edit → Version: New version) after any
  *     edit to this file, or the old code keeps running.
  *
- * The secret is visible to anyone who views the page source. That is acceptable
- * here because this endpoint can only append rows — it never reads or deletes.
+ * The secret is visible to anyone who views the page source. Appending was
+ * always open; note that the `list` action below also makes comments READABLE
+ * to anyone holding the secret — i.e. every reviewer can read every comment.
+ * That is the point of the comment board; keep it in mind before pasting
+ * anything sensitive into the sheet.
  */
 
 var SHARED_SECRET = 'purple-kangaroo';
 var SHEET_NAME = 'Comments';
-var HEADERS = ['received', 'name', 'comment', 'quoted text', 'chapter', 'section', 'page', 'client time', 'id', 'status'];
+var HEADERS = ['received', 'name', 'comment', 'quoted text', 'chapter', 'section', 'page', 'client time', 'id', 'status', 'parent'];
 
 function setupSheet() {
   var sheet = sheetOrCreate_();
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-    sheet.setFrozenRows(1);
-    sheet.setColumnWidth(3, 420);
-    sheet.setColumnWidth(4, 320);
-  }
+  // Writes (or upgrades) the header row — safe to re-run after adding columns.
+  sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
+  sheet.setFrozenRows(1);
+  sheet.setColumnWidth(3, 420);
+  sheet.setColumnWidth(4, 320);
   return 'ready';
 }
 
@@ -64,7 +65,8 @@ function doPost(e) {
         String(body.page || ''),
         String(body.at || ''),
         String(body.id || ''),
-        ''
+        '',
+        String(body.parent || '')   // id of the comment this replies to, if any
       ]);
     } finally {
       lock.releaseLock();
@@ -76,9 +78,44 @@ function doPost(e) {
   }
 }
 
-/** Lets you confirm the deployment is live by opening the /exec URL in a browser. */
-function doGet() {
+/**
+ * GET /exec                      → liveness check
+ * GET /exec?action=list&token=…  → all non-deleted comments as JSON (for the comment board)
+ */
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  if (p.action === 'list') {
+    if (SHARED_SECRET && SHARED_SECRET !== 'CHANGE-ME' && p.token !== SHARED_SECRET) {
+      return json_({ ok: false, error: 'unauthorized' });
+    }
+    return json_({ ok: true, comments: listComments_() });
+  }
   return json_({ ok: true, service: 'mca-comments' });
+}
+
+function listComments_() {
+  var sheet = sheetOrCreate_();
+  var rows = sheet.getLastRow() - 1;
+  if (rows < 1) return [];
+  var values = sheet.getRange(2, 1, rows, HEADERS.length).getValues();
+  var out = [];
+  for (var i = 0; i < values.length; i++) {
+    var v = values[i];
+    if (String(v[9]) === 'deleted') continue;
+    out.push({
+      received: v[0] instanceof Date ? v[0].toISOString() : String(v[0]),
+      name: String(v[1]),
+      body: String(v[2]),
+      quote: String(v[3]),
+      chapter: String(v[4]),
+      section: String(v[5]),
+      page: String(v[6]),
+      at: String(v[7]),
+      id: String(v[8]),
+      parent: String(v[10] || '')
+    });
+  }
+  return out;
 }
 
 /** Writes "deleted" into the status column for each id the page reports removed. */
