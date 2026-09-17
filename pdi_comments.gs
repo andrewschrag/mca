@@ -48,6 +48,11 @@ function doPost(e) {
       return json_({ ok: true, marked: markDeleted_(body.ids || []) });
     }
 
+    // Closing a comment moves it to the resolved list on the page; reopening clears the flag.
+    if (body.action === 'close') {
+      return json_({ ok: true, marked: setStatus_(body.ids || [], body.closed === false ? '' : 'closed') });
+    }
+
     if (!body.name || !body.body) {
       return json_({ ok: false, error: 'name and body are required' });
     }
@@ -112,6 +117,7 @@ function listComments_() {
       page: String(v[6]),
       at: String(v[7]),
       id: String(v[8]),
+      status: String(v[9] || ''),
       parent: String(v[10] || '')
     });
   }
@@ -120,6 +126,11 @@ function listComments_() {
 
 /** Writes "deleted" into the status column for each id the page reports removed. */
 function markDeleted_(ids) {
+  return setStatus_(ids, 'deleted');
+}
+
+/** Writes any status value ('deleted', 'closed', or '' to clear) for the given ids. */
+function setStatus_(ids, value) {
   if (!ids.length) return 0;
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
@@ -133,7 +144,7 @@ function markDeleted_(ids) {
     var marked = 0;
     for (var i = 0; i < values.length; i++) {
       if (ids.indexOf(String(values[i][0])) > -1) {
-        sheet.getRange(i + 2, statusCol).setValue('deleted');
+        sheet.getRange(i + 2, statusCol).setValue(value);
         marked++;
       }
     }
