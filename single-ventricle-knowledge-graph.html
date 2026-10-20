@@ -255,7 +255,7 @@ td.code { white-space: nowrap; font-weight: 600 }
 details.src summary { cursor: pointer; font-size: 12.5px; color: var(--mca-blue); margin-top: 14px }
 .empty { font-size: 12.5px; color: var(--mca-gray-400); padding: 8px 0 }
 @media (prefers-reduced-motion: no-preference) { .n, .e, .card { transition: opacity .18s ease-out, border-color .15s ease-out } }
-#__splash{position:fixed;inset:0;background:#1A2566;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .35s ease-out}#__splash svg{width:100%;height:100%;object-fit:contain}#__splash.out{opacity:0;pointer-events:none}.sitebar{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--mca-gray-500);margin:0 0 14px}.sitebar a{color:var(--mca-blue);text-decoration:none;font-weight:600}.sitebar a:hover{color:var(--mca-navy)}.sitefoot{border-top:1px solid var(--mca-rule);margin-top:40px;padding-top:12px;font-size:12px;color:var(--mca-gray-400);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+#__splash{position:fixed;inset:0;background:#1A2566;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .35s ease-out}#__splash svg{width:100%;height:100%;object-fit:contain}#__splash.out{opacity:0;pointer-events:none}.sitenav{display:flex;flex-direction:column;gap:6px;padding:10px 0 12px;margin:0 0 18px;border-bottom:1px solid var(--mca-rule);font-size:12.5px;color:var(--mca-gray-500)}.sitenav .brand{font-family:var(--font-display,inherit);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;color:var(--mca-navy);text-decoration:none;align-self:flex-start}.sitenav .brand:hover{color:var(--mca-blue)}.sitenav ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 22px;counter-reset:nav}.sitenav li a{color:var(--mca-blue);text-decoration:none;font-weight:600;white-space:nowrap;counter-increment:nav;padding-bottom:2px;border-bottom:2px solid transparent}.sitenav li a::before{content:counter(nav,decimal-leading-zero) "\2009";font-weight:400;color:var(--mca-gray-400);font-variant-numeric:tabular-nums;letter-spacing:.04em}.sitenav li a:hover{color:var(--mca-navy)}.sitenav li a[aria-current="page"]{color:var(--mca-navy);border-bottom-color:var(--mca-sky);cursor:default}@media (max-width:720px){.sitenav{font-size:12px}.sitenav ol{gap:4px 16px}}.sitefoot{border-top:1px solid var(--mca-rule);margin-top:40px;padding-top:12px;font-size:12px;color:var(--mca-gray-400);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}.sitefoot .index{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--mca-gray-500)}.sitefoot .index a{color:var(--mca-blue);text-decoration:none;font-weight:600}.sitefoot .index a:hover{color:var(--mca-navy)}.sitefoot .index a[aria-current="page"]{color:var(--mca-navy)}
 </style>
 </head>
 <body>
@@ -263,7 +263,7 @@ details.src summary { cursor: pointer; font-size: 12.5px; color: var(--mca-blue)
 
 
 <div class="wrap">
-  <div class="sitebar"><a href="pdi-strategy.html">← back to the patient data strategy</a><span>domain knowledge graph · v0.3.0 · draft seed, reviewed, with anatomy</span></div>
+  <nav class="sitenav" aria-label="site index"><a class="brand" href="index.html">Mussallem CHD Alliance · patient data</a><ol><li><a href="pdi-strategy.html">the patient data strategy</a></li><li><a href="choosing-an-operating-model.html">choosing an operating model</a></li><li><a href="where-the-data-lives-decision.html">where the data lives</a></li><li><a href="pdi-comms.html">how we talk about it</a></li><li><a href="single-ventricle-knowledge-graph.html" aria-current="page">single ventricle knowledge graph</a></li></ol></nav>
   <p class="kicker">Mussallem CHD Alliance</p>
   <h1>single ventricle knowledge graph</h1>
   <hr class="hair">
@@ -305,7 +305,7 @@ details.src summary { cursor: pointer; font-size: 12.5px; color: var(--mca-blue)
     <div class="mapbox" id="mapbox"><svg id="map" role="img" aria-label="Concept lanes; the selected concept's relationships are drawn as lines"></svg></div>
     <aside class="panel" id="panel2" aria-live="polite"></aside>
   </div>
-<div class="sitefoot"><span>© 2026 Mussallem CHD Alliance</span><span>A draft domain model for review, not clinical guidance. Codes marked “asserted” or “no mapping yet” have not been verified against a live terminology.</span></div>
+<div class="sitefoot"><span class="index"><span>on this site:</span><a href="pdi-strategy.html">the patient data strategy</a><a href="choosing-an-operating-model.html">choosing an operating model</a><a href="where-the-data-lives-decision.html">where the data lives</a><a href="pdi-comms.html">how we talk about it</a><a href="single-ventricle-knowledge-graph.html" aria-current="page">single ventricle knowledge graph</a></span><span>© 2026 Mussallem CHD Alliance</span><span>A draft domain model for review, not clinical guidance. Codes marked “asserted” or “no mapping yet” have not been verified against a live terminology.</span></div>
 </div>
 
 <script>
