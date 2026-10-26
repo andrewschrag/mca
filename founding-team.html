@@ -6,476 +6,517 @@
 <title>Wave 1 Founding Team</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap">
 <style>
-/* Layout: one reading column; roles as full-width sections with a role summary rail on the left and the skill profile on the right */
+/* MCA Design System on the strategy site's blue-grey ground (no sandstone). Raleway Medium 500 only; cobalt for emphasis and links,
+   horizon for fills and accents, black for copy. Layout: logo and ribbon header, sticky section nav, the team chart, one white card per role
+   (summary rail left, skill profile right), then the catalogue, what is bought, roles on a trigger and the order of hiring. Single light theme by choice. */
 :root{
-  --paper:#F2F4FA; --surface:#FFFFFF; --surface-2:#FAFBFE;
-  --ink:#101733; --ink-2:#3A4266; --muted:#616A8B; --muted-2:#7C849F;
-  --line:#D9DEED; --line-2:#C3CADF;
-  --mca:#1A2566; --mca-2:#2E5FA3; --mca-3:#5B9BD5; --mca-wash:#EAEFF9;
-  --tech:#2E5FA3; --tech-wash:#E8EFF9;
-  --evid:#2F6B60; --evid-wash:#E6F0ED;
-  --ops:#8A6B22; --ops-wash:#F6EFDE;
-  --brick:#9E4B2E; --brick-wash:#F7ECE7;
-  --on-accent:#FFFFFF;
-  --f-display:Raleway,"Aptos Display","Helvetica Neue",Arial,sans-serif;
-  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#0C1020; --surface:#141A2C; --surface-2:#182036;
-    --ink:#E7EAF3; --ink-2:#C3C9DC; --muted:#98A1BE; --muted-2:#808AA8;
-    --line:#28314D; --line-2:#374267;
-    --mca:#9BAEEE; --mca-2:#7FA9E0; --mca-3:#8FBDE8; --mca-wash:#1B2444;
-    --tech:#7FA9E0; --tech-wash:#18243F;
-    --evid:#6EB6A2; --evid-wash:#16302B;
-    --ops:#CBA755; --ops-wash:#332B14;
-    --brick:#DE8A6C; --brick-wash:#33201A;
-    --on-accent:#0C1020;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0C1020; --surface:#141A2C; --surface-2:#182036;
-  --ink:#E7EAF3; --ink-2:#C3C9DC; --muted:#98A1BE; --muted-2:#808AA8;
-  --line:#28314D; --line-2:#374267;
-  --mca:#9BAEEE; --mca-2:#7FA9E0; --mca-3:#8FBDE8; --mca-wash:#1B2444;
-  --tech:#7FA9E0; --tech-wash:#18243F;
-  --evid:#6EB6A2; --evid-wash:#16302B;
-  --ops:#CBA755; --ops-wash:#332B14;
-  --brick:#DE8A6C; --brick-wash:#33201A;
-  --on-accent:#0C1020;
-  color-scheme:dark;
+  --mist:#F5F7FB; --mist-deep:#E9EEF7; --white:#ffffff; --black:#000000; --cobalt:#1e1e91; --horizon:#648de9;
+  --surface:var(--mist); --raised:var(--white); --ink:var(--black); --ink-2:rgba(0,0,0,.68);
+  --line:#D7DEEB; --line-2:#E9EEF7;
+  --font:'Raleway',Arial,sans-serif;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding-inline:28px;padding-block:0 96px}
-h1,h2,h3,h4{font-family:var(--f-display);color:var(--ink);text-wrap:balance}
-h1{font-size:clamp(2.1rem,4.6vw,3.2rem);font-weight:600;letter-spacing:-.022em;line-height:1.06;margin:0}
-h2{font-size:1.45rem;font-weight:600;letter-spacing:-.012em;line-height:1.2;margin:0}
-h3{font-size:1.02rem;font-weight:600;margin:0}
-p{margin:0 0 1em}
-.eyebrow{font-family:var(--f-display);font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-2)}
-.mono{font-family:var(--f-mono);font-size:.85em;font-variant-numeric:tabular-nums}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font);font-weight:500;font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px;-webkit-font-smoothing:antialiased}
+b,strong{font-weight:500}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3,h4{font-weight:500;margin:0;text-wrap:balance;letter-spacing:-.01em;line-height:1.08;color:var(--ink)}
+h1{font-size:clamp(34px,5.2vw,52px);letter-spacing:-.02em}
+h2{font-size:clamp(24px,3vw,30px)}
+h3{font-size:18px;line-height:1.2}
+p{margin:0 0 .9em}
+a{color:var(--cobalt)}
+.eyebrow{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
 
-/* masthead */
-header.mast{padding-block:56px 34px;border-bottom:1px solid var(--line)}
-.mast .kick{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:18px}
-.mast .kick .dot{color:var(--line-2)}
-.mast .sub{margin:18px 0 0;max-width:62ch;font-size:1.15rem;color:var(--ink-2)}
-.stamps{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
-.stamps span{font-family:var(--f-display);font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-2);color:var(--muted);padding:5px 9px;border-radius:2px}
+/* header */
+header.mast{position:relative;overflow:hidden;padding-block:28px 30px;display:flex;flex-direction:column;gap:16px;border-bottom:1px solid var(--black)}
+header .ribbon{position:absolute;right:-40px;top:-30px;width:380px;max-width:46%;pointer-events:none}
+header .logo{height:52px;width:auto;align-self:flex-start;position:relative}
+.mast .kick{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;position:relative}
+.mast .kick .dot{color:var(--ink-2)}
+.mast h1{position:relative;max-width:16ch}
+.mast .sub{margin:0;max-width:62ch;font-size:20px;line-height:1.4;position:relative}
+.stamps{display:flex;gap:8px;flex-wrap:wrap;position:relative}
+.stamps span{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--black);padding:4px 9px;border-radius:2px;background:var(--surface)}
 
-section{padding-top:52px}
-.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:24px}
-.sechead .note{font-family:var(--f-display);font-size:.82rem;color:var(--muted);margin:0}
+/* sticky nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line);margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:0 max(16px,env(safe-area-inset-left,0px))}
+.nav ul{list-style:none;margin:0 auto;padding:0;max-width:1180px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a{display:block;padding:12px 12px;font-size:15px;color:var(--ink-2);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent}
+.nav a:hover,.nav a:focus-visible{color:var(--cobalt);outline:none}
+.nav a.on{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--surface)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
 
-/* thesis */
-.thesis{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
-.position{border-left:3px solid var(--mca);padding:2px 0 2px 22px}
-.position .big{font-family:var(--f-display);font-size:1.28rem;font-weight:600;line-height:1.35;letter-spacing:-.01em;margin-bottom:.7em}
+section{padding-top:56px;scroll-margin-top:64px}
+.sechead{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.sechead::before{content:"";width:40px;height:4px;background:var(--cobalt)}
+.sechead .note{font-size:15px;color:var(--ink-2);margin:0;max-width:72ch}
+
+/* why */
+.thesis{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:start}
+.position .big{font-size:24px;line-height:1.3;letter-spacing:-.01em;color:var(--cobalt);margin-bottom:.8em}
+.position p{max-width:66ch}
 .position p:last-child{margin-bottom:0}
-.fourtests{border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden}
+.fourtests{background:var(--raised);overflow:hidden}
 .fourtests ol{list-style:none;margin:0;padding:0}
-.fourtests .cap{border-bottom:1px solid var(--line)}
-.fourtests li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);font-size:.98rem;color:var(--ink-2)}
+.fourtests .cap{display:block;padding:14px 20px;background:var(--horizon);color:var(--black);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+.fourtests li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.45}
 .fourtests li:last-child{border-bottom:0}
-.fourtests .k{font-family:var(--f-mono);font-size:.78rem;color:var(--mca-2);padding-top:3px}
-.fourtests .cap{padding:12px 18px;background:var(--surface-2);font-family:var(--f-display);font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);display:block}
+.fourtests .k{font-size:20px;color:var(--cobalt);font-variant-numeric:tabular-nums;line-height:1.1}
 
-/* team shape */
-.org{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:28px 24px 24px;overflow-x:auto}
-.org-inner{min-width:760px}
-.org .head{margin:0 auto;width:max-content;padding:10px 18px;background:var(--mca);color:var(--on-accent);border-radius:2px;font-family:var(--f-display);font-weight:600;font-size:.92rem;text-align:center}
-.org .head small{display:block;font-weight:500;font-size:.72rem;opacity:.85;letter-spacing:.02em}
-.org .stem{width:1px;height:18px;background:var(--line-2);margin:0 auto}
-.org .bar{height:1px;background:var(--line-2);margin:0 10%}
-.org .five{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+/* team chart */
+.org{background:var(--raised);padding:28px 24px 24px;overflow-x:auto}
+.org-inner{min-width:860px}
+.org .head{margin:0 auto;width:max-content;padding:12px 20px;background:var(--cobalt);color:var(--white);font-size:16px;text-align:center}
+.org .head small{display:block;font-size:13px;opacity:.85;margin-top:2px}
+.org .stem{width:1px;height:18px;background:var(--black);margin:0 auto}
+.org .bar{height:1px;background:var(--black);margin:0 12.5%}
+.org .five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 .org .five > div{position:relative;padding-top:18px}
-.org .five > div::before{content:"";position:absolute;top:0;left:50%;width:1px;height:18px;background:var(--line-2)}
-.seat{border:1px solid var(--line);border-top:3px solid var(--c);background:var(--surface-2);border-radius:2px;padding:12px 12px 13px;height:100%}
-.seat .tag{font-family:var(--f-display);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
-.seat h4{font-size:.9rem;font-weight:600;margin:.35rem 0 .35rem;line-height:1.25}
-.seat p{font-size:.82rem;line-height:1.45;color:var(--muted);margin:0}
-.t-tech{--c:var(--tech)} .t-evid{--c:var(--evid)} .t-ops{--c:var(--ops)}
-.org .contract{margin-top:22px;border:1px dashed var(--line-2);border-radius:3px;padding:12px 16px;display:flex;gap:10px 22px;flex-wrap:wrap;align-items:baseline}
-.org .contract .eyebrow{flex:0 0 auto}
-.org .contract span.item{font-size:.86rem;color:var(--ink-2)}
-.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-family:var(--f-display);font-size:.75rem;color:var(--muted)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;background:var(--c);margin-right:6px;vertical-align:-1px}
-
-/* role */
-.role{display:grid;grid-template-columns:280px minmax(0,1fr);gap:36px;padding-block:34px;border-bottom:1px solid var(--line)}
-.role:last-of-type{border-bottom:0}
-.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);align-self:start}
-.rail .tag{font-family:var(--f-display);font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c);display:inline-block;padding:3px 7px;background:var(--cw);border-radius:2px}
-.rail h2{margin:.6rem 0 .8rem;font-size:1.38rem}
-.rail .owns{font-size:.95rem;color:var(--ink-2);margin:0 0 1rem}
-.rail dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:.85rem;border-top:1px solid var(--line);padding-top:12px}
-.rail dt{font-family:var(--f-display);font-size:.62rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted-2);padding-top:3px}
-.rail dd{margin:0;color:var(--ink-2);font-family:var(--f-display);font-weight:500}
-.r-tech{--c:var(--tech);--cw:var(--tech-wash)} .r-evid{--c:var(--evid);--cw:var(--evid-wash)} .r-ops{--c:var(--ops);--cw:var(--ops-wash)}
-
-.profile .what{font-size:1.04rem;color:var(--ink);max-width:68ch;margin-bottom:1.4rem}
-.profile h3{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-2);margin:0 0 .6rem}
-.must{list-style:none;margin:0 0 1.5rem;padding:0;border-top:1px solid var(--line)}
-.must li{padding:10px 0;border-bottom:1px solid var(--line);font-size:.97rem;color:var(--ink-2);display:grid;grid-template-columns:minmax(150px,200px) minmax(0,1fr);gap:16px}
-.must li b{font-family:var(--f-display);font-weight:600;font-size:.88rem;color:var(--ink);line-height:1.45;padding-top:2px}
-.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-bottom:1.4rem}
-.pair ul{margin:0;padding-left:1.1em;font-size:.94rem;color:var(--ink-2)}
-.pair li{margin-bottom:.4em}
-.pair .out h3{color:var(--brick)}
-.growth{margin:1.2rem 0 0;font-size:.92rem;color:var(--muted);max-width:68ch}
-.wider{border:1px dashed var(--ops);background:var(--ops-wash);border-radius:3px;padding:16px 20px;margin-top:1.4rem}
-.wider .eyebrow{color:var(--ops);display:block;margin-bottom:.4rem}
-.wider p{margin:0 0 .6em;font-size:.96rem;color:var(--ink-2)}
-.wider p:first-of-type{color:var(--ink)}
-.wider p:last-child{margin-bottom:0}
-.trigger{border:1px dashed var(--evid);background:var(--evid-wash);border-radius:3px;padding:16px 20px;margin-bottom:1.4rem}
-.trigger .eyebrow{color:var(--evid);display:block;margin-bottom:.4rem}
-.trigger p{margin:0 0 .6em;font-size:.97rem;color:var(--ink)}
-.trigger ul{margin:0 0 .6em;padding-left:1.1em;font-size:.95rem;color:var(--ink-2)}
-.trigger li{margin-bottom:.35em}
-.trigger p:last-child{margin-bottom:0}
-.why{margin:0 0 1.5rem;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.why li{background:var(--surface);padding:14px 16px;font-size:.92rem;color:var(--ink-2);line-height:1.5}
-.why b{display:block;font-family:var(--f-display);font-weight:600;font-size:.88rem;color:var(--ink);margin-bottom:.25rem}
+.org .five > div::before{content:"";position:absolute;top:0;left:50%;width:1px;height:18px;background:var(--black)}
 .org .five.below > div{padding-top:0}
 .org .five.below > div::before{display:none}
 .org .below .slot{grid-column:1}
-.org .below .slot2{grid-column:1}
-.org .below .vstem{width:1px;height:16px;background:var(--line-2);margin:0 auto}
-.seat.w15{border-style:dashed;border-top:3px solid var(--c);background:var(--surface)}
-.org .aside{margin-top:22px;border:1px solid var(--line);border-radius:3px;padding:12px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 22px;align-items:baseline}
-.org .aside span.item{font-size:.86rem;color:var(--ink-2)}
-.org .aside span.item b{font-family:var(--f-display);font-weight:600;font-size:.84rem;color:var(--ink)}
-.owners{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:.6rem 0 1rem}
-.owners>div{background:var(--surface-2);padding:12px 14px;font-size:.9rem;color:var(--ink-2);line-height:1.45}
-.owners .who{font-family:var(--f-display);font-weight:600;font-size:.8rem;color:var(--ink);display:block;margin-bottom:.2rem}
-.lanes{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--surface);border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.lanes th{font-family:var(--f-display);font-size:.64rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted-2);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface-2)}
-.lanes td{padding:11px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top;line-height:1.45}
-.lanes tr:last-child td{border-bottom:0}
-.lanes td:first-child{font-family:var(--f-display);font-weight:600;color:var(--ink);font-size:.88rem;white-space:nowrap}
-.lanes td:last-child{font-family:var(--f-display);font-size:.84rem;white-space:nowrap}
-.tablewrap{overflow-x:auto;margin-bottom:1rem}
-.frame{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:36px;align-items:start}
-.caution{border-left:3px solid var(--brick);padding:2px 0 2px 22px;max-width:72ch;margin-top:1.4rem}
-.caution .eyebrow{color:var(--brick);display:block;margin-bottom:.4rem}
-.caution p{margin:0;font-size:.97rem;color:var(--ink-2)}
-.triggers{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.triggers li{display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.96rem;color:var(--ink-2)}
-.triggers b{font-family:var(--f-display);font-weight:600;font-size:.9rem;color:var(--ink)}
-.triggers .when{display:block;font-family:var(--f-display);font-size:.78rem;color:var(--muted);margin-top:.25rem}
-.test{background:var(--mca-wash);border-radius:3px;padding:16px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:baseline}
-.test .eyebrow{color:var(--mca-2)}
-.test p{margin:0;font-size:.98rem;color:var(--ink)}
+.org .below .vstem{width:1px;height:16px;background:var(--black);margin:0 auto}
+.seat{border-top:4px solid var(--c);background:var(--mist);padding:14px 14px 15px;height:100%}
+.seat .tag{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.seat h4{font-size:17px;margin:.45rem 0 .4rem;line-height:1.2}
+.seat p{font-size:14px;line-height:1.45;color:var(--ink-2);margin:0}
+.seat.w15{background:var(--raised);border:1px dashed var(--black);border-top:4px solid var(--c)}
+.t-tech{--c:var(--horizon)} .t-evid{--c:var(--cobalt)} .t-ops{--c:var(--black)}
+.org .aside{margin-top:22px;background:var(--mist);padding:14px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 22px;align-items:baseline}
+.org .aside span.item{font-size:14.5px;line-height:1.5}
+.org .aside span.item b{color:var(--cobalt)}
+.legend{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--ink-2);align-items:center}
+.legend i{display:inline-block;width:22px;height:4px;background:var(--c);margin-right:8px;vertical-align:middle}
 
-/* traits + boundaries */
-.traits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.traits > div{background:var(--surface);padding:18px 20px;font-size:.96rem;color:var(--ink-2)}
-.traits b{display:block;font-family:var(--f-display);font-weight:600;color:var(--ink);font-size:.95rem;margin-bottom:.25rem}
-.bounds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.split.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.bound{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 22px}
-.bound h3{font-size:1.02rem;margin-bottom:.7rem}
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:2px;margin:.4rem 0 .9rem;overflow:hidden}
-.split > div{background:var(--surface-2);padding:10px 12px;font-size:.88rem;color:var(--ink-2);line-height:1.45}
-.split .who{font-family:var(--f-display);font-weight:600;font-size:.8rem;color:var(--ink);display:block;margin-bottom:.2rem}
-.bound p{font-size:.95rem;color:var(--ink-2)}
-.bound p:last-child{margin-bottom:0}
+/* roles */
+.role{background:var(--raised);display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px;padding:32px;margin-bottom:20px}
+.role:last-of-type{margin-bottom:0}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 68px);align-self:start}
+.rail .tag{display:inline-block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;background:var(--cw);color:var(--cf);border:1px solid var(--cb)}
+.rail h2{margin:.7rem 0 .8rem;font-size:26px}
+.rail .owns{font-size:16px;color:var(--cobalt);margin:0 0 1.1rem;line-height:1.4}
+.rail dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;font-size:14px;border-top:1px solid var(--black);padding-top:14px}
+.rail dt{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding-top:2px}
+.rail dd{margin:0;line-height:1.4}
+.r-tech{--cw:var(--horizon);--cf:var(--black);--cb:var(--horizon)}
+.r-evid{--cw:var(--cobalt);--cf:var(--white);--cb:var(--cobalt)}
+.r-ops{--cw:var(--white);--cf:var(--black);--cb:var(--black)}
 
-.contracted{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.contracted li{display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.96rem;color:var(--ink-2)}
-.contracted b{font-family:var(--f-display);font-weight:600;font-size:.9rem;color:var(--ink)}
+.profile{min-width:0}
+.profile .what{font-size:17px;line-height:1.55;max-width:68ch;margin-bottom:1.5rem}
+.profile h3{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt);margin:0 0 .7rem}
+.must{list-style:none;margin:0 0 1.6rem;padding:0;border-top:1px solid var(--black)}
+.must li{padding:12px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.5;display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:18px}
+.must li b{color:var(--ink);font-size:15.5px;line-height:1.4}
+.must li span{color:var(--ink-2)}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-bottom:1.6rem}
+.pair ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--black)}
+.pair li{position:relative;padding:10px 0 10px 26px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.45}
+.pair li::before{content:"+";position:absolute;left:2px;top:7px;font-size:20px;line-height:1;color:var(--cobalt)}
+.pair .out h3{color:var(--black)}
+.pair .out li::before{content:"\2013";color:var(--black)}
+.test{background:var(--mist-deep);padding:18px 22px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;align-items:baseline}
+.test .eyebrow{white-space:nowrap}
+.test p{margin:0;font-size:15.5px;line-height:1.5}
+.why{margin:0 0 1.6rem;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.why li{background:var(--mist);border-top:4px solid var(--horizon);padding:14px 16px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.why b{display:block;color:var(--ink);font-size:16px;margin-bottom:.35rem}
+.trigger,.wider{background:var(--mist);padding:18px 22px;margin-bottom:1.6rem}
+.wider{margin:1.6rem 0 0}
+.trigger .eyebrow,.wider .eyebrow{display:block;margin-bottom:.5rem}
+.trigger p,.wider p{margin:0 0 .7em;font-size:15.5px;line-height:1.55}
+.trigger p:last-child,.wider p:last-child{margin-bottom:0}
+.wider p b{color:var(--cobalt)}
+.growth{margin:1.4rem 0 0;font-size:15px;color:var(--ink-2);max-width:68ch}
 
-.order{border-left:3px solid var(--mca-2);padding:4px 0 4px 22px;max-width:72ch}
-.order .big{font-family:var(--f-display);font-size:1.2rem;font-weight:600;line-height:1.35;margin-bottom:.6em}
-.order p:last-child{margin-bottom:0}
+/* catalogue, traits, bought, triggers */
+.owners{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 1.2rem}
+.owners>div{background:var(--raised);border-top:4px solid var(--cobalt);padding:16px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.owners .who{display:block;color:var(--ink);font-size:16px;margin-bottom:.35rem;line-height:1.25}
+#catalogue > p{max-width:72ch;color:var(--ink-2);font-size:15.5px}
+.traits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.traits > div{background:var(--raised);padding:18px 20px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.traits b{display:block;color:var(--cobalt);font-size:18px;margin-bottom:.35rem}
+.contracted,.triggers{list-style:none;margin:0;padding:0;background:var(--raised)}
+.contracted li,.triggers li{display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr);gap:20px;padding:16px 22px;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.5}
+.contracted li:last-child,.triggers li:last-child{border-bottom:0}
+.contracted li > span,.triggers li > span{color:var(--ink-2)}
+.contracted b,.triggers > li > b{color:var(--ink);font-size:16px}
+.triggers span b{color:var(--cobalt)}
+.triggers .when{display:block;font-size:13px;color:var(--ink-2);margin-top:.3rem;letter-spacing:.02em}
 
-footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--f-display);font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* order */
+.order{background:var(--raised);padding:28px 30px}
+.order .big{font-size:22px;line-height:1.35;color:var(--cobalt);margin-bottom:1em;max-width:58ch}
+.order p{max-width:72ch}
+.caution{border-top:1px solid var(--black);padding-top:16px;margin:1.4rem 0 0;max-width:72ch}
+.caution .eyebrow{display:block;margin-bottom:.4rem}
+.order p.caution{color:var(--ink)}
 
-@media (max-width:860px){
-  .thesis,.frame{grid-template-columns:1fr;gap:28px}
-  .role{grid-template-columns:1fr;gap:18px}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .thesis{grid-template-columns:1fr;gap:28px}
+  .role{grid-template-columns:1fr;gap:20px;padding:24px}
   .rail{position:static}
-  .bounds{grid-template-columns:1fr}
   .why{grid-template-columns:1fr}
   .owners{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){
-  .wrap{padding-inline:16px}
-  body{font-size:16px}
-  .must li,.contracted li{grid-template-columns:1fr;gap:4px}
-  .pair{grid-template-columns:1fr;gap:16px}
-  .traits{grid-template-columns:1fr}
+  body{font-size:15.5px}
+  .mast .sub{font-size:18px}
+  .role{padding:20px 18px}
+  .must li,.contracted li,.triggers li{grid-template-columns:1fr;gap:4px}
+  .contracted li,.triggers li{padding:14px 16px}
+  .pair{grid-template-columns:1fr;gap:18px}
+  .traits,.owners{grid-template-columns:1fr}
   .test{grid-template-columns:1fr}
-  .why,.split.three,.owners{grid-template-columns:1fr}
-  .triggers li,.org .aside{grid-template-columns:1fr;gap:6px}
-  .lanes td:first-child,.lanes td:last-child{white-space:normal}
+  .org .aside{grid-template-columns:1fr;gap:6px}
+  .org{padding:20px 16px;overflow:visible}
+  .org-inner{min-width:0}
+  .org .head{width:auto}
+  .org .bar,.org .five > div::before,.org .below .vstem{display:none}
+  .org .stem{height:14px}
+  .org .five{grid-template-columns:1fr;gap:12px}
+  .org .five > div{padding-top:0}
+  .org .five.below{margin-top:12px}
+  .org .below .slot{grid-column:auto}
+  .order{padding:22px 18px}
 }
 </style>
 </head>
 <body>
 
 
+
 <div class="wrap">
 
 <header class="mast">
+  <img class="ribbon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2NzEuNiAzOTgiIHhtbG5zOmMycGE9Imh0dHA6Ly9jMnBhLm9yZy9tYW5pZmVzdCI+PG1ldGFkYXRhPjxjMnBhOm1hbmlmZXN0PkFBQVdnbXAxYldJQUFBQWVhblZ0WkdNeWNHRUFFUUFRZ0FBQXFnQTRtM0VEWXpKd1lRQUFBQlpjYW5WdFlnQUFBRWRxZFcxa1l6SnRZUUFSQUJDQUFBQ3FBRGliY1FOMWNtNDZZekp3WVRwaU1UTXlaREppTnkwNU5qY3hMVFJtTkRrdFltTXdaQzB6WVROaE5HUTRPV1U1TWprQUFBQURsMnAxYldJQUFBQXBhblZ0WkdNeVlYTUFFUUFRZ0FBQXFnQTRtM0VEWXpKd1lTNWhjM05sY25ScGIyNXpBQUFBQUx4cWRXMWlBQUFBUkdwMWJXUmpZbTl5QUJFQUVJQUFBS29BT0p0eEUyTXljR0V1YVc1bmNtVmthV1Z1ZEM1Mk13QUFBQUFZWXpKemFJQjZHdEk3OWM5MVRtWlVlVnE1WDg4QUFBQndZMkp2Y3FOcFpHTTZabTl5YldGMGJXbHRZV2RsTDNOMlp5dDRiV3hxYVc1emRHRnVZMlZKUkhnc2VHMXdPbWxwWkRwbE5qUmtNVGcyWVMxak9UY3dMVFJoTWpJdFlqVmxNaTB6Tm1NMU5tVXdZbVV4TlRGc2NtVnNZWFJwYjI1emFHbHdhSEJoY21WdWRFOW1BQUFCNG1wMWJXSUFBQUJCYW5WdFpHTmliM0lBRVFBUWdBQUFxZ0E0bTNFVFl6SndZUzVoWTNScGIyNXpMbll5QUFBQUFCaGpNbk5vendpRnk0UUJIR2EvUlcvQy93eGJsZ0FBQVpsalltOXlvbWRoWTNScGIyNXpncUptWVdOMGFXOXVhMk15Y0dFdWIzQmxibVZrYW5CaGNtRnRaWFJsY25PaGEybHVaM0psWkdsbGJuUnpnYUpqZFhKc2VDMXpaV3htSTJwMWJXSm1QV015Y0dFdVlYTnpaWEowYVc5dWN5OWpNbkJoTG1sdVozSmxaR2xsYm5RdWRqTmthR0Z6YUZnZ2k3YkFZelkzcFVnSzEvNmVqS2NOd1pOSHg4MzhRVTk3MVp5WHkxUXp6czJrWm1GamRHbHZibmdkWTI5dExtRnVkR2h5YjNCcFl5NWpiR0YxWkdVdWNISnZkbWxrWldScWNHRnlZVzFsZEdWeWM2RjRIMk52YlM1aGJuUm9jbTl3YVdNdWIzSnBaMmx1TFdOdmJtWnBaR1Z1WTJWbmRXNXJibTkzYm10a1pYTmpjbWx3ZEdsdmJuaG1RMnhoZFdSbElIQnliM1pwWkdWa0lIUm9hWE1nWm1sc1pTQmhkQ0IwYUdVZ2NtVnhkV1Z6ZENCdlppQmhJSFZ6WlhJZ1lXNWtJRzFoZVNCb1lYWmxJR055WldGMFpXUWdiM0lnYlc5a2FXWnBaV1FnZEdobElHWnBiR1VnWTI5dWRHVnVkSE11YlhOdlpuUjNZWEpsUVdkbGJuU2haRzVoYldWbVEyeGhkV1JsY21Gc2JFRmpkR2x2Ym5OSmJtTnNkV1JsWlBVQUFBRElhblZ0WWdBQUFFQnFkVzFrWTJKdmNnQVJBQkNBQUFDcUFEaWJjUk5qTW5CaExtaGhjMmd1WkdGMFlRQUFBQUFZWXpKemFHcXFhL1A3SlFDa0srQ0crVjA2dTNZQUFBQ0FZMkp2Y3FWallXeG5abk5vWVRJMU5tTndZV1JOQUFBQUFBQUFBQUFBQUFBQUFHUm9ZWE5vV0NDYTRuQkNMUENvUlluekNoN2UyNi8wNnB3a2ZhQ3hGLzk0Z2pPdS9kRVJhR1J1WVcxbGJtcDFiV0ptSUcxaGJtbG1aWE4wYW1WNFkyeDFjMmx2Ym5PQm9tVnpkR0Z5ZEJqQlpteGxibWQwYUJrZUJBQUFBajVxZFcxaUFBQUFKMnAxYldSak1tTnNBQkVBRUlBQUFLb0FPSnR4QTJNeWNHRXVZMnhoYVcwdWRqSUFBQUFDRDJOaWIzS2xZMkZzWjJaemFHRXlOVFpwYzJsbmJtRjBkWEpsZUUxelpXeG1JMnAxYldKbVBTOWpNbkJoTDNWeWJqcGpNbkJoT21JeE16SmtNbUkzTFRrMk56RXROR1kwT1MxaVl6QmtMVE5oTTJFMFpEZzVaVGt5T1M5ak1uQmhMbk5wWjI1aGRIVnlaV3BwYm5OMFlXNWpaVWxFZUN4NGJYQTZhV2xrT21JNU1XTTBZV1kxTFRrMk16Y3RORGd3TWkxaFlUWTBMVGs0TURrNFpqQmhPREl4TUhKamNtVmhkR1ZrWDJGemMyVnlkR2x2Ym5PRG9tTjFjbXg0TFhObGJHWWphblZ0WW1ZOVl6SndZUzVoYzNObGNuUnBiMjV6TDJNeWNHRXVhVzVuY21Wa2FXVnVkQzUyTTJSb1lYTm9XQ0NMdHNCak5qZWxTQXJYL3A2TXB3M0JrMGZIemZ4QlQzdlZuSmZMVkRQT3phSmpkWEpzZUNwelpXeG1JMnAxYldKbVBXTXljR0V1WVhOelpYSjBhVzl1Y3k5ak1uQmhMbUZqZEdsdmJuTXVkakprYUdGemFGZ2doQXhPRW5RN1l3cSs3dEx2WDBJb0V3TzU2T2t5Q29PaStKeW1EZ0gxM0JTaVkzVnliSGdwYzJWc1ppTnFkVzFpWmoxak1uQmhMbUZ6YzJWeWRHbHZibk12WXpKd1lTNW9ZWE5vTG1SaGRHRmthR0Z6YUZnZzNrRGM1bnh5OUFiblFXaUVmS29QYlJXazZ0RGZoemRCOXh0bmZIaHQ0SU4wWTJ4aGFXMWZaMlZ1WlhKaGRHOXlYMmx1Wm0ralpHNWhiV1Z2UVc1MGFISnZjR2xqSUVacGJHVnpaM1psY25OcGIyNWxNUzR3TGpCcmMzQmxZMVpsY25OcGIyNWxNaTQwTGpBQUFCQTRhblZ0WWdBQUFDaHFkVzFrWXpKamN3QVJBQkNBQUFDcUFEaWJjUU5qTW5CaExuTnBaMjVoZEhWeVpRQUFBQkFJWTJKdmN0S0VXUUlTb2dFbUdDRlpBZ293Z2dJR01JSUJqYUFEQWdFQ0FoUkE1YUFLN3NJNTBMNjRnL29HUWdVOVoxVVRBREFLQmdncWhrak9QUVFEQXpCSk1SY3dGUVlEVlFRS0V3NUJiblJvY205d2FXTXNJRkJDUXpFdU1Dd0dBMVVFQXhNbFFXNTBhSEp2Y0dsaklFTnZiblJsYm5RZ1EzSmxaR1Z1ZEdsaGJITWdVbTl2ZENCRFFUQWVGdzB5TmpBNE1EY3hPRFF6TlRaYUZ3MHlPREE0TURZeE9UUXpOVFphTUVReEZ6QVZCZ05WQkFvVERrRnVkR2h5YjNCcFl5d2dVRUpETVNrd0p3WURWUVFERXlCQmJuUm9jbTl3YVdNZ1EyeGhkV1JsSUVOdmJuUmxiblFnVTJsbmJtbHVaekJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCSmg2Q212TFVCZ0ZGTlUwdlVLbE9WdEU2ZGpkMTdMNVN1d1gwTGVtRmlzQk0zZGtkLzNjeWp4RkEzUW81UzQ2ZlgwL2loWTBWWjdtZmI5S0Y3MDN0NU9qV0RCV01BNEdBMVVkRHdFQi93UUVBd0lIZ0RBVkJnTlZIU1VFRGpBTUJnb3JCZ0VFQVlQb1hnSUJNQXdHQTFVZEV3RUIvd1FDTUFBd0h3WURWUjBqQkJnd0ZvQVV6bEhpQklGT1pGc2orT1BFejVvK25NSFhYTUl3Q2dZSUtvWkl6ajBFQXdNRFp3QXdaQUl3TVhNZEZKNEJldExMVlk3T1J1RTlub3FiYkFaT1puL2FBclh5VHdGQVpmS3JQenhGMnZQb0pOZjErVUNkZzFYR0FqQndYMXpkOVdHcVlrcW1MNVNGcXcxUXlTanIxekpmcEpNOSsxcmREd1NQTE1PUE9qS3VpWGpvVS9wVVVlRzlSd21oWTNCaFpGa05uZ0FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVBaWVFBQWVONDZ5bzMzVmpmcno5YmpHdjZwL3llMU90OGJhamJab0lJWVg0UGxwK2Nlak53ODhVWXpJWTBmSFp5elBRSVljcjZxS1MwTlMvWUdOK1dCWVZHWT08L2MycGE6bWFuaWZlc3Q+PC9tZXRhZGF0YT4KICA8cGF0aCBmaWxsPSIjMWUxZTkxIiBkPSJNMzI3LjEsMTYzLjlsNTguNiwyMC42YzE2LjYsMTIuNSw1MC42LDE0Ny45LDI4NS45LDEwMS4zbC03MCwxMTIuMmMtMjc0LjUtNzUuMi0yMjktMjE4LjEtMjc0LjUtMjM0LjFaIj48L3BhdGg+CiAgPHBhdGggZmlsbD0iIzY0OGRlOSIgZD0iTTM4NS43LDE4NC41bC01Ny44LTIwLjRjLTI4LjUtNy4zLTEwNSwxODQuOC0yMjEuOSw0Ny40LDAsMCw0NS40LDU2LDg5LjUsNzQuMSwxMDYuNiw0Ni45LDE1Ni40LTExMS4xLDE5MC4yLTEwMS4yWiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiMxZTFlOTEiIGQ9Ik0yMDkuNyw4Ny40cy02Ny43LDE4My44LDUuMywyMDQuOEM5Ny40LDI3My4yLTM5LjksMTg4LjUsMTAuOSwwbDE5OC44LDg3LjRaIj48L3BhdGg+Cjwvc3ZnPg==" alt="">
+  <img class="logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDM2Mi40IDEwMS45Ij4KICA8ZyBpZD0iTG9nbyI+CiAgICA8ZyBpZD0iVGV4dCI+CiAgICAgIDxwYXRoIGQ9Ik0zMzAsNzguOWMtNS42LDAtOC42LTMuNy04LjYtOXMzLjItOS4xLDguNC05LjEsOC40LDMuNiw4LjUsOS41YzAsLjItLjEuMy0uMy4zaC0xMi42Yy4xLDMuOSwxLjcsNS42LDQuNSw1LjZzMy41LTEuMSw0LTMuMmMwLS4yLjItLjIuMy0uMmgzLjNjLjIsMCwuMywwLC4zLjItLjUsMy4zLTMuMyw2LTgsNlpNMzI1LjYsNjcuOWg4LjRjLS4yLTIuNC0xLjUtNC40LTQuMS00LjRzLTMuOSwxLjYtNC4zLDQuNFoiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTMxMi4yLDc4LjljLTUuNCwwLTguNS0zLjUtOC41LTlzMy4xLTkuMSw4LjUtOS4xLDcuMSwyLjQsNy41LDYuMWMwLC4yLDAsLjMtLjMuM2gtMy4yYy0uMiwwLS4zLDAtLjMtLjMtLjQtMi4zLTEuOS0zLjQtMy44LTMuNC0zLDAtNC40LDIuMi00LjQsNi4zczEuNCw2LjMsNC40LDYuM2MyLjEsMCwzLjctMS4zLDMuOS0zLjksMC0uMi4xLS4zLjMtLjNoMy4zYy4yLDAsLjMsMCwuMy4zLS40LDMuOC0zLjMsNi42LTcuOCw2LjZaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0yODYuNiw3OC41Yy0uMiwwLS4zLDAtLjMtLjN2LTcuOGMwLDAsMC04LjksMC04LjksMC0uMi4xLS4zLjMtLjNoMy40Yy4yLDAsLjMsMCwuMy4zdjIuM2MxLTEuNiwzLTMsNS42LTNzNS45LDIuNCw1LjksNi44djEwLjZjMCwuMiwwLC4zLS4yLjNoLTMuNWMtLjIsMC0uMywwLS4zLS4zdi03LjFjMCwwLDAtMy40LDAtMy40LDAtMi42LTEuMy0zLjktMy4xLTMuOXMtMy45LDEuNy00LjMsNS4zdjkuMWMwLC4yLDAsLjMtLjIuM2gtMy42WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMjc0LjUsNzguOGMtNC44LDAtNy4zLTMuOS03LjMtOC45czIuOC05LDcuNC05LDQuMS45LDUuMiwyLjd2LTJjLS4xLS4yLDAtLjMuMi0uM2gzLjVjLjIsMCwuMywwLC4zLjN2OC4zYzAsMCwwLDguNSwwLDguNSwwLC4yLS4xLjMtLjMuM2gtMy41Yy0uMiwwLS4zLS4xLS4zLS4zdi0yLjJjLTEuMSwxLjgtMi45LDIuOC01LjMsMi44Wk0yNzUuNiw3Ni4xYzIuNywwLDQuMy0yLDQuMy02LjEsMC00LjEtMS41LTYuNC00LjItNi40LTIuOSwwLTQuNCwyLjMtNC40LDZzMS41LDYuNSw0LjMsNi40WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMjYxLjIsNTkuNGMtLjIsMC0uMy0uMS0uMy0uM3YtMy4zYzAtLjIuMS0uMy4zLS4zaDMuNWMuMiwwLC4zLjEuMy4zdjMuM2MwLC4yLS4xLjMtLjMuM2gtMy41Wk0yNjEuMiw3OC41Yy0uMiwwLS4zLDAtLjMtLjN2LTguNWMwLDAsMC04LjIsMC04LjIsMC0uMi4xLS4zLjMtLjNoMy42Yy4yLDAsLjMsMCwuMy4zdjguMmMwLDAsMCw4LjUsMCw4LjUsMCwuMi0uMS4zLS4zLjNoLTMuNloiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTI1NC40LDc4LjVjLS4yLDAtLjMsMC0uMy0uM3YtMTEuNmMuMSwwLDAtMTEuNCwwLTExLjQsMC0uMi4xLS4zLjMtLjNoMy41Yy4yLDAsLjMsMCwuMy4zdjExLjRjLS4xLDAsMCwxMS42LDAsMTEuNiwwLC4yLS4xLjMtLjMuM2gtMy41WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMjQ3LjYsNzguNWMtLjIsMC0uMywwLS4zLS4zdi0xMS42Yy4xLDAsMC0xMS40LDAtMTEuNCwwLS4yLjEtLjMuMy0uM2gzLjVjLjIsMCwuMywwLC4zLjN2MTEuNGMtLjEsMCwwLDExLjYsMCwxMS42LDAsLjItLjEuMy0uMy4zaC0zLjVaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0yMjQuMiw3OC41Yy0uMiwwLS4zLS4xLS4yLS4zbDguMS0yM2MwLS4xLjItLjIuMy0uMmg1Yy4yLDAsLjMsMCwuMy4ybDgsMjNjMCwuMiwwLC4zLS4yLjNoLTMuN2MtLjIsMC0uMywwLS4zLS4ybC0yLjEtNi4zaC05LjJsLTIuMSw2LjNjMCwuMi0uMi4yLS4zLjJoLTMuNlpNMjMxLjIsNjguN2g3LjFsLTMuNi0xMC45LTMuNSwxMC45WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMTk4LDc4LjVjLS4yLDAtLjMsMC0uMy0uM3YtMTEuN2MuMSwwLDAtMTEuMywwLTExLjMsMC0uMi4xLS4zLjMtLjNoNy45YzYuNywwLDEyLjIsMy45LDEyLjIsMTEuOHMtNS43LDExLjctMTIuMSwxMS43aC04Wk0yMDEuOSw3NS40aDQuM2M0LDAsNy42LTIuNSw3LjYtOC42cy0zLjQtOC43LTcuNy04LjdoLTQuMnY4LjRjLS4xLDAsMCw4LjksMCw4LjlaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0xNzUuNSw3OC41Yy0uMiwwLS4zLDAtLjMtLjN2LTExLjRjLjEsMCwwLTExLjUsMC0xMS41LDAtLjIsMC0uMy4zLS4zaDMuNmMuMiwwLC4zLDAsLjMuM3Y5LjFjMCwwLDExLjMsMCwxMS4zLDB2LTkuMWMwLS4yLDAtLjMuMi0uM2gzLjZjLjIsMCwuMywwLC4zLjN2MTEuNWMtLjEsMCwwLDExLjQsMCwxMS40LDAsLjIsMCwuMy0uMy4zaC0zLjZjLS4yLDAtLjMsMC0uMy0uM3YtMTAuOGMwLDAtMTEuMywwLTExLjMsMHYxMC44YzAsLjIsMCwuMy0uMi4zaC0zLjZaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0xNjIuOCw3OWMtNy4xLDAtMTEuMy00LjgtMTEuMy0xMi4yczQuNC0xMi4yLDExLjMtMTIuMiw4LjksMi4xLDEwLjEsOC4zYzAsLjIsMCwuMy0uMi4zaC0zLjVjLS4yLDAtLjMsMC0uMy0uMi0uNy0zLjUtMi45LTUuMi02LjItNS4ycy03LDMuNS03LDksMi42LDksNyw5LDUuOC0yLDYuMy01LjdjMC0uMi4yLS4zLjMtLjNoMy42Yy4yLDAsLjMuMS4yLjQtMS4xLDYuMS00LjksOC43LTEwLjMsOC43WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMjgyLjYsNDdjLS4yLDAtLjMsMC0uMy0uM3YtNi4yYy4xLDAsMC0xMC41LDAtMTAuNSwwLS4yLjEtLjMuMy0uM2gzLjRjLjIsMCwuMywwLC4zLjN2Mi4zYzEuMS0xLjgsMi43LTMsNS4xLTNzNC4yLDEuMSw1LDMuNWMxLjMtMi41LDMuMS0zLjUsNS40LTMuNSwzLjQsMCw1LjUsMi4xLDUuNSw2Ljh2MTAuNmMwLC4yLDAsLjMtLjIuM2gtMy42Yy0uMiwwLS4zLDAtLjMtLjN2LTYuMmMwLDAsMC00LjMsMC00LjMsMC0yLjctMS4xLTMuOS0yLjgtMy45cy0zLjMsMS44LTMuNiw1LjJjMCwuMSwwLC4zLDAsLjR2OC44YzAsLjIsMCwuMy0uMi4zaC0zLjZjLS4yLDAtLjMsMC0uMy0uM3YtNi4yYzAsMCwwLTQuMywwLTQuMywwLTIuNy0xLjEtMy45LTIuOC0zLjlzLTMuMywxLjktMy43LDUuM3Y5LjFjMCwuMiwwLC4zLS4yLjNoLTMuNloiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTI3MS45LDQ3LjRjLTUuNiwwLTguNi0zLjctOC42LTlzMy4yLTkuMSw4LjQtOS4xLDguNCwzLjYsOC41LDkuNWMwLC4yLS4xLjMtLjMuM2gtMTIuNmMuMSwzLjksMS43LDUuNiw0LjUsNS42czMuNS0xLjEsNC0zLjJjMC0uMi4yLS4yLjMtLjJoMy4zYy4yLDAsLjMsMCwuMy4yLS41LDMuMy0zLjMsNi04LDZaTTI2Ny41LDM2LjRoOC40Yy0uMi0yLjQtMS41LTQuNC00LjEtNC40cy0zLjksMS42LTQuMyw0LjRaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0yNTcuNCw0N2MtLjIsMC0uMywwLS4zLS4zdi0xMS42YzAsMCwwLTExLjQsMC0xMS40LDAtLjIuMS0uMy4zLS4zaDMuNWMuMiwwLC4zLDAsLjMuM3YxMS40Yy0uMSwwLDAsMTEuNiwwLDExLjYsMCwuMi0uMS4zLS4zLjNoLTMuNVoiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTI1MC42LDQ3Yy0uMiwwLS4zLDAtLjMtLjN2LTExLjZjLjEsMCwwLTExLjQsMC0xMS40LDAtLjIuMS0uMy4zLS4zaDMuNWMuMiwwLC4zLDAsLjMuM3YxMS40Yy0uMSwwLDAsMTEuNiwwLDExLjYsMCwuMi0uMS4zLS4zLjNoLTMuNVoiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTIzOC40LDQ3LjNjLTQuOCwwLTcuMy0zLjktNy4zLTguOXMyLjgtOSw3LjQtOSw0LjEuOSw1LjIsMi43di0yYy0uMS0uMiwwLS4zLjItLjNoMy41Yy4yLDAsLjMsMCwuMy4zdjguM2MwLDAsMCw4LjUsMCw4LjUsMCwuMi0uMS4zLS4zLjNoLTMuNWMtLjIsMC0uMy0uMS0uMy0uM3YtMi4yYy0xLjEsMS44LTIuOSwyLjgtNS4zLDIuOFpNMjM5LjQsNDQuNmMyLjcsMCw0LjMtMiw0LjMtNi4xLDAtNC4xLTEuNS02LjQtNC4yLTYuNC0yLjksMC00LjQsMi4zLTQuNCw2czEuNSw2LjUsNC4zLDYuNFoiPjwvcGF0aD4KICAgICAgPHBhdGggZD0iTTIyMS44LDQ3LjNjLTQuOCwwLTcuOS0yLTgtNiwwLS4yLjEtLjMuMy0uM2gzLjRjLjIsMCwuMy4xLjMuMy4xLDIuNCwxLjYsMy40LDQuMywzLjRzMy43LS45LDMuNy0yLjZjMC00LTExLjUtLjYtMTEuNS03LjZzMi44LTUuMyw3LjItNS4zLDcuMywxLjcsNy41LDUuM2MwLC4yLS4xLjMtLjMuM2gtMy4yYy0uMiwwLS4zLS4xLS4zLS4zLS4yLTEuOC0xLjUtMi44LTMuOC0yLjhzLTMuMy44LTMuMywyLjVjMCwzLjksMTEuNS4zLDExLjUsNy42cy0zLjMsNS41LTcuNyw1LjVaIj48L3BhdGg+CiAgICAgIDxwYXRoIGQ9Ik0yMDQuNSw0Ny4zYy00LjgsMC03LjktMi04LTYsMC0uMi4xLS4zLjMtLjNoMy40Yy4yLDAsLjMuMS4zLjMuMSwyLjQsMS42LDMuNCw0LjMsMy40czMuNy0uOSwzLjctMi42YzAtNC0xMS41LS42LTExLjUtNy42czIuOC01LjMsNy4yLTUuMyw3LjMsMS43LDcuNSw1LjNjMCwuMi0uMS4zLS4zLjNoLTMuMmMtLjIsMC0uMy0uMS0uMy0uMy0uMi0xLjgtMS41LTIuOC0zLjgtMi44cy0zLjMuOC0zLjMsMi41YzAsMy45LDExLjUuMywxMS41LDcuNnMtMy4zLDUuNS03LjcsNS41WiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMTg0LjksNDcuNGMtMy42LDAtNS45LTIuNC01LjktNi44di0xMC42YzAtLjIsMC0uMy4yLS4zaDMuNWMuMiwwLC4zLDAsLjMuM3Y3LjFjMCwwLDAsMy40LDAsMy40LDAsMi42LDEuMywzLjksMy4yLDMuOXMzLjktMS43LDQuMy01LjN2LTkuMWMwLS4yLDAtLjMuMi0uM2gzLjZjLjIsMCwuMywwLC4zLjN2Ny44YzAsMCwwLDguOSwwLDguOSwwLC4yLS4xLjMtLjMuM2gtMy40Yy0uMiwwLS4zLDAtLjMtLjN2LTIuM2MtMSwxLjYtMywzLTUuNiwzWiI+PC9wYXRoPgogICAgICA8cGF0aCBkPSJNMTUyLjMsNDdjLS4yLDAtLjMsMC0uMy0uM3YtMTEuNGMuMSwwLDAtMTEuNiwwLTExLjYsMC0uMi4xLS4zLjMtLjNoNWMuMiwwLC4zLDAsLjMuMmw1LjEsMTMuMywxLjgsNC44LDEuNy00LjgsNC45LTEzLjNjMC0uMi4yLS4yLjMtLjJoNC43Yy4yLDAsLjMsMCwuMy4zdjExLjZjLS4xLDAsMCwxMS40LDAsMTEuNCwwLC4yLDAsLjMtLjMuM2gtMy42Yy0uMiwwLS4zLS4xLS4zLS4zdi0xMHMuMi03LjcuMi03LjdsLTYuNSwxNy43YzAsLjItLjIuMi0uMy4yaC0yLjhjLS4yLDAtLjMsMC0uMy0uMmwtNi45LTE4LjIuMiw4LjF2MTBjMCwuMiwwLC4zLS4zLjNoLTMuMloiPjwvcGF0aD4KICAgIDwvZz4KICAgIDxnIGlkPSJNX3g1Rl9tYXJrIj4KICAgICAgPGc+CiAgICAgICAgPHBhdGggZmlsbD0iIzY0OGRlOSIgZD0iTTM5LjQsNzMuOWMtNS40LTEuOC01LjEtNy44LTUuMS03LjhoLTkuOXMxLjIsOS4xLDkuOCwxMC42YzAsMCwwLDAsMCwwLDIuMSwwLDMuNy0xLDUuMS0yLjhaIj48L3BhdGg+CiAgICAgICAgPHBhdGggZmlsbD0iIzY0OGRlOSIgZD0iTTM1LjUsNzYuOWMtLjQsMC0uOCwwLTEuMy0uMS4yLDAsLjYsMCwxLjMuMVoiPjwvcGF0aD4KICAgICAgICA8cGF0aCBmaWxsPSIjMWUxZTkxIiBkPSJNMzQuMyw3Ni44czAsMCwwLDBjMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDBaIj48L3BhdGg+CiAgICAgICAgPHBhdGggZmlsbD0iIzY0OGRlOSIgZD0iTTEwMC4yLDE5LjJzMCwwLS4yLDBjLS4yLDAtMTIuNS0yLTEyLjctMmgtLjJjMywuOCw0LDEwLjksNiwyMi42LDIuOCwxNi4zLDcuNCwzNS45LDIxLjksMzkuMS0uNy0uMi0xLjUtLjQtMi4yLS43LDYuNCwxLDkuNy0xLDExLjUtMy44LTE4LjMtLjUtMTkuMS01My4zLTI0LjEtNTUuMVoiPjwvcGF0aD4KICAgICAgPC9nPgogICAgICA8cGF0aCBmaWxsPSIjMWUxZTkxIiBkPSJNMTI2LDY0LjRzLjksNS44LTEuNyw5LjljLTEuOCwyLjgtNS4xLDQuOS0xMS41LDMuOC44LjMsMS41LjUsMi4yLjcsMTYuMiw0LjQsMjQuMS00LjIsMjUuNC0xNC40aC0xNC41WiI+PC9wYXRoPgogICAgICA8cGF0aCBmaWxsPSIjMWUxZTkxIiBkPSJNODcuMiwxNy4xYy0zLjcsMS45LS4yLDQ1LjgtMTIuNiw1OC4yLTIuMSwyLjEtNC41LDMuMy03LjYsMy4zLDAsMCwwLDAsMCwwLDEuNS40LDMuMS40LDQuNy40LDEuNSwwLDMuMS0uMSw0LjctLjMsMS41LS4yLDMtLjQsNC40LS45LDIuOC0xLjEsNC43LTMuNCw2LjEtNiwuMi0uMy40LS43LjUtMSwwLDAsMC0uMS4xLS4yLjctMS41LDEuMy0zLDEuNy00LjYuNS0xLjcuOS0zLjUsMS4zLTUuMi40LTEuOS43LTMuNywxLTUuNi4zLTEuOS41LTMuOS43LTUuOS4yLTIsLjQtMy45LjYtNS45LjEtMS4yLjMtMi40LjQtMy42LTItMTEuOC0zLTIxLjgtNi0yMi43WiI+PC9wYXRoPgogICAgICA8cGF0aCBmaWxsPSIjNjQ4ZGU5IiBkPSJNNTcuNiwzNS4xbC05LjYtMS42YzIuMi42LDMsOCw0LjQsMTYuNiwyLDEyLDUuMSwyNi4zLDE0LjYsMjguNSwzLDAsNS41LTEuMiw3LjYtMy4zLTEwLjktNi4zLTEyLjgtMzguNy0xNy00MC4zWiI+PC9wYXRoPgogICAgICA8cGF0aCBmaWxsPSIjMWUxZTkxIiBkPSJNNDgsMzMuNWMtMi41LDEuMy0xLjUsMzEtOC42LDQwLjUtMS40LDEuOC0zLDIuOS01LjEsMi44LDAsMCwwLDAsMCwwLC40LDAsLjgsMCwxLjMuMSwyLjMuMiw0LjcsMCw2LjktLjcsMy43LTEsNS40LTMuNCw2LjYtNi40LjYtMS42LDEuMS0zLjIsMS40LTQuOS40LTEuOC43LTMuMy45LTUuMS4yLTEuOS40LTMuOS42LTUuOC4xLTEuMy4yLTIuNi4zLTMuOS0xLjQtOC42LTIuMi0xNi00LjQtMTYuNloiPjwvcGF0aD4KICAgIDwvZz4KICA8L2c+CiAgPGcgaWQ9ImNsZWFyc3BhY2UuX2RvZXNfbm90X3ByaW50Ij4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0zMzguMiwyMy40Yy0uMiwwLS4zLDAtLjMtLjN2LTExLjRjLjEsMCwwLTExLjYsMC0xMS42LDAtLjIuMS0uMy4zLS4zaDVjLjIsMCwuMywwLC4zLjJsNS4xLDEzLjMsMS44LDQuOCwxLjctNC44LDQuOS0xMy4zYzAtLjIuMi0uMi4zLS4yaDQuN2MuMiwwLC4zLDAsLjMuM3YxMS42Yy0uMSwwLDAsMTEuNCwwLDExLjQsMCwuMiwwLC4zLS4zLjNoLTMuNmMtLjIsMC0uMy0uMS0uMy0uM3YtMTBzLjItNy43LjItNy43bC02LjUsMTcuN2MwLC4yLS4yLjItLjMuMmgtMi44Yy0uMiwwLS4zLDAtLjMtLjJsLTYuOS0xOC4yLjIsOC4xdjEwYzAsLjIsMCwuMy0uMy4zaC0zLjJaIj48L3BhdGg+CiAgICA8cGF0aCBmaWxsPSJub25lIiBkPSJNLjIsMTAyYy0uMiwwLS4zLDAtLjMtLjN2LTExLjRjLjEsMCwwLTExLjYsMC0xMS42LDAtLjIuMS0uMy4zLS4zaDVjLjIsMCwuMywwLC4zLjJsNS4xLDEzLjMsMS44LDQuOCwxLjctNC44LDQuOS0xMy4zYzAtLjIuMi0uMi4zLS4yaDQuN2MuMiwwLC4zLDAsLjMuM3YxMS42Yy0uMSwwLDAsMTEuNCwwLDExLjQsMCwuMiwwLC4zLS4zLjNoLTMuNmMtLjIsMC0uMy0uMS0uMy0uM3YtMTBzLjItNy43LjItNy43bC02LjUsMTcuN2MwLC4yLS4yLjItLjMuMmgtMi44Yy0uMiwwLS4zLDAtLjMtLjJsLTYuOS0xOC4yLjIsOC4xdjEwYzAsLjIsMCwuMy0uMy4zSC4yWiI+PC9wYXRoPgogIDwvZz4KPC9zdmc+" alt="Mussallem CHD Alliance">
   <div class="kick">
-    <span class="eyebrow">Mussallem CHD Alliance</span><span class="dot">·</span>
     <span class="eyebrow">Patient Data Initiative</span><span class="dot">·</span>
     <span class="eyebrow">Hiring plan</span>
   </div>
   <h1>Wave 1: the founding team</h1>
-  <p class="sub">The roles the December team decision picks from. The nine-month roadmap assumes the smallest team that works; each hire here takes a lane off it. Three permanent seats decided in December, one on a trigger in the spring, and the platform engineering bought from the host.</p>
-  <div class="stamps"><span>Draft rev 4 · 19 October 2026</span><span>Decision: mid-December, with phase 1 funding</span><span>Default: lean through March; January checkpoint</span></div>
+  <p class="sub">Four permanent roles starting in January, led by the Director of Epidemiology &amp; Evidence, plus an analyst about May. Each takes a lane of the nine-month roadmap off the Head.</p>
+  <div class="stamps"><span>Draft rev 5 · 26 October 2026</span><span>Decision: mid-December, with phase 1 funding</span><span>Starts: January; platform engineering by March</span></div>
 </header>
 
-<section>
+<nav class="nav" aria-label="Sections"><ul>
+  <li><a href="#why">Why these roles</a></li>
+  <li><a href="#team">The team</a></li>
+  <li><a href="#epi-evidence">Epidemiology &amp; Evidence</a></li>
+  <li><a href="#ml-scientist">ML scientist</a></li>
+  <li><a href="#platform-engineer">Platform engineer</a></li>
+  <li><a href="#network-operations">Network Operations</a></li>
+  <li><a href="#clinical-data-analyst">Analyst</a></li>
+  <li><a href="#catalogue">Concept catalogue</a></li>
+  <li><a href="#bought">Bought</a></li>
+  <li><a href="#triggers">On a trigger</a></li>
+  <li><a href="#order">Order of hiring</a></li>
+</ul></nav>
+
+<section id="why">
   <div class="sechead"><h2>Why these roles</h2></div>
   <div class="thesis">
     <div class="position">
-      <p class="big">Hire for what has to survive a vendor change, what sits on the first horizon's critical path, and what the host is not already building.</p>
-      <p>The third test is new. The host institution is building a knowledge graph over a lakehouse for its own reasons, going live this November, with a research informatics team that works on project funding. MCA and the host have agreed to build one path. That moves the environment, the lakehouse, ingestion and deployment to the host's side of the line, bought and scoped rather than hired.</p>
-      <p>What stays on MCA's side is narrower and sharper: the CHD knowledge graph's content, the extraction implementation and its validation, the concept catalogue and the methods that make the data usable, and the agreements and rules that are MCA's half of the host model. Each hire will be the only person in their discipline for at least six months, so each has to do the work, not only manage it.</p>
+      <p class="big">Hire for work that has to survive a vendor change and sits on the first phase's critical path.</p>
+      <p>MCA builds the platform on an out-of-the-box stack (Databricks or similar), chosen in December. The build starts in January in an MCA sandbox with no patient data and moves inside the anchor institution once the agreement is signed, targeted for 31 March. The anchor institution supplies the environment, its FHIR feed and security. What MCA builds stays MCA's, documented and portable.</p>
+      <p>Each hire will be the only person in their discipline for at least six months and has to do the work, not just manage it.</p>
     </div>
     <div class="fourtests">
-      <span class="cap">Work that meets all three tests</span>
+      <span class="cap">MCA's work</span>
       <ol>
-      <li><span class="k">01</span><span>The CHD knowledge graph's content and the extraction pipeline that reads notes into it</span></li>
-      <li><span class="k">02</span><span>The validation evidence, methods and concept catalogue that make the data usable, starting with the first device study's protocol</span></li>
-      <li><span class="k">03</span><span>The agreements, awards and charters that put the platform inside a host institution and set its rules</span></li>
-      <li><span class="k">04</span><span>Proof of dynamic assembly on real questions, before outside researchers depend on it</span></li>
+      <li><span class="k">01</span><span>The platform foundation, the CHD knowledge graph and the extraction pipeline</span></li>
+      <li><span class="k">02</span><span>Validation, methods and the concept catalogue, starting with the first use case</span></li>
+      <li><span class="k">03</span><span>The agreements, awards and charters that put the platform inside the anchor institution and set its rules</span></li>
+      <li><span class="k">04</span><span>Dynamic assembly working on real questions before outside researchers rely on it</span></li>
       </ol>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="sechead"><h2>The team at a glance</h2><p class="note">Three permanent seats decided in December, the analyst on a trigger, and a central team of five with the Head by mid-2027</p></div>
+<section id="team">
+  <div class="sechead"><h2>The team at a glance</h2><p class="note">Four permanent seats decided in December, the analyst after the Director. Six people with the Head by mid-2027.</p></div>
   <div class="org">
     <div class="org-inner">
-      <div class="head">Head of Patient Data Strategy &amp; RWE<small>Strategy, architecture, the host relationship, product</small></div>
+      <div class="head">Head of Patient Data Strategy &amp; RWE<small>Strategy, architecture, anchor institution relationship, product</small></div>
       <div class="stem"></div>
       <div class="bar"></div>
       <div class="five">
-        <div><div class="seat t-evid"><span class="tag">Evidence · first hire</span><h4>Director of Epidemiology &amp; Evidence</h4><p>Validation protocol, methods, consultation and review, FDA, the concept catalogue</p></div></div>
-        <div><div class="seat t-tech"><span class="tag">Technical core · second</span><h4>ML / Clinical NLP Scientist</h4><p>Extraction pipeline, evaluation, confidence scoring, the AI position for hospitals</p></div></div>
-        <div><div class="seat t-ops"><span class="tag">Network · gated on January</span><h4>Director of Network Operations</h4><p>Term sheet to agreement, governance charter, the cohort RFA, the access function</p></div></div>
+        <div><div class="seat t-evid"><span class="tag">Evidence · first hire</span><h4>Director of Epidemiology &amp; Evidence</h4><p>Methods, validation, FDA, consultation and review, concept catalogue</p></div></div>
+        <div><div class="seat t-tech"><span class="tag">Technical core · January</span><h4>ML / Clinical NLP Scientist</h4><p>Extraction pipeline, evaluation, confidence scoring, AI position for hospitals</p></div></div>
+        <div><div class="seat t-tech"><span class="tag">Technical core · by March · scope open</span><h4>Platform Data Engineer</h4><p>Stack, knowledge graph, assembly engine, workspace, identity, release path</p></div></div>
+        <div><div class="seat t-ops"><span class="tag">Network · January</span><h4>Director of Network Operations</h4><p>Anchor institution agreement, network DUA, hospital recruiting, governance</p></div></div>
       </div>
       <div class="five below">
-        <div class="slot"><div class="vstem"></div><div class="seat w15 t-evid"><span class="tag">Evidence · on trigger, about May</span><h4>Clinical Data Analyst</h4><p>Study datasets, analyses, catalogue maintenance, the use-case feedback loop</p></div></div>
+        <div class="slot"><div class="vstem"></div><div class="seat w15 t-evid"><span class="tag">Evidence · about May</span><h4>Clinical Data Analyst</h4><p>Study datasets, analyses, catalogue maintenance</p></div></div>
       </div>
       <div class="aside">
-        <span class="eyebrow">In the first horizon, not as hires</span>
-        <span class="item"><b>Patients and families.</b> Fractional or partner-led engagement: consent design, the patient and family seats on the committee, the patient-return concept. Becomes a hire when patient-authorized records for study patients start, about June.</span>
+        <span class="eyebrow">First phase, not hires</span>
+        <span class="item"><b>Patients and families.</b> Fractional or partner-led: consent design, the patient and family seats on the committee, the patient-return concept. Becomes a hire when patient-authorized records start, about June.</span>
         <span class="eyebrow"></span>
-        <span class="item"><b>Clinical leadership.</b> Co-owns the hospital lane: recruiting sites for feeds is physician-led, jointly with each site's registry lead. Whether the clinical lead is an advisor, an internal hire or an executive role is part of the December decision. Registry clinicians sit on the Data Standards committee for adjudication and definition sign-off.</span>
+        <span class="item"><b>Clinical leadership.</b> Co-leads hospital recruiting with each site's registry lead. Whether the clinical lead is an advisor, an internal hire or an executive role is part of the December decision. Registry clinicians on the Data Standards committee sign off definitions.</span>
       </div>
     </div>
   </div>
-  <div class="legend"><span class="t-evid"><i></i>Evidence: what makes the data credible</span><span class="t-tech"><i></i>Technical core: what MCA always builds</span><span class="t-ops"><i></i>Network: MCA's half of the host model</span><span>Dashed: hired on a trigger, not a date</span></div>
+  <div class="legend"><span class="t-evid"><i></i>Evidence</span><span class="t-tech"><i></i>Technical core</span><span class="t-ops"><i></i>Network</span><span>Dashed: hired when the first real data arrives</span></div>
 </section>
 
-<section>
-  <div class="sechead"><h2>The roles</h2><p class="note">Every seat is permanent. Three report to the Head of Patient Data Strategy; the analyst reports to the Director of Epidemiology &amp; Evidence</p></div>
+<section id="roles">
+  <div class="sechead"><h2>The roles</h2><p class="note">All permanent. Four report to the Head of Patient Data Strategy; the analyst reports to the Director of Epidemiology &amp; Evidence.</p></div>
 
   <article class="role r-evid" id="epi-evidence">
     <aside class="rail">
-      <span class="tag">Evidence · first hire · deputy to the Head</span>
+      <span class="tag">Evidence · first hire · deputy</span>
       <h2>Director of Epidemiology &amp; Evidence</h2>
-      <p class="owns">Leads the science of the platform: how its data becomes evidence anyone can trust.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Validation protocol, methods, consultation and review, FDA, the concept catalogue</dd><dt>Reports</dt><dd>Clinical Data Analyst, then the central methods group</dd><dt>Start</dt><dd>Q1 2027; a senior methodologist can be contracted for the protocol and converted</dd></dl>
+      <p class="owns">Leads the science of the platform and deputizes for the Head.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Methods, validation, FDA, consultation and review, concept catalogue</dd><dt>Manages</dt><dd>Clinical Data Analyst</dd><dt>Start</dt><dd>January, first offer. A senior methodologist could be contracted for the protocol and converted.</dd></dl>
     </aside>
     <div class="profile">
-      <p class="what">The scientific lead of the evidence function and the Head of Patient Data Strategy's deputy. First hire, because the first device post-approval study is weeks away and its validation protocol is a first-quarter deliverable that goes to FDA through the monthly cadence and settles when to bring in a second reviewing office. Four jobs. First, methods for the platform: how cohorts, time-zero, follow-up and missingness work when data comes from a graph rather than a registry form. Second, MCA's own studies, starting with the paired validation study in which every value a trial abstracts by hand is also abstracted by the AI, blind, with discordances adjudicated. Third, the consultation and review service for groups using the platform. Fourth, FDA. Owns the concept catalogue.</p>
+      <p class="what">First hire because the role helps guide the decisions that follow, and because the first use case's validation design goes to FDA in the first quarter. Sets the platform's methods: how cohorts, time-zero, follow-up and missingness work when data comes from a graph rather than a registry form. Leads MCA's own studies, starting with paired validation, where every value abstracted by hand is also abstracted by the AI, blind, with discordances adjudicated. Runs consultation and review for groups using the platform, and the FDA relationship.</p>
       <ul class="why">
-        <li><b>Owns the catalogue</b>What concepts exist, how they are defined, versioning and citation rules, and what goes to the Data Standards committee for clinical sign-off.</li>
-        <li><b>Runs analytics the decentralized way</b>Analysis happens at the centres and the cores. The central group sets methods, unblocks and trains, and reviews; it does not do the field's analysis for it.</li>
-        <li><b>One voice to FDA</b>MCA owns the validation design and the evidence that platform data is fit for purpose. The trials partner owns trial conduct. The host provides review. The lines are drawn before the first protocol.</li>
+        <li><b>Concept catalogue</b>Decides which concepts exist, how they're defined, versioned and cited, and what goes to the Data Standards committee.</li>
+        <li><b>Distributed analytics</b>Analysts at the centres and cores do the analysis. The central group sets methods, trains and reviews.</li>
+        <li><b>FDA</b>MCA owns the validation design and fitness-for-purpose evidence. The trials partner owns trial conduct; the anchor institution provides review.</li>
       </ul>
       <div class="trigger">
-        <span class="eyebrow">First-quarter deliverables</span>
-        <p>The validation protocol for the first device study, reviewed with FDA by about March. The health-economics and access questions being added to the device case report forms, which are a study-design decision. The first concept definitions the extraction build needs, so the catalogue exists before the pipeline does.</p>
-        <p>One scope question the December advisor decision settles: if an advisor continues in the role of leading how analysts across the centres work together, this seat narrows to methods, validation, FDA and the catalogue. If not, it carries both.</p>
+        <span class="eyebrow">First quarter</span>
+        <p>Validation design for the first use case, reviewed with FDA by end of March. Health-economics and access questions for the device case report forms. The first concept set for the extraction build, in January.</p>
+        <p>If an advisor keeps leading how analysts across the centres work together after December, this role narrows to methods, validation, FDA and the catalogue.</p>
       </div>
       <h3>Must have</h3>
       <ul class="must">
         <li><b>Real-world evidence methods</b><span>Doctoral-level epidemiology or biostatistics: cohort and post-approval study design, external controls, natural-history comparators, target trial emulation.</span></li>
-        <li><b>Computable phenotyping on EHR data</b><span>Has written and versioned phenotype definitions with temporal logic against real records, and knows how EHR data misleads.</span></li>
-        <li><b>Methods leadership across investigators</b><span>Has run a consult or review service, set standards for analysis plans, and raised the quality of other people's studies without owning them.</span></li>
-        <li><b>Validation statistics</b><span>Agreement measures, sensitivity and PPV for each variable, adjudication design, and sizing a validation sample.</span></li>
-        <li><b>Regulatory experience</b><span>Fitness-for-purpose under FDA's real-world evidence guidance, including the 2025 device guidance; pre-submissions and documents a reviewer will act on; explains technical work plainly to non-technical reviewers.</span></li>
-        <li><b>Builds a team</b><span>Standards for reproducible code (R, Python or SQL), and the judgment to grow a central group that trains rather than a central group that does everything.</span></li>
+        <li><b>Computable phenotyping</b><span>Has written and versioned phenotype definitions with temporal logic against real EHR data.</span></li>
+        <li><b>Methods leadership</b><span>Has run a consult or review service and set standards for other investigators' analysis plans.</span></li>
+        <li><b>Validation statistics</b><span>Agreement measures, per-variable sensitivity and PPV, adjudication design, validation sample size.</span></li>
+        <li><b>Regulatory experience</b><span>FDA real-world evidence guidance, including the 2025 device guidance; pre-submissions; explains technical work to non-technical reviewers.</span></li>
+        <li><b>Team building</b><span>Sets standards for reproducible code (R, Python or SQL) and grows a small central group.</span></li>
       </ul>
       <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>A clinician-epidemiologist with CHD depth, who covers definitions and clinical judgment in one person</li><li>Multi-stakeholder RWE pilots (Friends of Cancer Research), an RWE company (Flatiron, Aetion), or FDA's Sentinel or NEST programs</li><li>Device post-approval studies built on registry data</li><li>Published validations of ML-derived variables</li><li>Small-population and rare-disease methods</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>A methodologist whose work no regulator or outside investigator has ever relied on</li><li>A regulatory affairs specialist who can't design the statistics</li><li>A trial statistician who has not worked with observational EHR data</li></ul></div>
+        <div><h3>Gives an edge</h3><ul><li>Clinician-epidemiologist with CHD depth</li><li>Friends of Cancer Research RWE pilots, an RWE company (Flatiron, Aetion), or FDA's Sentinel or NEST programs</li><li>Device post-approval studies on registry data</li><li>Published validations of ML-derived variables</li><li>Small-population and rare-disease methods</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>No work a regulator or outside investigator has relied on</li><li>Regulatory affairs without statistical design</li><li>Trial statistics only, no observational EHR work</li></ul></div>
       </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>Two parts. Sketch the sample size and acceptance criteria for an AI-versus-human abstraction comparison on a 60-patient device cohort with ten-year follow-up, and explain how they would present it to FDA. Then take a study request from an outside investigator and show how they would review it: what they would push back on, what concept definitions it needs, and what they would approve as is.</p></div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Sketch sample size and acceptance criteria for an AI-versus-human abstraction comparison on a 60-patient device cohort with ten-year follow-up, and how to present it to FDA. Then review a study request from an outside investigator: what to push back on, which concept definitions it needs, what to approve.</p></div>
     </div>
   </article>
 
   <article class="role r-tech" id="ml-scientist">
     <aside class="rail">
-      <span class="tag">Technical core · second hire</span>
+      <span class="tag">Technical core · January</span>
       <h2>ML / Clinical NLP Scientist</h2>
-      <p class="owns">Builds the reader that turns notes into the graph. MCA's one technical seat in the first horizon.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Extraction, evaluation, confidence scoring, the AI position, MCA's side of the shared build</dd><dt>Start</dt><dd>February, for the build start</dd></dl>
+      <p class="owns">Builds the extraction pipeline that reads notes into the graph.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Extraction, evaluation, confidence scoring, AI position for hospitals</dd><dt>Start</dt><dd>January</dd></dl>
     </aside>
     <div class="profile">
-      <p class="what">Builds the graph-guided extraction pipeline that turns clinical notes into assertions in the knowledge graph, running on off-the-shelf models, inside the host's environment and on the host's lakehouse. Owns how good the extraction is and how sure it is: per-concept accuracy, confidence scores, and the learning loop from the two gold standards (registry submissions and trial hand-abstraction). With the host building the platform layer, this is MCA's one technical seat: the person who holds MCA's side of the shared build and makes sure the derived layer, the graph content and the pipeline code are MCA's, documented and exportable. A scientist who ships production code, not an analyst.</p>
+      <p class="what">Builds the graph-guided extraction pipeline on off-the-shelf models, first in MCA's sandbox and then inside the anchor institution. Owns accuracy and confidence per concept, and the learning loop from two gold standards: registry submissions and trial hand-abstraction. Works with the platform data engineer; whether the two are one role or two is open. Ships production code.</p>
       <ul class="why">
-        <li><b>The AI position for hospitals</b>Academic centres are adding AI clauses to data use agreements now. Someone has to answer a hospital's data-use lawyer in technical terms: models run inside the host enclave, no training on hospital data, redaction where a site requires it.</li>
-        <li><b>Vendor evaluation and the bake-off</b>Extraction models, including the vendors the incumbent registries are trialling, judged on an independent validation set. MCA's side of the host's ingestion bake-off: notes upload, patient-authorized FHIR, bulk FHIR and the EHR-native routes.</li>
-        <li><b>The build and the first 25 concepts</b>The graph and extraction build from February, with 25 concepts validated against the gold standard by about June, including the ones that disappoint.</li>
+        <li><b>AI position for hospitals</b>Academic centres are adding AI clauses to data use agreements. This role answers their counsel: models run inside the anchor institution's enclave, no training on hospital data, redaction where a site requires it.</li>
+        <li><b>Vendors and models</b>Evaluates extraction vendors, including those the incumbent registries are trialling, on an independent validation set. Model access set up in the sandbox in January.</li>
+        <li><b>Milestones</b>Extraction on de-identified notes by mid-February, pipeline v0.1 in June, 25 concepts validated by mid-July.</li>
       </ul>
       <h3>Must have</h3>
       <ul class="must">
-        <li><b>LLM extraction from clinical text</b><span>Retrieval design, structured output, and prompt and pipeline engineering on unstructured notes.</span></li>
-        <li><b>Graph-guided retrieval</b><span>GraphRAG or close equivalents, using domain knowledge to steer what the model reads and asserts.</span></li>
-        <li><b>Evaluation discipline</b><span>Builds gold-standard sets, measures precision and recall per concept, and re-tests whenever a model changes. Evaluation sets are a joint deliverable with the Director of Epidemiology &amp; Evidence, so clinical content is never decided by whoever writes the prompts.</span></li>
-        <li><b>Confidence scoring and calibration</b><span>Scores that mean something, so human review can scale with confidence and project need.</span></li>
-        <li><b>Working inside someone else's environment</b><span>Deploys into a hospital's enclave under its security rules, with de-identification and redaction tooling where required, and can say plainly what the models do and do not see.</span></li>
-        <li><b>Production-quality, portable code</b><span>Model-independent, so a better model replaces the current one without rework; documented so the pipeline can move if the host relationship ever ends.</span></li>
+        <li><b>LLM extraction from clinical text</b><span>Retrieval design, structured output, prompt and pipeline engineering on unstructured notes.</span></li>
+        <li><b>Graph-guided retrieval</b><span>GraphRAG or similar, using domain knowledge to steer what the model reads and asserts.</span></li>
+        <li><b>Evaluation</b><span>Gold-standard sets, per-concept precision and recall, regression testing on every model change. Evaluation sets are built jointly with the Director of Epidemiology &amp; Evidence.</span></li>
+        <li><b>Confidence calibration</b><span>Scores reliable enough to set how much human review each use needs.</span></li>
+        <li><b>Working in a hospital enclave</b><span>Deploys under its security rules, with de-identification and redaction tooling, and can explain what the models see.</span></li>
+        <li><b>Portable production code</b><span>Model-independent and documented, so the pipeline can move if the anchor institution relationship ends.</span></li>
       </ul>
       <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>Has moved a team from human abstraction to ML extraction; oncology RWE (Flatiron, Tempus and similar) is the closest precedent</li><li>Has published or shipped validated ML-derived clinical variables</li><li>Has worked with clinical terminologies (SNOMED CT, HPO) in an extraction pipeline</li><li>Has built on a lakehouse with a knowledge graph or ontology layer over it</li><li>Pediatric or rare-disease records, where examples are scarce</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>A data analyst whose output is notebooks rather than pipelines</li><li>A researcher who has never run a model against messy clinical data in production</li><li>Anyone who cannot explain to a privacy officer where the data goes</li></ul></div>
+        <div><h3>Gives an edge</h3><ul><li>Moved a team from human abstraction to ML extraction (Flatiron, Tempus or similar)</li><li>Published or shipped validated ML-derived clinical variables</li><li>Clinical terminologies (SNOMED CT, HPO) in an extraction pipeline</li><li>A lakehouse with a knowledge graph or ontology layer</li><li>Pediatric or rare-disease records</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Notebooks, not pipelines</li><li>No production experience with clinical data</li><li>Can't explain to a privacy officer where the data goes</li></ul></div>
       </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>Give them a dozen de-identified notes and three target concepts. Ask how they would build the first evaluation set, what score would mean "ready for a human to review less," and how they would know when a model change made things worse. Then ask them to write, in a paragraph, the AI position they would give a hospital's counsel.</p></div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Give a dozen de-identified notes and three target concepts. Ask how they'd build the first evaluation set, what score would justify less human review, and how they'd catch a regression after a model change. Then have them write the AI position for a hospital's counsel in one paragraph.</p></div>
+    </div>
+  </article>
+
+  <article class="role r-tech" id="platform-engineer">
+    <aside class="rail">
+      <span class="tag">Technical core · by March · scope open</span>
+      <h2>Platform Data Engineer</h2>
+      <p class="owns">Builds the platform foundation and moves it inside the anchor institution.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Stack, knowledge graph, assembly engine, workspace, identity, release path</dd><dt>Start</dt><dd>By March</dd><dt>Open</dt><dd>Separate role, or combined with the ML scientist</dd></dl>
+    </aside>
+    <div class="profile">
+      <p class="what">Builds the knowledge graph, the three storage layers with lineage, and the assembly engine on the stack chosen in December. Starts in an MCA sandbox in January with synthetic records and de-identified gold-standard pairs, then migrates inside the anchor institution once the agreement is signed. Owns the workspace there, identity resolution and tokenization, and the release path. Writes the acceptance tests MCA holds vendors to.</p>
+      <ul class="why">
+        <li><b>Sandbox</b>Stack stood up in January, so the graph, assembly engine and first pipeline exist before patient data does.</li>
+        <li><b>Anchor institution</b>Workspace inside its environment about May, the FHIR feed with notes landing in the raw layer, and MCA's derived layer kept exportable.</li>
+        <li><b>Identity and release</b>Tokenization provider chosen in February, identity resolution about July, then de-identification and access tiers.</li>
+      </ul>
+      <div class="trigger">
+        <span class="eyebrow">Open: one role or two</span>
+        <p>Combining this with the ML scientist costs less and fits a small team. But few people do both well, and January to July needs both at full speed: sandbox, graph and workspace on one side; pipeline, evaluation and 25 concepts on the other. Decided in December.</p>
+      </div>
+      <h3>Must have</h3>
+      <ul class="must">
+        <li><b>Graph data modeling</b><span>In production, with time and provenance: source, date and confidence on every assertion.</span></li>
+        <li><b>Healthcare data engineering</b><span>FHIR R4 and US Core, clinical documents, terminology services, HL7v2.</span></li>
+        <li><b>Lineage and storage</b><span>Immutable raw landing, a versioned assertion layer, reproducible datasets.</span></li>
+        <li><b>Hospital environments</b><span>HIPAA-grade security, audit logging, de-identification, a hospital's cloud tenant.</span></li>
+        <li><b>Identity and privacy</b><span>Patient tokenization or privacy-preserving record linkage, tiered access.</span></li>
+        <li><b>Hands-on vendor management</b><span>Writes code daily; scopes statements of work, writes acceptance tests, directs contractors.</span></li>
+      </ul>
+      <div class="pair">
+        <div><h3>Gives an edge</h3><ul><li>Databricks or a similar lakehouse with a graph or ontology layer</li><li>Systems with audit trails a regulator examined</li><li>Academic medical center or research coordinating center experience</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Hasn't coded in years</li><li>Defaults to a record-centric common data model</li></ul></div>
+      </div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>How would you model one patient's history, from birth through Fontan completion to adult care, so a question nobody has asked yet can still be answered?</p></div>
     </div>
   </article>
 
   <article class="role r-ops" id="network-operations">
     <aside class="rail">
-      <span class="tag">Network · gated on the January checkpoint</span>
+      <span class="tag">Network · January</span>
       <h2>Director of Network Operations</h2>
-      <p class="owns">Runs MCA's half of the host model: the agreements, the awards and the rules.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Term sheet to signed agreement, governance charter, the cohort RFA, the access function</dd><dt>Holds</dt><dd>The cohort and cores budget and the agreement pipeline</dd><dt>Start</dt><dd>March or April, ahead of the letter of intent; later if January is green</dd></dl>
+      <p class="owns">Runs MCA's agreements, awards and governance.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Anchor institution agreement, network DUA, hospital recruiting, governance charter, coalition, access function</dd><dt>Budget</dt><dd>Cohorts and cores; the agreement pipeline</dd><dt>Start</dt><dd>January, for the 31 March agreement target</dd></dl>
     </aside>
     <div class="profile">
-      <p class="what">In the host model the institution holds the data and MCA holds the contracting and the governance. That makes the agreements and the rules MCA's one irreplaceable asset, and someone has to run them as a job. The role is defined by outcomes, not coordination. Its first-horizon content is smaller than first drawn: the network data use agreement is re-papered by the host and its counsel as a name change plus a letter to sites, and recruiting hospitals for feeds is physician-led, co-led with each site's registry lead. What remains is what nobody else holds, and it peaks from April, when agreement negotiation, the governance charter and the RFA run at once.</p>
+      <p class="what">The anchor institution holds the data; MCA holds the contracts and the governance. This role runs both and is measured on what gets signed, awarded and chartered. The first quarter is the heaviest: the anchor institution agreement is negotiated from January for signature by 31 March.</p>
       <ul class="why">
-        <li><b>Signed</b>The term sheet (about March), the letter of intent (about April) and the host agreement itself (about six months later), with the four protective terms: a license to the derived layer, a priced right to migrate, no exclusivity, and consent that can be reassigned. Runs the issue list with outside counsel and the counterparty's pace.</li>
-        <li><b>Awarded</b>The RFA to groups already running consented cohorts, awards about August: published criteria, a real competition, IP assigned or licensed at award, milestone payments, a named MCA counterpart. The first award is read by the field as the policy. Cores are not defined up front; the ones that already exist come first.</li>
-        <li><b>Chartered</b>The steering committee with seats for patients and families, sites, registries, the host and MCA, seated about June and required before any dataset is released; the Data Standards committee; the independent patient coalition. Later, the access function that applies the rules per request.</li>
+        <li><b>Signed</b>Anchor institution agreement by 31 March, with four protective terms: license to the derived layer, a priced right to migrate, no exclusivity, reassignable consent. Then hospitals recruited for feeds about May, co-led with each registry lead, and the network data use agreement re-papered about June.</li>
+        <li><b>Awarded</b>The RFA to groups already running consented cohorts: published criteria, real competition, IP terms at award, milestone payments, a named MCA counterpart. Existing cores first.</li>
+        <li><b>Chartered</b>Governance charter from January, the patient and family coalition about June, and the steering committee about July, with seats for patients and families, sites, registries, the anchor institution and MCA. No dataset is released before it sits. Later, the access function.</li>
       </ul>
       <h3>Must have</h3>
       <ul class="must">
-        <li><b>Has signed things</b><span>Health-system research agreements: DUAs, BAAs, master research agreements and reliance agreements (for example SMART IRB). Has carried an institutional agreement from issue list to signature with outside counsel, and works fluently with IRB, tech transfer and compliance offices at children's hospitals.</span></li>
-        <li><b>Has awarded things</b><span>Has run a competitive funding call end to end: criteria, review, award terms including IP, milestone payments and counterpart management.</span></li>
-        <li><b>Has chartered things</b><span>Has stood up a governance body or network committee from nothing: charter, seats, decision rules, and the first year of operation.</span></li>
-        <li><b>Multi-site network operations</b><span>Site onboarding and coordinating-center workflows in a research network.</span></li>
-        <li><b>Credibility and diplomacy</b><span>Credible with academic clinicians and hospital executives, and diplomatic enough with registries that "partner, not replacement" holds up in practice.</span></li>
+        <li><b>Agreements</b><span>Has taken institutional agreements (DUAs, BAAs, master research agreements, SMART IRB reliance) from issue list to signature with outside counsel and children's hospital IRB, tech transfer and compliance offices.</span></li>
+        <li><b>Funding calls</b><span>Has run a competitive call end to end: criteria, review, IP terms, milestones.</span></li>
+        <li><b>Governance bodies</b><span>Has stood up a committee from scratch and run its first year.</span></li>
+        <li><b>Network operations</b><span>Site onboarding and coordinating-center workflows.</span></li>
+        <li><b>Credibility</b><span>Trusted by academic clinicians and hospital executives, and by registries as a partner.</span></li>
       </ul>
       <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>A disease foundation that ran a data network (for example CF Foundation, Michael J. Fox Foundation, ASH Research Collaborative)</li><li>A rare-disease or national research network coordinating center, or an NIH program officer background</li><li>Has administered a research network's data access committee</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>A program-management office background: trackers, status reports and alignment meetings with no agreement, award or charter they can point to</li><li>A business-development hunter who treats partners as sales targets</li><li>Anyone who describes the job as coordinating other people's work</li></ul></div>
+        <div><h3>Gives an edge</h3><ul><li>A disease foundation that ran a data network (CF Foundation, Michael J. Fox Foundation, ASH Research Collaborative)</li><li>A rare-disease or national research network coordinating center, or NIH program officer</li><li>Ran a data access committee</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Program management with no agreement, award or charter to show for it</li><li>Business development that treats partners as sales targets</li></ul></div>
       </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>Ask for the last three things they got signed, awarded or chartered, and what went wrong on each. Then walk them through the open legal issues for a host institution agreement and ask which three they would settle first, and with whom. Someone who answers the first question with process rather than outcomes is the wrong hire.</p></div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Ask for the last three things they got signed, awarded or chartered, and what went wrong on each. Then walk through the open legal issues for an anchor institution agreement and ask which three they'd settle first, and with whom.</p></div>
       <div class="wider">
-        <span class="eyebrow">Why this is not a program director, and not a product hybrid</span>
-        <p>The familiar failure of a program director is a role defined by activity: cadence, logs and alignment, with no domain, no budget and no outcome of its own. The work routes around it and the leader gains a layer instead of time. This seat is drawn the other way: it owns a budget, a pipeline and three outcomes, and reports on those rather than on status. Cut anything from this description that reads as coordination.</p>
-        <p>A hybrid with product was considered and set aside for the first horizon. The Head of Patient Data Strategy is the product lead while the product is the strategy itself, and agreements and product are different muscles. The product role that does make sense is a technical product lead for the workspaces, in the second horizon when vendors start building (see Roles on a trigger).</p>
-        <p>The partnerships title also waits. Two open decisions would take that half of the job: the clinical lead, who co-owns the hospital lane whichever form the role takes, and whether MCA creates a wider partnerships role that owns each institution's top-level relationship across all of MCA's work. Either way, this seat builds the institution-by-institution relationship map and agreement register so they can become MCA-wide.</p>
+        <span class="eyebrow">Notes on scope</span>
+        <p>Not a program director. The role owns a budget, a pipeline and three outcomes, and reports on those.</p>
+        <p>No product hybrid in the first phase; the Head leads product. A technical product lead comes in the second phase, when vendors start building workspaces.</p>
+        <p>The partnerships title waits on two decisions: the clinical lead's role, and whether MCA creates a partnerships role across all its work. Either way, this role keeps the institution-by-institution relationship map and agreement register.</p>
       </div>
     </div>
   </article>
 
   <article class="role r-evid" id="clinical-data-analyst">
     <aside class="rail">
-      <span class="tag">Evidence · on trigger</span>
+      <span class="tag">Evidence · about May</span>
       <h2>Clinical Data Analyst</h2>
-      <p class="owns">Turns real questions into datasets and results, and proves dynamic assembly works.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Reports to</dt><dd>Director of Epidemiology &amp; Evidence</dd><dt>Owns</dt><dd>Study datasets, analyses, catalogue maintenance, the use-case feedback loop</dd><dt>Start</dt><dd>About May, when the first real data lands</dd></dl>
+      <p class="owns">Turns study questions into datasets and results.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Reports to</dt><dd>Director of Epidemiology &amp; Evidence</dd><dt>Owns</dt><dd>Study datasets, analyses, catalogue maintenance</dd><dt>Start</dt><dd>About May, when real data arrives</dd></dl>
     </aside>
     <div class="profile">
-      <p class="what">Takes a study question, writes its dataset definition, assembles it from versioned concepts, checks it and runs the analysis. This is the platform's first user, and the person who shows dynamic assembly working on real questions before outside researchers depend on it. Maintains the concept catalogue as code. Sits between the use cases, epidemiology and engineering, with the statistics and the engineering habits to work in all three.</p>
+      <p class="what">Writes each study's dataset definition, assembles it from versioned concepts, checks it and runs the analysis. The platform's first user: shows dynamic assembly working before outside researchers rely on it. Maintains the concept catalogue as code.</p>
       <ul class="why">
-        <li><b>Proves the differentiator</b>Phase 1 has to demonstrate dynamic assembly, not only extraction. The first dataset by dynamic assembly lands about September. This role is the demonstration.</li>
-        <li><b>Closes the loop</b>Sees first when a concept is missing or extraction is weak on the variable that matters, and sends it back as a specific, testable gap.</li>
-        <li><b>Tests the workspaces</b>Writes the user-side acceptance tests for vendor-built workspaces before anyone outside uses them.</li>
+        <li><b>Dynamic assembly</b>Phase 1 has to show it, not just extraction. First dataset by dynamic assembly in mid-September.</li>
+        <li><b>Feedback</b>Reports missing concepts and weak extraction as specific, testable gaps.</li>
+        <li><b>Acceptance tests</b>Writes the user-side tests for vendor-built workspaces.</li>
       </ul>
       <div class="trigger">
-        <span class="eyebrow">The trigger, now with dates</span>
-        <p>Raw notes from the trials partner's sites about March. First consented study patients about April. Twenty-five concepts validated about June. The analyst lands when the first of these is real, a few months after the Director, and is in place before paired abstraction begins.</p>
+        <span class="eyebrow">When</span>
+        <p>Anchor institution FHIR feed with notes mid-April, trials partner notes late April, first consented records late May, 25 concepts validated mid-July. The analyst starts when the first of these arrives, before paired abstraction begins.</p>
       </div>
       <h3>Must have</h3>
       <ul class="must">
-        <li><b>Epidemiology and biostatistics in practice</b><span>Cohort definitions, time-zero, censoring, survival analysis, propensity methods, external controls.</span></li>
-        <li><b>Engineering habits</b><span>Python or R plus SQL, version control, tested and reproducible pipelines, and cohort logic written as code rather than spreadsheet steps.</span></li>
-        <li><b>Clinical data literacy</b><span>Knows the ways EHR data misleads, knows congenital heart disease well enough to sanity-check a cohort, and talks to clinicians without a translator.</span></li>
-        <li><b>Data quality instinct</b><span>Profiles completeness and plausibility before trusting a dataset, and records every assumption.</span></li>
-        <li><b>Clear reporting</b><span>Tables and figures an investigator or reviewer can act on.</span></li>
+        <li><b>Applied epidemiology</b><span>Cohort definitions, time-zero, censoring, survival analysis, propensity methods, external controls.</span></li>
+        <li><b>Engineering habits</b><span>Python or R and SQL, version control, tested and reproducible pipelines, cohort logic as code.</span></li>
+        <li><b>Clinical data</b><span>Knows EHR data's pitfalls and enough CHD to sanity-check a cohort.</span></li>
+        <li><b>Data quality</b><span>Checks completeness and plausibility first; documents assumptions.</span></li>
+        <li><b>Reporting</b><span>Tables and figures investigators and reviewers can use.</span></li>
       </ul>
       <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>A quantitative sciences team at an RWE company (Flatiron, Aetion and similar)</li><li>Has validated abstracted or ML-derived variables</li><li>Pediatric or rare-disease cohorts</li><li>Has contributed to analyses submitted to FDA</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>A statistician who can't work in the pipeline</li><li>A data engineer without study-design judgment</li><li>A dashboard-only BI analyst</li></ul></div>
+        <div><h3>Gives an edge</h3><ul><li>Quantitative sciences at an RWE company (Flatiron, Aetion or similar)</li><li>Validated abstracted or ML-derived variables</li><li>Pediatric or rare-disease cohorts</li><li>Analyses submitted to FDA</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Statistics without pipeline skills</li><li>Engineering without study design</li><li>Dashboards only</li></ul></div>
       </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>Give them a question (late arrhythmia after Fontan, by era of surgery) and a small synthetic dataset. Ask for the cohort definition, time-zero and the variables needed, what they would check before trusting the data, and which concepts they would need defined and signed off before they could proceed.</p></div>
-      <p class="growth">Analytics grows the decentralized way: analysts at the centres and the cores do the field's work, and the central group stays small, a second technician when a second funded use case has its own study calendar. The central group unblocks, trains and reviews.</p>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Give a question (late arrhythmia after Fontan, by era of surgery) and a small synthetic dataset. Ask for the cohort definition, time-zero, variables, data checks, and which concepts need definitions before they start.</p></div>
+      <p class="growth">Analysis grows at the centres and cores. The central group stays small, adding a second analyst when a second funded use case has its own study calendar.</p>
     </div>
   </article>
 </section>
 
-<section>
-  <div class="sechead"><h2>The concept catalogue</h2><p class="note">Key to the platform, so it gets a named owner, a named maintainer and a named clinical check from day one</p></div>
+<section id="catalogue">
+  <div class="sechead"><h2>The concept catalogue</h2><p class="note">One owner, one maintainer, one clinical check.</p></div>
   <div class="owners">
-    <div><span class="who">Director of Epidemiology &amp; Evidence</span>Owns it: what concepts exist, how they are defined, versioning and citation, what goes to the committee.</div>
-    <div><span class="who">Clinical Data Analyst</span>Maintains it as code and builds study-specific logic on top of the reusable definitions.</div>
-    <div><span class="who">ML / Clinical NLP Scientist</span>Consumes it for extraction, carries the technical terminology mapping, and reports where a concept cannot yet be delivered.</div>
-    <div><span class="who">Clinical lead and the Data Standards committee</span>Sign off that definitions are clinically sound, adjudicate discordances, and endorse new variable definitions and novel abstraction.</div>
+    <div><span class="who">Director of Epidemiology &amp; Evidence</span>Owns concepts, definitions, versioning and citation, and what goes to the committee.</div>
+    <div><span class="who">Clinical Data Analyst</span>Maintains it as code; builds study logic on the definitions.</div>
+    <div><span class="who">ML / Clinical NLP Scientist</span>Uses it for extraction, maps terminologies, flags concepts extraction can't yet deliver.</div>
+    <div><span class="who">Clinical lead and Data Standards committee</span>Sign off definitions, adjudicate discordances, endorse new variables.</div>
   </div>
-  <p style="max-width:72ch;color:var(--ink-2);font-size:.97rem">A standalone clinical informatics seat was considered and set aside for wave 1. Computable definitions are epidemiology, terminology mapping is bounded and shared with the ML scientist and a terminology service, and clinical judgment comes from the clinical lead and registry clinicians. The seat returns on a trigger (below). Two safeguards: seat the Data Standards committee early, so clinical sign-off never depends on one person, and make the ML scientist's evaluation sets a joint deliverable with the Director.</p>
+  <p>No separate clinical informatics role in wave 1. Definitions sit with epidemiology, terminology mapping with the ML scientist and a terminology service, and clinical judgment with the clinical lead and registry clinicians. Seat the Data Standards committee early so sign-off never depends on one person.</p>
 </section>
 
-<section>
-  <div class="sechead"><h2>Across every seat</h2></div>
+<section id="traits">
+  <div class="sechead"><h2>Every role</h2></div>
   <div class="traits">
-    <div><b>Does the work</b>Comfortable with early-stage ambiguity, and able to do the work themselves, not only manage it.</div>
-    <div><b>Writes clearly</b>For patients and families, clinicians, regulators and engineers alike.</div>
-    <div><b>Gets the idea</b>Can explain, unprompted, why this is an evidence platform and not another registry, and why it does not replace the registries.</div>
-    <div><b>Works inside a shared build</b>Comfortable building with the host's engineers on one path while keeping MCA's piece MCA's: documented, portable and owned.</div>
+    <div><b>Does the work</b>Comfortable with ambiguity; hands-on.</div>
+    <div><b>Writes clearly</b>For patients and families, clinicians, regulators and engineers.</div>
+    <div><b>Gets the idea</b>Can explain why this is an evidence platform, not another registry, and why it doesn't replace registries.</div>
+    <div><b>Builds to move</b>Works in MCA's sandbox, then inside the anchor institution, and keeps MCA's work documented and portable.</div>
   </div>
 </section>
 
-<section>
-  <div class="sechead"><h2>Bought rather than hired</h2></div>
+<section id="bought">
+  <div class="sechead"><h2>Bought, not hired</h2></div>
   <ul class="contracted">
-    <li><b>The host's research informatics team</b><span>Environment, lakehouse, ingestion routes, deployment and the bake-off, on the host's project-funded model, scoped and costed by February. Capacity is their constraint, so the estimate shows what they add or drop to take the work. This replaces the platform data engineer in the first horizon.</span></li>
-    <li><b>Terminology services</b><span>A terminology server and mapping tooling behind the ML scientist, until the catalogue's terminology work justifies a seat.</span></li>
-    <li><b>Privacy and legal</b><span>Outside counsel for the host agreement and the AI position, plus fractional privacy support and redaction tooling where a site requires it.</span></li>
-    <li><b>Commodity layers such as the user interface</b><span>Vendors, held to acceptance tests MCA writes.</span></li>
+    <li><b>The stack</b><span>Databricks or similar, chosen in December.</span></li>
+    <li><b>Anchor institution research informatics</b><span>Environment, FHIR feed with notes, security and credentialing, scoped and costed in December and January. Their capacity is limited; the estimate shows what they add or drop.</span></li>
+    <li><b>Terminology services</b><span>Terminology server and mapping tools, until the work needs a dedicated role.</span></li>
+    <li><b>Privacy and legal</b><span>Outside counsel for the anchor institution agreement and AI position; fractional privacy support; redaction tooling where needed.</span></li>
+    <li><b>Commodity layers, including the user interface</b><span>Vendors, held to MCA's acceptance tests.</span></li>
   </ul>
 </section>
 
-<section>
-  <div class="sechead"><h2>Roles on a trigger</h2><p class="note">Hired when a condition is met, not on a date</p></div>
+<section id="triggers">
+  <div class="sechead"><h2>Roles on a trigger</h2><p class="note">Hired when a condition is met.</p></div>
   <ul class="triggers">
-    <li><b>Platform Data Engineer<span class="when">Moved off wave 1 on 19 October</span></b><span>Graph storage, lineage, the assembly engine and deployment were MCA's seat until the host turned out to be building the same platform layer and agreed to one path. In the first horizon that engineering is bought from the host and the ML scientist holds MCA's side. <b>Trigger:</b> the host's capacity cannot take the work, the migration right has to be exercised rather than held, or hospital feeds start at scale (about the end of 2027). <b>Mitigation until then:</b> the term sheet makes the derived layer and the pipeline code MCA's, documented and exportable.</span></li>
-    <li><b>Patient &amp; Family Engagement Lead<span class="when">Fractional or partner-led in the first horizon</span></b><span>Owns consent design, the patient and family seats and the independent coalition's charter, and the patient-return concept. <b>Trigger:</b> patient-authorized records for study patients start (about June), or the coalition charter, whichever comes first.</span></li>
-    <li><b>Clinical Informatics Lead<span class="when">Set aside for wave 1</span></b><span>Owns terminology engineering and the catalogue's day-to-day curation. <b>Trigger:</b> the catalogue's terminology work exceeds what the Director and analyst can carry alongside studies, or registry ingestion begins and definitions must reconcile across sources. Expected in the second horizon.</span></li>
-    <li><b>Technical product lead<span class="when">Second horizon, when vendors start building</span></b><span>Owns the workspace specs, vendor evaluation and acceptance, and user research across the six personas, patients and families first. Until then the Head is the product lead and the analyst writes the user-side acceptance tests. <b>Trigger:</b> the first workspace vendor is engaged.</span></li>
-    <li><b>Data governance and access lead<span class="when">Second horizon</span></b><span>Runs the access function day to day: the rulebook, decisions on requests the rules don't settle within the published turnaround, and support for the steering committee. Until request volume justifies it, the Director of Network Operations holds the function.</span></li>
+    <li><b>Patient &amp; Family Engagement Lead<span class="when">Fractional or partner-led in the first phase</span></b><span>Consent design, the coalition charter, the patient-return concept. <b>Trigger:</b> patient-authorized records start (about June) or the coalition charter, whichever is first.</span></li>
+    <li><b>Clinical Informatics Lead<span class="when">Not in wave 1</span></b><span>Terminology engineering and day-to-day catalogue curation. <b>Trigger:</b> terminology work outgrows the Director and analyst, or registry ingestion needs definitions reconciled across sources. Likely second phase.</span></li>
+    <li><b>Technical Product Lead<span class="when">Second phase</span></b><span>Workspace specs, vendor evaluation and acceptance, user research across the six personas, patients and families first. <b>Trigger:</b> the first workspace vendor is engaged.</span></li>
+    <li><b>Data Governance &amp; Access Lead<span class="when">Second phase</span></b><span>Runs access day to day: the rulebook, decisions on requests the rules don't cover, committee support. Until volume justifies it, the Director of Network Operations covers this.</span></li>
   </ul>
 </section>
 
-<section>
+<section id="order">
   <div class="sechead"><h2>Order of hiring</h2></div>
   <div class="order">
-    <p class="big">Epidemiology &amp; Evidence first. The ML scientist second, in place for the February build start. Network Operations in March or April ahead of the letter of intent, or later if January is green. The analyst on its trigger about May.</p>
-    <p>The Director is first because the validation protocol is a first-quarter deliverable and the catalogue has to exist before the pipeline does; a senior methodologist can be contracted for the protocol and converted. The scientist is second because the graph and extraction build starts in February on the host's new platform, and the AI position for hospitals needs a technical owner before the first hospital asks. Network Operations is gated because the host and its counsel carry the early agreement work; the seat earns its place when negotiation, charter and RFA overlap in the spring.</p>
-    <p class="caution"><span class="eyebrow">The caution</span>The roadmap's durations already assume the lean team. Every quarter a hire slips is a quarter the Head carries that lane. The January checkpoint should ask, lane by lane, which items are behind because of capacity rather than counterparties, and move the hire whose lane is red.</p>
+    <p class="big">Epidemiology &amp; Evidence first. Network Operations and the ML scientist in January. Platform engineering by March. The analyst about May.</p>
+    <p>The Director guides the decisions that follow and owns the validation design due to FDA by end of March. Network Operations protects the 31 March agreement, which everything inside the anchor institution waits on. The ML scientist starts the sandbox build and owns the AI position before hospitals ask. Platform engineering is needed when the build moves inside the anchor institution.</p>
+    <p class="caution"><span class="eyebrow">Risk</span>The roadmap assumes this team. Each quarter a hire slips, the Head carries that lane. At each checkpoint, check whether delays come from capacity or counterparties, and move up the hire whose lane is behind.</p>
   </div>
 </section>
 
-<footer><span>Mussallem CHD Alliance · Patient Data Initiative</span><span>Wave 1 hiring plan · Draft rev 4, 19 October 2026</span></footer>
+<footer><span>Mussallem CHD Alliance · Patient Data Initiative</span><span>Wave 1 hiring plan · Draft rev 5, 26 October 2026</span></footer>
 
 </div>
+
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var y=window.scrollY+90, cur=0;
+    targets.forEach(function(t,i){ if(t && t.getBoundingClientRect().top+window.scrollY<=y) cur=i; });
+    links.forEach(function(a,i){a.classList.toggle('on',i===cur);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script>
 
 </body>
 </html>
