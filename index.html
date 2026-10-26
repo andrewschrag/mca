@@ -2,14 +2,110 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=pdi-strategy.html">
-<link rel="canonical" href="pdi-strategy.html">
-<title>Mussallem CHD Alliance · patient data strategy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>patient data — Mussallem CHD Alliance</title>
+<meta name="description" content="Working pages from the Mussallem CHD Alliance on bringing patient data together for people born with congenital heart defects.">
 <meta name="robots" content="noindex">
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F5F7FB;font-family:Raleway,-apple-system,'Segoe UI',sans-serif;color:#333}a{color:#5B9BD5;text-decoration:none}a:hover{color:#1A2566}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1A2566;--blue:#5B9BD5;--blue-d:#2E5FA3;--sky:#8DC3E8;--surface:#F5F7FB;--rule:#D7DEEB;--ink:#1A1A1A;--g500:#595959;--g400:#8C8C8C}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--surface)}
+body{font-family:Raleway,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--surface);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.hero{background:var(--navy);color:#fff;padding:72px 0 64px}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 32px}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky)}
+.hero .rule{width:64px;height:3px;background:var(--blue);margin:22px 0 26px}
+h1{font-weight:300;font-size:clamp(40px,6.4vw,72px);line-height:1.02;letter-spacing:-.01em}
+.lead{margin-top:24px;max-width:46ch;font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:#DCE4F2;font-weight:400}
+main{flex:1;padding:48px 0 64px}
+.label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.label::after{content:"";flex:1;height:1px;background:var(--rule)}
+.sites{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;list-style:none}
+.site a{display:flex;flex-direction:column;height:100%;background:#fff;border:1px solid var(--rule);border-radius:4px;overflow:hidden;transition:border-color .18s,box-shadow .18s,transform .18s}
+.site a:hover,.site a:focus-visible{border-color:var(--blue);box-shadow:0 10px 28px -14px rgba(26,37,102,.35);transform:translateY(-2px)}
+.site a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.tile{background:var(--navy);aspect-ratio:16/8;display:flex;align-items:center;justify-content:center}
+.tile svg{width:62%;height:auto;max-height:70%;overflow:visible}
+.body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.num{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--g400);font-variant-numeric:tabular-nums}
+h2{margin-top:8px;font-weight:600;font-size:21px;line-height:1.2;color:var(--navy)}
+.body p{margin-top:10px;font-size:14.5px;line-height:1.55;color:var(--g500);flex:1}
+.go{margin-top:18px;font-size:13px;font-weight:700;color:var(--blue-d);display:inline-flex;gap:8px;align-items:center}
+.go span{transition:transform .18s}
+.site a:hover .go span{transform:translateX(4px)}
+footer{border-top:1px solid var(--rule);padding:18px 0 26px;font-size:12px;color:var(--g400)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+@media (max-width:900px){.sites{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.wrap{padding:0 16px}.hero{padding:52px 0 44px}.sites{grid-template-columns:1fr}.tile{aspect-ratio:16/7}main{padding:36px 0 48px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
-<p>Opening <a href="pdi-strategy.html">the patient data strategy</a>…</p>
-<script>location.replace('pdi-strategy.html');</script>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Mussallem CHD Alliance</p>
+    <div class="rule"></div>
+    <h1>patient data</h1>
+    <p class="lead">Children born with heart defects grow up, and their record doesn't travel with them. These pages set out how we plan to bring it together: for patients and families first, and for the clinicians and researchers who care for them.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="label">sites</p>
+    <ul class="sites">
+      <li class="site">
+        <a href="pdi-strategy.html">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="290 330 620 200"><polyline points="300,430 400,430 440,340 500,520 540,430 600,430 640,360 700,500 740,430 900,430" fill="none" stroke="#8DC3E8" stroke-width="14" stroke-linecap="square"/></svg>
+          </div>
+          <div class="body">
+            <span class="num">01</span>
+            <h2>the patient data strategy</h2>
+            <p>The plan, one step at a time: who it serves, what we're building, and the decisions behind it, including the operating model and where the data lives.</p>
+            <span class="go">open <span>→</span></span>
+          </div>
+        </a>
+      </li>
+      <li class="site">
+        <a href="pdi-comms.html">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="340 300 520 200"><rect x="360" y="330" width="480" height="10" fill="#8DC3E8"/><rect x="360" y="396" width="320" height="10" fill="#FFFFFF"/><rect x="360" y="462" width="400" height="10" fill="#FFFFFF"/></svg>
+          </div>
+          <div class="body">
+            <span class="num">02</span>
+            <h2>how we talk about it</h2>
+            <p>One strategy, many rooms: the shared way we describe the work to families, clinicians, partners and funders, from a ten-second line to the full pitch.</p>
+            <span class="go">open <span>→</span></span>
+          </div>
+        </a>
+      </li>
+      <li class="site">
+        <a href="single-ventricle-knowledge-graph.html">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="330 230 460 360"><path d="M520,300 C440,300 400,360 400,420 C400,480 450,520 520,520 L600,520 C670,520 720,480 720,420 C720,360 680,300 600,300 Z" fill="none" stroke="#8DC3E8" stroke-width="14"/><path d="M360,420 L400,420 M720,420 L760,420 M560,300 L560,250 M560,520 L560,570" stroke="#5B9BD5" stroke-width="12" stroke-linecap="round"/><circle cx="560" cy="420" r="30" fill="#5B9BD5"/></svg>
+          </div>
+          <div class="body">
+            <span class="num">03</span>
+            <h2>single ventricle knowledge graph</h2>
+            <p>An interactive map of single-ventricle heart disease: the conditions, the operations, how blood flows at each stage, and the evidence behind each step.</p>
+            <span class="go">open <span>→</span></span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Mussallem CHD Alliance</span>
+    <span>Working drafts for review, not clinical guidance.</span>
+  </div>
+</footer>
 </body>
 </html>
