@@ -77,8 +77,8 @@ section{padding-top:56px;scroll-margin-top:64px}
 .org .head{margin:0 auto;width:max-content;padding:12px 20px;background:var(--cobalt);color:var(--white);font-size:16px;text-align:center}
 .org .head small{display:block;font-size:13px;opacity:.85;margin-top:2px}
 .org .stem{width:1px;height:18px;background:var(--black);margin:0 auto}
-.org .bar{height:1px;background:var(--black);margin:0 12.5%}
-.org .five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.org .bar{height:1px;background:var(--black);margin:0 16.667%}
+.org .five{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .org .five > div{position:relative;padding-top:18px}
 .org .five > div::before{content:"";position:absolute;top:0;left:50%;width:1px;height:18px;background:var(--black)}
 .org .five.below > div{padding-top:0}
@@ -208,7 +208,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
     <span class="eyebrow">Hiring plan</span>
   </div>
   <h1>Wave 1: the founding team</h1>
-  <p class="sub">Four permanent roles, led by the Senior Director of Epidemiology &amp; Evidence, plus an analyst once real data arrives. Each takes a lane of the roadmap off the Head.</p>
+  <p class="sub">Three permanent roles, led by the Senior Director of Epidemiology &amp; Evidence, plus an analyst once real data arrives. Each takes a lane of the roadmap off the Head.</p>
   <div class="stamps"><span>Draft rev 5 · 26 October 2026</span><span>Decided with phase 1 funding</span><span>Epidemiology &amp; Evidence first</span></div>
 </header>
 
@@ -216,8 +216,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
   <li><a href="#why">Why these roles</a></li>
   <li><a href="#team">The team</a></li>
   <li><a href="#epi-evidence">Epidemiology &amp; Evidence</a></li>
-  <li><a href="#ml-scientist">ML scientist</a></li>
-  <li><a href="#platform-engineer">Platform engineer</a></li>
+  <li><a href="#founding-engineer">Founding engineer</a></li>
   <li><a href="#network-operations">Network Operations</a></li>
   <li><a href="#clinical-data-analyst">Analyst</a></li>
 </ul></nav>
@@ -243,7 +242,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
 </section>
 
 <section id="team">
-  <div class="sechead"><h2>The team at a glance</h2><p class="note">Four permanent roles and an analyst after the Senior Director. Six people with the Head.</p></div>
+  <div class="sechead"><h2>The team at a glance</h2><p class="note">Three permanent roles and an analyst after the Senior Director. Five people with the Head.</p></div>
   <div class="org">
     <div class="org-inner">
       <div class="head">Head of Patient Data Strategy &amp; RWE<small>Strategy, architecture, anchor institution relationship, product</small></div>
@@ -251,8 +250,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
       <div class="bar"></div>
       <div class="five">
         <div><div class="seat t-evid"><span class="tag">Evidence · first hire</span><h4>Senior Director of Epidemiology &amp; Evidence</h4><p>Methods, validation, FDA, consultation and review, concept catalogue</p></div></div>
-        <div><div class="seat t-tech"><span class="tag">Technical core · early</span><h4>ML / Clinical NLP Scientist</h4><p>Extraction pipeline, evaluation, confidence scoring, AI position for hospitals</p></div></div>
-        <div><div class="seat t-tech"><span class="tag">Technical core · scope open</span><h4>Platform Data Engineer</h4><p>Stack, knowledge graph, assembly engine, workspace, identity, release path</p></div></div>
+        <div><div class="seat t-tech"><span class="tag">Technical core · lead · early</span><h4>Founding Engineer, Data &amp; AI</h4><p>Sandbox stack, extraction, evaluation, confidence scoring, first knowledge graph</p></div></div>
         <div><div class="seat t-ops"><span class="tag">Network · early</span><h4>Director of Network Operations</h4><p>Anchor institution agreement, network DUA, hospital recruiting, governance</p></div></div>
       </div>
       <div class="five below">
@@ -270,7 +268,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
 </section>
 
 <section id="roles">
-  <div class="sechead"><h2>The roles</h2><p class="note">All permanent. Four report to the Head of Patient Data Strategy; the analyst reports to the Senior Director of Epidemiology &amp; Evidence.</p></div>
+  <div class="sechead"><h2>The roles</h2><p class="note">All permanent. Three report to the Head of Patient Data Strategy; the analyst reports to the Senior Director of Epidemiology &amp; Evidence.</p></div>
 
   <article class="role r-evid" id="epi-evidence">
     <aside class="rail">
@@ -308,69 +306,38 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
     </div>
   </article>
 
-  <article class="role r-tech" id="ml-scientist">
+  <article class="role r-tech" id="founding-engineer">
     <aside class="rail">
-      <span class="tag">Technical core · early</span>
-      <h2>ML / Clinical NLP Scientist</h2>
-      <p class="owns">Builds the extraction pipeline that reads notes into the graph.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Extraction, evaluation, confidence scoring, AI position for hospitals</dd><dt>Start</dt><dd>With the sandbox build</dd></dl>
+      <span class="tag">Technical core · lead · early</span>
+      <h2>Founding Engineer, Data &amp; AI</h2>
+      <p class="owns">Builds and runs everything technical MCA keeps, starting with extraction and validation.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Sandbox stack, extraction, evaluation, confidence scoring, first knowledge graph, AI position for hospitals</dd><dt>Manages</dt><dd>Second engineer, when hired</dd><dt>Start</dt><dd>With the sandbox build</dd></dl>
     </aside>
     <div class="profile">
-      <p class="what">Builds the graph-guided extraction pipeline on off-the-shelf models, first in MCA's sandbox and then inside the anchor institution. Owns accuracy and confidence per concept, and the learning loop from two gold standards: registry submissions and trial hand-abstraction. Works with the platform data engineer; whether the two are one role or two is open. Ships production code.</p>
+      <p class="what">One engineer for now, weighted to AI and evaluation. Stands up the stack in MCA's sandbox, runs extraction on off-the-shelf models or a vendor's, and builds what MCA keeps: the evaluation harness, confidence scoring per concept, and the datasets for paired validation with the Senior Director of Epidemiology &amp; Evidence. Starts the knowledge graph. Builds early work directly and directs vendors and contractors for the rest. Ships production code, not research.</p>
       <ul class="why">
+        <li><b>Sandbox first</b>Stack, document intake and a first graph, so extraction and evaluation run before patient data arrives.</li>
+        <li><b>Validation</b>Extraction can be bought; validation is what MCA owns. Gold-standard sets from registry submissions and trial hand-abstraction, built with the Senior Director.</li>
         <li><b>AI position for hospitals</b>Academic centres are adding AI clauses to data use agreements. This role answers their counsel: models run inside the anchor institution's enclave, no training on hospital data, redaction where a site requires it.</li>
-        <li><b>Vendors and models</b>Evaluates extraction vendors, including those the incumbent registries are trialling, on an independent validation set. Sets up model access in the sandbox.</li>
-        <li><b>Milestones</b>Extraction on de-identified notes, then a first pipeline, then the first 25 concepts validated.</li>
-      </ul>
-      <h3>Must have</h3>
-      <ul class="must">
-        <li><b>LLM extraction from clinical text</b><span>Retrieval design, structured output, prompt and pipeline engineering on unstructured notes.</span></li>
-        <li><b>Graph-guided retrieval</b><span>GraphRAG or similar, using domain knowledge to steer what the model reads and asserts.</span></li>
-        <li><b>Evaluation</b><span>Gold-standard sets, per-concept precision and recall, regression testing on every model change. Evaluation sets are built jointly with the Senior Director of Epidemiology &amp; Evidence.</span></li>
-        <li><b>Confidence calibration</b><span>Scores reliable enough to set how much human review each use needs.</span></li>
-        <li><b>Working in a hospital enclave</b><span>Deploys under its security rules, with de-identification and redaction tooling, and can explain what the models see.</span></li>
-        <li><b>Portable production code</b><span>Model-independent and documented, so the pipeline can move if the anchor institution relationship ends.</span></li>
-      </ul>
-      <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>Moved a team from human abstraction to ML extraction (Flatiron, Tempus or similar)</li><li>Published or shipped validated ML-derived clinical variables</li><li>Clinical terminologies (SNOMED CT, HPO) in an extraction pipeline</li><li>A lakehouse with a knowledge graph or ontology layer</li><li>Pediatric or rare-disease records</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>Notebooks, not pipelines</li><li>No production experience with clinical data</li><li>Can't explain to a privacy officer where the data goes</li></ul></div>
-      </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>Give a dozen de-identified notes and three target concepts. Ask how they'd build the first evaluation set, what score would justify less human review, and how they'd catch a regression after a model change. Then have them write the AI position for a hospital's counsel in one paragraph.</p></div>
-    </div>
-  </article>
-
-  <article class="role r-tech" id="platform-engineer">
-    <aside class="rail">
-      <span class="tag">Technical core · scope open</span>
-      <h2>Platform Data Engineer</h2>
-      <p class="owns">Builds the platform foundation and moves it inside the anchor institution.</p>
-      <dl><dt>Type</dt><dd>Permanent</dd><dt>Owns</dt><dd>Stack, knowledge graph, assembly engine, workspace, identity, release path</dd><dt>Start</dt><dd>Before the build moves inside the anchor institution</dd><dt>Open</dt><dd>Separate role, or combined with the ML scientist</dd></dl>
-    </aside>
-    <div class="profile">
-      <p class="what">Builds the knowledge graph, the three storage layers with lineage, and the assembly engine on the chosen stack. Starts in an MCA sandbox with synthetic records and de-identified gold-standard pairs, then migrates inside the anchor institution once the agreement is signed. Owns the workspace there, identity resolution and tokenization, and the release path. Writes the acceptance tests MCA holds vendors to.</p>
-      <ul class="why">
-        <li><b>Sandbox</b>Stack stood up first, so the graph, assembly engine and first pipeline exist before patient data does.</li>
-        <li><b>Anchor institution</b>Workspace inside its environment, the FHIR feed with notes landing in the raw layer, and MCA's derived layer kept exportable.</li>
-        <li><b>Identity and release</b>Tokenization provider, identity resolution, then de-identification and access tiers.</li>
       </ul>
       <div class="trigger">
-        <span class="eyebrow">Open: one role or two</span>
-        <p>Combining this with the ML scientist costs less and fits a small team. But few people do both well, and the first phase needs both at full speed: sandbox, graph and workspace on one side; pipeline, evaluation and 25 concepts on the other. Decided with the team decision.</p>
+        <span class="eyebrow">Second engineer</span>
+        <p>A platform data engineer joins when platform work starts crowding out validation, most likely the move inside the anchor institution or identity and tokenization. Reports to this role. Until then, the anchor institution's research informatics and vendors cover enclave security, identity, the release path and the researcher workspace.</p>
       </div>
       <h3>Must have</h3>
       <ul class="must">
-        <li><b>Graph data modeling</b><span>In production, with time and provenance: source, date and confidence on every assertion.</span></li>
-        <li><b>Healthcare data engineering</b><span>FHIR R4 and US Core, clinical documents, terminology services, HL7v2.</span></li>
-        <li><b>Lineage and storage</b><span>Immutable raw landing, a versioned assertion layer, reproducible datasets.</span></li>
-        <li><b>Hospital environments</b><span>HIPAA-grade security, audit logging, de-identification, a hospital's cloud tenant.</span></li>
-        <li><b>Identity and privacy</b><span>Patient tokenization or privacy-preserving record linkage, tiered access.</span></li>
-        <li><b>Hands-on vendor management</b><span>Writes code daily; scopes statements of work, writes acceptance tests, directs contractors.</span></li>
+        <li><b>ML on clinical text, in production</b><span>LLM extraction from unstructured notes: retrieval design, structured output, pipelines shipped and maintained.</span></li>
+        <li><b>Evaluation</b><span>Gold-standard sets, per-concept precision and recall, calibration, regression testing on every model change.</span></li>
+        <li><b>Lakehouse data engineering</b><span>Databricks or Spark, MLflow, Delta or equivalents; pipelines with lineage. Competent on a managed stack is enough.</span></li>
+        <li><b>Data modeling</b><span>Enough to start a knowledge graph with provenance: source, date and confidence on every assertion.</span></li>
+        <li><b>Hospital environments</b><span>Deploys under someone else's security rules, with de-identification and redaction, and can explain what the models see.</span></li>
+        <li><b>Builds or buys</b><span>Scopes vendor work, writes acceptance tests, directs contractors. Still writes code daily.</span></li>
       </ul>
       <div class="pair">
-        <div><h3>Gives an edge</h3><ul><li>Databricks or a similar lakehouse with a graph or ontology layer</li><li>Systems with audit trails a regulator examined</li><li>Academic medical center or research coordinating center experience</li></ul></div>
-        <div class="out"><h3>Rules them out</h3><ul><li>Hasn't coded in years</li><li>Defaults to a record-centric common data model</li></ul></div>
+        <div><h3>Gives an edge</h3><ul><li>Early engineer at a health-data company (Flatiron, Tempus or similar)</li><li>Moved a team from human abstraction to ML extraction</li><li>A knowledge graph or ontology in production</li><li>Clinical terminologies (SNOMED CT, HPO) in a pipeline</li><li>Pediatric or rare-disease records</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Notebooks, not pipelines</li><li>Platform work without ever shipping a model</li><li>Manages but no longer codes</li><li>Can't explain to a privacy officer where the data goes</li></ul></div>
       </div>
-      <div class="test"><span class="eyebrow">Interview test</span><p>How would you model one patient's history, from birth through Fontan completion to adult care, so a question nobody has asked yet can still be answered?</p></div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Give a dozen de-identified notes and three target concepts. Ask how they'd build the first evaluation set, what score would justify less human review, and what they'd build versus buy to get there. Then have them write the AI position for a hospital's counsel in one paragraph.</p></div>
     </div>
   </article>
 
