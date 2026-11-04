@@ -10,7 +10,7 @@
 <style>
 /* MCA Design System on the strategy site's blue-grey ground (no sandstone). Raleway Medium 500 only; cobalt for emphasis and links,
    horizon for fills and accents, black for copy. Layout: logo and ribbon header, sticky section nav, the team chart, one white card per role
-   (summary rail left, skill profile right), then the catalogue, what is bought, roles on a trigger and the order of hiring. Single light theme by choice. */
+   (summary rail left, skill profile right). Single light theme by choice. */
 :root{
   --mist:#F5F7FB; --mist-deep:#E9EEF7; --white:#ffffff; --black:#000000; --cobalt:#1e1e91; --horizon:#648de9;
   --surface:var(--mist); --raised:var(--white); --ink:var(--black); --ink-2:rgba(0,0,0,.68);
@@ -220,10 +220,6 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
   <li><a href="#platform-engineer">Platform engineer</a></li>
   <li><a href="#network-operations">Network Operations</a></li>
   <li><a href="#clinical-data-analyst">Analyst</a></li>
-  <li><a href="#catalogue">Concept catalogue</a></li>
-  <li><a href="#bought">Bought</a></li>
-  <li><a href="#triggers">On a trigger</a></li>
-  <li><a href="#order">Order of hiring</a></li>
 </ul></nav>
 
 <section id="why">
@@ -450,56 +446,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
   </article>
 </section>
 
-<section id="catalogue">
-  <div class="sechead"><h2>The concept catalogue</h2><p class="note">One owner, one maintainer, one clinical check.</p></div>
-  <div class="owners">
-    <div><span class="who">Senior Director of Epidemiology &amp; Evidence</span>Owns concepts, definitions, versioning and citation, and what goes to the committee.</div>
-    <div><span class="who">Clinical Data Analyst</span>Maintains it as code; builds study logic on the definitions.</div>
-    <div><span class="who">ML / Clinical NLP Scientist</span>Uses it for extraction, maps terminologies, flags concepts extraction can't yet deliver.</div>
-    <div><span class="who">Clinical lead and Data Standards committee</span>Sign off definitions, adjudicate discordances, endorse new variables.</div>
-  </div>
-  <p>No separate clinical informatics role in wave 1. Definitions sit with epidemiology, terminology mapping with the ML scientist and a terminology service, and clinical judgment with the clinical lead and registry clinicians. Seat the Data Standards committee early so sign-off never depends on one person.</p>
-</section>
 
-<section id="traits">
-  <div class="sechead"><h2>Every role</h2></div>
-  <div class="traits">
-    <div><b>Does the work</b>Comfortable with ambiguity; hands-on.</div>
-    <div><b>Writes clearly</b>For patients and families, clinicians, regulators and engineers.</div>
-    <div><b>Gets the idea</b>Can explain why this is an evidence platform, not another registry, and why it doesn't replace registries.</div>
-    <div><b>Builds to move</b>Works in MCA's sandbox, then inside the anchor institution, and keeps MCA's work documented and portable.</div>
-  </div>
-</section>
-
-<section id="bought">
-  <div class="sechead"><h2>Bought, not hired</h2></div>
-  <ul class="contracted">
-    <li><b>The stack</b><span>Databricks or similar.</span></li>
-    <li><b>Anchor institution research informatics</b><span>Environment, FHIR feed with notes, security and credentialing, scoped and costed up front. Their capacity is limited; the estimate shows what they add or drop.</span></li>
-    <li><b>Terminology services</b><span>Terminology server and mapping tools, until the work needs a dedicated role.</span></li>
-    <li><b>Privacy and legal</b><span>Outside counsel for the anchor institution agreement and AI position; fractional privacy support; redaction tooling where needed.</span></li>
-    <li><b>Commodity layers, including the user interface</b><span>Vendors, held to MCA's acceptance tests.</span></li>
-  </ul>
-</section>
-
-<section id="triggers">
-  <div class="sechead"><h2>Roles on a trigger</h2><p class="note">Hired when a condition is met.</p></div>
-  <ul class="triggers">
-    <li><b>Patient &amp; Family Engagement Lead<span class="when">Fractional or partner-led in the first phase</span></b><span>Consent design, the coalition charter, the patient-return concept. <b>Trigger:</b> patient-authorized records start or the coalition charter, whichever is first.</span></li>
-    <li><b>Clinical Informatics Lead<span class="when">Not in wave 1</span></b><span>Terminology engineering and day-to-day catalogue curation. <b>Trigger:</b> terminology work outgrows the Senior Director and analyst, or registry ingestion needs definitions reconciled across sources. Likely second phase.</span></li>
-    <li><b>Technical Product Lead<span class="when">Second phase</span></b><span>Workspace specs, vendor evaluation and acceptance, user research across the six personas, patients and families first. <b>Trigger:</b> the first workspace vendor is engaged.</span></li>
-    <li><b>Data Governance &amp; Access Lead<span class="when">Second phase</span></b><span>Runs access day to day: the rulebook, decisions on requests the rules don't cover, committee support. Until volume justifies it, the Director of Network Operations covers this.</span></li>
-  </ul>
-</section>
-
-<section id="order">
-  <div class="sechead"><h2>Order of hiring</h2></div>
-  <div class="order">
-    <p class="big">Epidemiology &amp; Evidence first. Network Operations and the ML scientist next. Platform engineering before the build moves inside the anchor institution. The analyst when real data arrives.</p>
-    <p>The Senior Director guides the decisions that follow and owns the validation design that goes to FDA. Network Operations keeps the anchor institution agreement on track; everything inside the anchor institution waits on. The ML scientist starts the sandbox build and owns the AI position before hospitals ask. Platform engineering is needed when the build moves inside the anchor institution.</p>
-    <p class="caution"><span class="eyebrow">Risk</span>The roadmap assumes this team. Every month a hire slips, the Head carries that lane. At each checkpoint, check whether delays come from capacity or counterparties, and move up the hire whose lane is behind.</p>
-  </div>
-</section>
 
 <footer><span>Mussallem CHD Alliance · Patient Data Initiative</span><span>Wave 1 hiring plan · Draft rev 5, 26 October 2026</span></footer>
 
