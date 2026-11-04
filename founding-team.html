@@ -77,8 +77,9 @@ section{padding-top:56px;scroll-margin-top:64px}
 .org .head{margin:0 auto;width:max-content;padding:12px 20px;background:var(--cobalt);color:var(--white);font-size:16px;text-align:center}
 .org .head small{display:block;font-size:13px;opacity:.85;margin-top:2px}
 .org .stem{width:1px;height:18px;background:var(--black);margin:0 auto}
-.org .bar{height:1px;background:var(--black);margin:0 16.667%}
-.org .five{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.org .bar{height:1px;background:linear-gradient(90deg,var(--black) 0 66.667%,transparent 66.667%) 0 0/100% 1px no-repeat,repeating-linear-gradient(90deg,var(--black) 0 4px,transparent 4px 8px);margin:0 12.5%}
+.org .five > div.later::before{background:none;border-left:1px dashed var(--black)}
+.org .five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 .org .five > div{position:relative;padding-top:18px}
 .org .five > div::before{content:"";position:absolute;top:0;left:50%;width:1px;height:18px;background:var(--black)}
 .org .five.below > div{padding-top:0}
@@ -208,7 +209,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
     <span class="eyebrow">Hiring plan</span>
   </div>
   <h1>Wave 1: the founding team</h1>
-  <p class="sub">Three permanent roles, led by the Senior Director of Epidemiology &amp; Evidence, plus an analyst once real data arrives. Each takes a lane of the roadmap off the Head.</p>
+  <p class="sub">Three permanent roles, led by the Senior Director of Epidemiology &amp; Evidence, then a product manager and an analyst as the build and the data grow. Each takes a lane of the roadmap off the Head.</p>
   <div class="stamps"><span>Draft rev 5 · 26 October 2026</span><span>Decided with phase 1 funding</span><span>Epidemiology &amp; Evidence first</span></div>
 </header>
 
@@ -218,6 +219,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
   <li><a href="#epi-evidence">Epidemiology &amp; Evidence</a></li>
   <li><a href="#founding-engineer">Founding engineer</a></li>
   <li><a href="#network-operations">Network Operations</a></li>
+  <li><a href="#product-manager">Product</a></li>
   <li><a href="#clinical-data-analyst">Analyst</a></li>
 </ul></nav>
 
@@ -242,7 +244,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
 </section>
 
 <section id="team">
-  <div class="sechead"><h2>The team at a glance</h2><p class="note">Three permanent roles and an analyst after the Senior Director. Five people with the Head.</p></div>
+  <div class="sechead"><h2>The team at a glance</h2><p class="note">Three founding roles, then a product manager and an analyst. Six people with the Head.</p></div>
   <div class="org">
     <div class="org-inner">
       <div class="head">Head of Patient Data Strategy &amp; RWE<small>Strategy, architecture, anchor institution relationship, product</small></div>
@@ -252,6 +254,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
         <div><div class="seat t-evid"><span class="tag">Evidence · first hire</span><h4>Senior Director of Epidemiology &amp; Evidence</h4><p>Methods, validation, FDA, consultation and review, concept catalogue</p></div></div>
         <div><div class="seat t-tech"><span class="tag">Technical core · lead · early</span><h4>Founding Engineer, Data &amp; AI</h4><p>Sandbox stack, extraction, evaluation, confidence scoring, first knowledge graph</p></div></div>
         <div><div class="seat t-ops"><span class="tag">Network · early</span><h4>Director of Network Operations</h4><p>Anchor institution agreement, network DUA, hospital recruiting, governance</p></div></div>
+        <div class="later"><div class="seat w15 t-tech"><span class="tag">Product · after wave 1</span><h4>Technical Product Manager</h4><p>Specs, roadmap, vendor selection, user research</p></div></div>
       </div>
       <div class="five below">
         <div class="slot"><div class="vstem"></div><div class="seat w15 t-evid"><span class="tag">Evidence · when data arrives</span><h4>Clinical Data Analyst</h4><p>Study datasets, analyses, catalogue maintenance</p></div></div>
@@ -264,11 +267,11 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
       </div>
     </div>
   </div>
-  <div class="legend"><span class="t-evid"><i></i>Evidence</span><span class="t-tech"><i></i>Technical core</span><span class="t-ops"><i></i>Network</span><span>Dashed: hired when the first real data arrives</span></div>
+  <div class="legend"><span class="t-evid"><i></i>Evidence</span><span class="t-tech"><i></i>Technical core and product</span><span class="t-ops"><i></i>Network</span><span>Dashed: hired after the founding three</span></div>
 </section>
 
 <section id="roles">
-  <div class="sechead"><h2>The roles</h2><p class="note">All permanent. Three report to the Head of Patient Data Strategy; the analyst reports to the Senior Director of Epidemiology &amp; Evidence.</p></div>
+  <div class="sechead"><h2>The roles</h2><p class="note">All permanent. Four report to the Head of Patient Data Strategy; the analyst reports to the Senior Director of Epidemiology &amp; Evidence.</p></div>
 
   <article class="role r-evid" id="epi-evidence">
     <aside class="rail">
@@ -374,6 +377,41 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--black);font-s
         <p>No product hybrid in the first phase; the Head leads product. A technical product lead comes in the second phase, when vendors start building workspaces.</p>
         <p>The partnerships title waits on two decisions: the clinical lead's role, and whether MCA creates a partnerships role across all its work. Either way, this role keeps the institution-by-institution relationship map and agreement register.</p>
       </div>
+    </div>
+  </article>
+
+  <article class="role r-tech" id="product-manager">
+    <aside class="rail">
+      <span class="tag">Product · after wave 1</span>
+      <h2>Technical Product Manager</h2>
+      <p class="owns">Turns strategy into specs and vendor decisions once the build grows past the sandbox.</p>
+      <dl><dt>Type</dt><dd>Permanent</dd><dt>Reports to</dt><dd>Head of Patient Data Strategy</dd><dt>Owns</dt><dd>Specs, roadmap, vendor selection process, user research</dd><dt>Start</dt><dd>Before the workspace is specified and its vendors chosen</dd></dl>
+    </aside>
+    <div class="profile">
+      <p class="what">Takes product execution off the Head. Writes the specs the founding engineer and vendors build to, runs vendor selection against a written scorecard, and keeps the roadmap and release cadence across MCA, the anchor institution and vendors. Talks to the people who will use the platform: patients and families first, then researchers, registries and the anchor institution's teams. Strategy and final calls stay with the Head.</p>
+      <ul class="why">
+        <li><b>Specs</b>Dynamic assembly, the researcher workspace and patient-facing features, written so engineers and vendors can build and test against them.</li>
+        <li><b>Vendors</b>Runs bake-offs and the selection scorecard. The founding engineer owns technical evaluation and acceptance tests; Network Operations owns contracts.</li>
+        <li><b>Users</b>Patients and families first, then researchers, RFA awardees and registry teams. What they need sets what gets built first.</li>
+      </ul>
+      <div class="trigger">
+        <span class="eyebrow">Why not wave 1</span>
+        <p>In the first phase, product decisions are strategy decisions and sit with the Head. This role starts when there is more to specify and coordinate than the Head can carry: the workspace, outside users and more than one vendor.</p>
+      </div>
+      <h3>Must have</h3>
+      <ul class="must">
+        <li><b>Technical product management</b><span>Has shipped data or AI products; writes specs engineers build from without translation.</span></li>
+        <li><b>Vendor selection</b><span>Has run evaluations and bake-offs, written scorecards and the requirements that go into contracts.</span></li>
+        <li><b>Health data</b><span>EHR, research or registry data; knows consent, privacy and data use agreements well enough to spec around them.</span></li>
+        <li><b>User research</b><span>Has interviewed and tested with clinicians, researchers or patients, and turned what they heard into priorities.</span></li>
+        <li><b>Working across organizations</b><span>Has delivered with hospital IT, research informatics or partner teams they don't manage.</span></li>
+        <li><b>Technical fluency</b><span>Reads code and SQL, understands evaluation metrics, can test a vendor's claims about AI.</span></li>
+      </ul>
+      <div class="pair">
+        <div><h3>Gives an edge</h3><ul><li>Product at a health-data or RWE company (Flatiron, Aetion or similar)</li><li>Built a researcher-facing data platform or workspace</li><li>Patient-facing product experience</li><li>Worked inside an academic medical center</li></ul></div>
+        <div class="out"><h3>Rules them out</h3><ul><li>Program or project management only: tracks work but doesn't decide it</li><li>No experience with regulated data</li><li>Can't read a technical spec</li></ul></div>
+      </div>
+      <div class="test"><span class="eyebrow">Interview test</span><p>Give two extraction vendors' claims and the first use case. Ask for a one-page spec and a selection scorecard, and the first three questions they'd put to the anchor institution's research informatics team.</p></div>
     </div>
   </article>
 
