@@ -26,17 +26,30 @@ body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:col
 h1{margin:clamp(18px,4vh,40px) 0 0 5.73%;font-size:clamp(30px,4.2vw,60px);line-height:1.02;letter-spacing:-.02em;font-weight:500;transition:opacity .6s ease}
 h1 em{font-style:normal;color:var(--horizon)}
 .frame{position:relative;width:100%;aspect-ratio:16/9}
-/* no frame, corners or shadow: the film's edges dissolve into the matching sky around it */
-.frame video{position:absolute;inset:0;width:100%;height:100%;display:block;background:transparent;opacity:0;pointer-events:none;cursor:pointer;transition:opacity .7s ease;
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 82%,transparent);-webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 82%,transparent);mask-composite:intersect}
-.frame video:fullscreen{-webkit-mask-image:none;mask-image:none;opacity:1;cursor:auto}
-.frame video:-webkit-full-screen{-webkit-mask-image:none;mask-image:none;opacity:1;cursor:auto}
+/* no frame, corners or shadow: the film's edges dissolve into the matching sky around it. The fade is four still strips of the page's own sky laid over the film's edges, so the browser never has to mask moving video. */
+.frame video{position:absolute;inset:0;width:100%;height:100%;display:block;background:transparent;opacity:0;pointer-events:none;cursor:pointer;transition:opacity .7s ease}
+.frame video:fullscreen{opacity:1;cursor:auto}
+.frame video:-webkit-full-screen{opacity:1;cursor:auto}
+.feather{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .7s ease}
+.feather i{position:absolute;display:block}
+.feather .l,.feather .r{top:0;bottom:0;width:4%;background:linear-gradient(var(--deep),var(--cobalt) 72%)}
+.feather .l{left:0;-webkit-mask-image:linear-gradient(to right,#000,transparent);mask-image:linear-gradient(to right,#000,transparent)}
+.feather .r{right:0;-webkit-mask-image:linear-gradient(to left,#000,transparent);mask-image:linear-gradient(to left,#000,transparent)}
+.feather .t{left:0;right:0;top:0;height:5%;background:linear-gradient(var(--deep),var(--cobalt) 72%) top/100% 2000% no-repeat;-webkit-mask-image:linear-gradient(to bottom,#000,transparent);mask-image:linear-gradient(to bottom,#000,transparent)}
+.feather .b{left:0;right:0;bottom:0;height:18%;background:linear-gradient(to top,#1e1e91,rgba(30,30,145,0))}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:14px;padding:12px;font-size:clamp(15px,1.3vw,18px);transition:opacity .5s ease,visibility 0s}
 .play i{display:flex;align-items:center;justify-content:center;width:clamp(72px,7vw,104px);height:clamp(72px,7vw,104px);border-radius:50%;border:2px solid var(--white);transition:background .2s ease,color .2s ease}
 .play svg{width:34%;height:34%;margin-left:6%;fill:currentColor}
 .play:hover i,.play:focus-visible i{background:var(--white);color:var(--cobalt)}
+/* between the click and the film's first frame, and whenever the film has to wait for more of itself, a turning ring says so */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:none;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:var(--white);animation:spin 1s linear infinite}
+.starting .play{cursor:default}.starting .play i{border-color:transparent;background:none;color:var(--white);position:relative}
+.starting .play i svg{display:none}.starting .play i .spin{display:block;position:absolute;inset:-2px}
+.wait{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.wait .spin{display:block;width:100%;height:100%}
+.buffering .wait{opacity:1}
 .play:focus-visible{outline:3px solid var(--horizon);outline-offset:3px;border-radius:10px}
 .bar button:focus-visible{outline:3px solid var(--horizon);outline-offset:1px}
 /* the film's own quiet controls, sitting where its lower edge fades out; they show only while the pointer is over the film */
@@ -63,15 +76,16 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .playing .logo,.playing h1{opacity:0}
 .playing .play{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .playing .frame video{opacity:1;pointer-events:auto}
+.playing .feather{opacity:1}
 .playing .bar{visibility:visible;transition:opacity .35s ease,visibility 0s}
 /* shown on hover (until the pointer has rested a few seconds), for keyboard focus, and, where there is no hover, while the film is paused or over */
 .playing .frame:hover:not(.idle) .bar,.playing .bar:has(:focus-visible){opacity:1;pointer-events:auto}
 @media (hover:none){.playing .frame.halted .bar{opacity:1;pointer-events:auto}}
 .playing .frame.idle video{cursor:none}
 @media (max-width:700px){:root{--gutter:20px}.top{padding-top:20px}.logo{height:32px;margin-left:0}h1,.mission{margin-left:0}.band{padding:0}.band .wrap{max-width:none}
-  .frame video{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 80%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 80%,transparent)}
+  .feather .l,.feather .r{display:none}.feather .b{height:20%}
   .bar{left:10px;right:10px;gap:0}.bar button{width:36px;height:36px}.bar .time{font-size:12px;margin:0 4px 0 6px}.mission{font-size:15px}}
-@media (prefers-reduced-motion:reduce){.logo,h1,.frame video,.play,.bar{transition:none!important}}
+@media (prefers-reduced-motion:reduce){.logo,h1,.frame video,.feather,.play,.bar{transition:none!important}.spin{animation-duration:2.4s}}
 </style>
 </head>
 <body>
@@ -85,7 +99,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <video id="film" playsinline preload="auto" aria-describedby="about">
       <source src="evidence-commons.mp4" type="video/mp4">
     </video>
-    <button class="play" id="play" type="button"><i><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0 L10 6 L0 12 Z"/></svg></i><span>Play the film</span></button>
+    <button class="play" id="play" type="button"><i><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0 L10 6 L0 12 Z"/></svg><b class="spin"></b></i><span id="playlabel" aria-live="polite">Play the film</span></button>
+    <div class="wait" aria-hidden="true"><b class="spin"></b></div>
+    <div class="feather" aria-hidden="true"><i class="l"></i><i class="r"></i><i class="t"></i><i class="b"></i></div>
     <div class="bar" id="bar">
       <button type="button" id="toggle" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="toggleicon" class="solid" d=""/></svg></button>
       <input class="seek" id="seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Place in the film">
@@ -114,7 +130,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
   function $(id) { return document.getElementById(id); }
   var body = document.body, frame = $('frame'), film = $('film'), src = film.querySelector('source');
-  var play = $('play'), toggle = $('toggle'), seek = $('seek'), time = $('time'), mute = $('mute'), full = $('full');
+  var play = $('play'), label = $('playlabel'), toggle = $('toggle'), seek = $('seek'), time = $('time'), mute = $('mute'), full = $('full');
   var ICON = { play: 'M6 3.5 L16 10 L6 16.5 Z', pause: 'M5 3.5h3.4v13H5z M11.6 3.5H15v13h-3.4z', again: 'M6 3.5 L16 10 L6 16.5 Z' };
   var SOUND = { on: 'M13 7.2a4 4 0 0 1 0 5.6M15.2 4.8a7.4 7.4 0 0 1 0 10.4', off: 'M13 7.5l4.5 5M17.5 7.5l-4.5 5' };
   var dragging = false, rest = 0, bar = $('bar');
@@ -140,14 +156,24 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   function tick() { draw(); if (!film.paused && !film.ended) requestAnimationFrame(tick); }
 
   // Title card until the film starts. From then on the film holds the screen, paused or finished included, so its closing frame stays up.
-  play.addEventListener('click', function () { start(); });
-  film.addEventListener('play', function () {
+  // The click starts the film loading in earnest; the title card stays, with a turning ring, until the film's first frame is really on screen.
+  play.addEventListener('click', function () {
+    if (body.classList.contains('starting')) return;
+    body.classList.add('starting'); label.textContent = 'Loading the film\u2026';
+    var p = film.play(); if (p && p.catch) p.catch(function () { body.classList.remove('starting'); label.textContent = 'Play the film'; });
+  });
+  film.addEventListener('playing', function () {
     var had = document.activeElement === play;
-    body.classList.add('playing');
+    body.classList.remove('starting'); body.classList.add('playing'); settle();
     if (had) toggle.focus({ preventScroll: true });
     frame.classList.remove('halted'); wake();
     tick();
   });
+  // If the film runs out of itself part-way, show the ring over it until it can go on. A short grace keeps a blink from showing.
+  var lag = 0;
+  function settle() { clearTimeout(lag); frame.classList.remove('buffering'); }
+  film.addEventListener('waiting', function () { clearTimeout(lag); lag = setTimeout(function () { if (!film.paused && film.readyState < 3 && body.classList.contains('playing')) frame.classList.add('buffering'); }, 400); });
+  ['canplay', 'pause', 'seeked', 'ended'].forEach(function (n) { film.addEventListener(n, settle); });
   ['pause', 'ended'].forEach(function (n) { film.addEventListener(n, function () { frame.classList.add('halted'); wake(); }); });
   ['pause', 'ended', 'loadedmetadata', 'durationchange', 'volumechange', 'seeked', 'timeupdate'].forEach(function (n) { film.addEventListener(n, draw); });
   toggle.addEventListener('click', function () { if (film.paused) start(); else film.pause(); });
@@ -170,7 +196,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (n) { document.addEventListener(n, function () { film.controls = fsEl() === film; }); });
 
   // If the film file is not beside the page, say so plainly instead of offering a button that does nothing.
-  function gone() { frame.classList.add('nofile'); body.classList.remove('playing'); }
+  function gone() { frame.classList.add('nofile'); body.classList.remove('playing'); body.classList.remove('starting'); settle(); }
   src.addEventListener('error', gone); film.addEventListener('error', gone);
   // The stars stop where the film's Earth begins, whatever the window's shape.
   function fit() { var b = frame.getBoundingClientRect(); sky.style.height = Math.round(b.top + window.pageYOffset + b.height * 0.8) + 'px'; }
