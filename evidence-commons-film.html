@@ -39,8 +39,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .play:hover i,.play:focus-visible i{background:var(--white);color:var(--cobalt)}
 .play:focus-visible{outline:3px solid var(--horizon);outline-offset:3px;border-radius:10px}
 .bar button:focus-visible{outline:3px solid var(--horizon);outline-offset:1px}
-/* the film's own quiet controls, sitting where its lower edge fades out */
-.bar{position:absolute;left:calc(5.73% - 10px);right:calc(5.73% - 10px);bottom:0;display:flex;align-items:center;gap:6px;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+/* the film's own quiet controls, sitting where its lower edge fades out; they show only while the pointer is over the film */
+.bar{position:absolute;left:calc(5.73% - 10px);right:calc(5.73% - 10px);bottom:0;display:flex;align-items:center;gap:6px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility 0s .35s}
 .bar button{flex:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;opacity:.8;transition:opacity .2s ease}
 .bar button:hover,.bar button:focus-visible{opacity:1}
 .bar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -63,7 +63,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .playing .logo,.playing h1{opacity:0}
 .playing .play{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .playing .frame video{opacity:1;pointer-events:auto}
-.playing .bar{opacity:1;visibility:visible;transition:opacity .5s ease .4s,visibility 0s}
+.playing .bar{visibility:visible;transition:opacity .35s ease,visibility 0s}
+/* shown on hover (until the pointer has rested a few seconds), for keyboard focus, and, where there is no hover, while the film is paused or over */
+.playing .frame:hover:not(.idle) .bar,.playing .bar:has(:focus-visible){opacity:1;pointer-events:auto}
+@media (hover:none){.playing .frame.halted .bar{opacity:1;pointer-events:auto}}
+.playing .frame.idle video{cursor:none}
 @media (max-width:700px){:root{--gutter:20px}.top{padding-top:20px}.logo{height:32px;margin-left:0}h1,.mission{margin-left:0}.band{padding:0}.band .wrap{max-width:none}
   .frame video{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 80%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 80%,transparent)}
   .bar{left:10px;right:10px;gap:0}.bar button{width:36px;height:36px}.bar .time{font-size:12px;margin:0 4px 0 6px}.mission{font-size:15px}}
@@ -78,7 +82,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 </div></div>
 <main class="band"><div class="wrap">
   <div class="frame" id="frame">
-    <video id="film" playsinline preload="metadata" aria-describedby="about">
+    <video id="film" playsinline preload="auto" aria-describedby="about">
       <source src="evidence-commons.mp4" type="video/mp4">
     </video>
     <button class="play" id="play" type="button"><i><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0 L10 6 L0 12 Z"/></svg></i><span>Play the film</span></button>
@@ -113,7 +117,12 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   var play = $('play'), toggle = $('toggle'), seek = $('seek'), time = $('time'), mute = $('mute'), full = $('full');
   var ICON = { play: 'M6 3.5 L16 10 L6 16.5 Z', pause: 'M5 3.5h3.4v13H5z M11.6 3.5H15v13h-3.4z', again: 'M6 3.5 L16 10 L6 16.5 Z' };
   var SOUND = { on: 'M13 7.2a4 4 0 0 1 0 5.6M15.2 4.8a7.4 7.4 0 0 1 0 10.4', off: 'M13 7.5l4.5 5M17.5 7.5l-4.5 5' };
-  var dragging = false;
+  var dragging = false, rest = 0, bar = $('bar');
+  // The controls show while the pointer is over the film and moving. Once it has rested a few seconds during play they slip away again, and any movement brings them back.
+  function wake() {
+    frame.classList.remove('idle'); clearTimeout(rest);
+    rest = setTimeout(function () { if (film.paused || dragging || bar.matches(':hover')) return; frame.classList.add('idle'); }, 2500);
+  }
 
   function start() { var p = film.play(); if (p && p.catch) p.catch(function () {}); }
   function clock(v) { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + ('0' + v % 60).slice(-2); }
@@ -136,8 +145,10 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     var had = document.activeElement === play;
     body.classList.add('playing');
     if (had) toggle.focus({ preventScroll: true });
+    frame.classList.remove('halted'); wake();
     tick();
   });
+  ['pause', 'ended'].forEach(function (n) { film.addEventListener(n, function () { frame.classList.add('halted'); wake(); }); });
   ['pause', 'ended', 'loadedmetadata', 'durationchange', 'volumechange', 'seeked', 'timeupdate'].forEach(function (n) { film.addEventListener(n, draw); });
   toggle.addEventListener('click', function () { if (film.paused) start(); else film.pause(); });
   film.addEventListener('click', function () { if (film.controls) return; if (film.paused) start(); else film.pause(); });
@@ -145,6 +156,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   seek.addEventListener('pointerdown', function () { dragging = true; });
   seek.addEventListener('input', function () { if (film.duration) film.currentTime = seek.value / 1000 * film.duration; draw(); });
   ['pointerup', 'pointercancel', 'change', 'blur'].forEach(function (n) { seek.addEventListener(n, function () { dragging = false; }); });
+
+  ['pointermove', 'pointerdown', 'keydown'].forEach(function (n) { frame.addEventListener(n, wake); });
 
   // Full screen hands over to the browser's own player and controls, then back.
   var enter = film.requestFullscreen || film.webkitRequestFullscreen || film.webkitEnterFullscreen;
